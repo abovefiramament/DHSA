@@ -1,0 +1,245 @@
+{
+  "source_run": "LOCAL_HOME/rpec_runs/imdb_dpo_singlebank_sv_20260926",
+  "status": "validated_completed_outputs_no_rerun",
+  "code_snapshot": "source/code_01",
+  "cases": [
+    {
+      "cell": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_all/high_effect",
+      "expected_rows": 20480,
+      "files": {
+        "generation/predictions.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "original_bytes": 52949045,
+          "compressed_bytes": 18986911
+        },
+        "generation/trajectory.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "None": 20480
+          },
+          "original_bytes": 27845880,
+          "compressed_bytes": 8611937
+        },
+        "generation/component_scores.jsonl.gz": {
+          "rows": 81920,
+          "per_alpha": {
+            "None": 81920
+          },
+          "original_bytes": 8655750,
+          "compressed_bytes": 418719
+        },
+        "evaluation/per_sample_scores.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "original_bytes": 8393059,
+          "compressed_bytes": 1315682
+        }
+      },
+      "prediction_trajectory_score_ids_match": true,
+      "summary_max_absolute_error": 0.0
+    },
+    {
+      "cell": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_prefill/high_effect",
+      "expected_rows": 20480,
+      "files": {
+        "generation/predictions.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "original_bytes": 54581435,
+          "compressed_bytes": 19569704
+        },
+        "generation/trajectory.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "None": 20480
+          },
+          "original_bytes": 28653477,
+          "compressed_bytes": 8902735
+        },
+        "generation/component_scores.jsonl.gz": {
+          "rows": 81920,
+          "per_alpha": {
+            "None": 81920
+          },
+          "original_bytes": 8655750,
+          "compressed_bytes": 418719
+        },
+        "evaluation/per_sample_scores.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "original_bytes": 8459653,
+          "compressed_bytes": 1341255
+        }
+      },
+      "prediction_trajectory_score_ids_match": true,
+      "summary_max_absolute_error": 0.0
+    },
+    {
+      "cell": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_all/high_effect",
+      "expected_rows": 20480,
+      "files": {
+        "generation/predictions.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "original_bytes": 53041644,
+          "compressed_bytes": 19048112
+        },
+        "generation/trajectory.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "None": 20480
+          },
+          "original_bytes": 27818506,
+          "compressed_bytes": 8638589
+        },
+        "generation/component_scores.jsonl.gz": {
+          "rows": 81920,
+          "per_alpha": {
+            "None": 81920
+          },
+          "original_bytes": 8585580,
+          "compressed_bytes": 412051
+        },
+        "evaluation/per_sample_scores.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "original_bytes": 8399907,
+          "compressed_bytes": 1316766
+        }
+      },
+      "prediction_trajectory_score_ids_match": true,
+      "summary_max_absolute_error": 0.0
+    },
+    {
+      "cell": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_prefill/high_effect",
+      "expected_rows": 20480,
+      "files": {
+        "generation/predictions.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "original_bytes": 54777452,
+          "compressed_bytes": 19645087
+        },
+        "generation/trajectory.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "None": 20480
+          },
+          "original_bytes": 28677415,
+          "compressed_bytes": 8927802
+        },
+        "generation/component_scores.jsonl.gz": {
+          "rows": 81920,
+          "per_alpha": {
+            "None": 81920
+          },
+          "original_bytes": 8585580,
+          "compressed_bytes": 412051
+        },
+        "evaluation/per_sample_scores.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "original_bytes": 8459097,
+          "compressed_bytes": 1340478
+        }
+      },
+      "prediction_trajectory_score_ids_match": true,
+      "summary_max_absolute_error": 0.0
+    }
+  ],
+  "excluded_redundant_restart_artifacts": [
+    "generation/generation_checkpoint.jsonl",
+    "generation/batch_checkpoints/",
+    "__pycache__/"
+  ],
+  "publication_member_count": 37
+}

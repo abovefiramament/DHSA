@@ -7,8 +7,8 @@ This repository and its release assets contain the selected formal IMDb, ConFiQA
 component-effect measurements, Site comparisons, single-bank controls, execution
 code, configurations, test predictions, scores, and evaluation traces.
 
-`EVIDENCE_INDEX.json` is the entry point. Its 154 entries comprise 64 Performance
-conditions, 60 Site conditions, 20 single-bank conditions, and 10 source
+`EVIDENCE_INDEX.json` is the entry point. Its 158 entries comprise 64 Performance
+conditions, 60 Site conditions, 24 single-bank conditions, and 10 source
 comparators; shared comparators are not independent experiments. Each entry
 links the applicable configuration, data construction, component or position
 records, controller, evaluation outputs, source code, and software environment.
@@ -16,10 +16,10 @@ The evidence directories are read-only inputs for reproduction.
 
 ## Evidence assets
 
-Download all nine `evidence-*.zip` attachments from the matching GitHub Release
+Download all ten `evidence-*.zip` attachments from the matching GitHub Release
 and extract each archive into the repository root. The archives preserve the
 relative paths in `EVIDENCE_INDEX.json`; `RELEASE_ASSETS.json` lists their sizes
-and SHA-256 checksums. The index paths resolve after all nine are extracted.
+and SHA-256 checksums. The index paths resolve after all ten are extracted.
 
 ## Layout
 
@@ -54,3 +54,9 @@ API credentials are supplied by the user at runtime and are not included here.
 The published model, dataset, method, and scorer source URLs are included in the
 condition index or its linked configuration. The measured numerical outputs and
 text are preserved; machine and account identifiers have been anonymized.
+
+## Snapshot coverage
+
+See [MATERIALS_AUDIT.md](MATERIALS_AUDIT.md) for the verified file inventory, IMDb SFT single-bank row coverage, and the recovered DPO-start single-bank supplement.
+
+The four IMDb DPO-start support-only SV conditions are in `evidence-010-imdb-dpo-single-bank.zip`. Their parent controllers and matched two-bank results are in the original nine assets. The added conditions reference the same included `source/code_01` snapshot. See each new index entry for the archived runner and required path/revision-alias bindings; work in a separate copy and preserve the evidence files.

@@ -64,6 +64,13 @@
       "uncompressed_bytes": 1199898328,
       "compressed_bytes": 233689916,
       "sha256": "986e82b3970da017a993326c99aa627c15baf24e9682539819c59165c5022219"
+    },
+    {
+      "file": "evidence-010-imdb-dpo-single-bank.zip",
+      "files": 37,
+      "uncompressed_bytes": 119370307,
+      "compressed_bytes": 119380475,
+      "sha256": "4e000660f10f2d70987872315ec85510ffed47c6a9d1b742fd9167eface38adc"
     }
   ]
 }

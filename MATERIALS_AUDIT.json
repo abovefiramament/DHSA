@@ -1,0 +1,877 @@
+{
+  "scope": "File presence, archive inventory, and IMDb SFT single-bank row coverage; no scientific rerun.",
+  "indexed_path_count": 78270,
+  "missing_indexed_paths": [],
+  "assets": [
+    {
+      "file": "evidence-001.zip",
+      "files": 3181,
+      "size": 521195421,
+      "matches_existing_manifest": true
+    },
+    {
+      "file": "evidence-002.zip",
+      "files": 12236,
+      "size": 241169957,
+      "matches_existing_manifest": true
+    },
+    {
+      "file": "evidence-003.zip",
+      "files": 1254,
+      "size": 417027232,
+      "matches_existing_manifest": true
+    },
+    {
+      "file": "evidence-004.zip",
+      "files": 675,
+      "size": 381980846,
+      "matches_existing_manifest": true
+    },
+    {
+      "file": "evidence-005.zip",
+      "files": 796,
+      "size": 393767033,
+      "matches_existing_manifest": true
+    },
+    {
+      "file": "evidence-006.zip",
+      "files": 3248,
+      "size": 284639188,
+      "matches_existing_manifest": true
+    },
+    {
+      "file": "evidence-007.zip",
+      "files": 1448,
+      "size": 194126314,
+      "matches_existing_manifest": true
+    },
+    {
+      "file": "evidence-008.zip",
+      "files": 3765,
+      "size": 273200161,
+      "matches_existing_manifest": true
+    },
+    {
+      "file": "evidence-009.zip",
+      "files": 56413,
+      "size": 233689916,
+      "matches_existing_manifest": true
+    }
+  ],
+  "duplicate_archive_members": [],
+  "archive_size_mismatches": [],
+  "missing_from_upload": [],
+  "unpacked_evidence_files": [],
+  "imdb_single_bank": [
+    {
+      "cell": "bank_controls/cells/imdb_gpt2_large/sft_cast_reft_all/high_effect",
+      "expected_rows": 20480,
+      "files": {
+        "generation/predictions.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        },
+        "generation/trajectory.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "None": 20480
+          },
+          "duplicate_ids": 0
+        },
+        "evaluation/per_sample_scores.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        }
+      },
+      "prediction_score_ids_match": true,
+      "row_counts_complete": true
+    },
+    {
+      "cell": "bank_controls/cells/imdb_gpt2_large/sft_cast_reft_all/low_effect",
+      "expected_rows": 20480,
+      "files": {
+        "generation/predictions.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        },
+        "generation/trajectory.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "None": 20480
+          },
+          "duplicate_ids": 0
+        },
+        "evaluation/per_sample_scores.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        }
+      },
+      "prediction_score_ids_match": true,
+      "row_counts_complete": true
+    },
+    {
+      "cell": "bank_controls/cells/imdb_gpt2_large/sft_cast_reft_prefill/high_effect",
+      "expected_rows": 20480,
+      "files": {
+        "generation/predictions.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        },
+        "generation/trajectory.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "None": 20480
+          },
+          "duplicate_ids": 0
+        },
+        "evaluation/per_sample_scores.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        }
+      },
+      "prediction_score_ids_match": true,
+      "row_counts_complete": true
+    },
+    {
+      "cell": "bank_controls/cells/imdb_gpt2_large/sft_cast_reft_prefill/low_effect",
+      "expected_rows": 20480,
+      "files": {
+        "generation/predictions.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        },
+        "generation/trajectory.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "None": 20480
+          },
+          "duplicate_ids": 0
+        },
+        "evaluation/per_sample_scores.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        }
+      },
+      "prediction_score_ids_match": true,
+      "row_counts_complete": true
+    },
+    {
+      "cell": "bank_controls/cells/imdb_gpt2_large/sft_cast_sv_all/high_effect",
+      "expected_rows": 20480,
+      "files": {
+        "generation/predictions.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        },
+        "generation/trajectory.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "None": 20480
+          },
+          "duplicate_ids": 0
+        },
+        "evaluation/per_sample_scores.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        }
+      },
+      "prediction_score_ids_match": true,
+      "row_counts_complete": true
+    },
+    {
+      "cell": "bank_controls/cells/imdb_gpt2_large/sft_cast_sv_all/low_effect",
+      "expected_rows": 20480,
+      "files": {
+        "generation/predictions.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        },
+        "generation/trajectory.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "None": 20480
+          },
+          "duplicate_ids": 0
+        },
+        "evaluation/per_sample_scores.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        }
+      },
+      "prediction_score_ids_match": true,
+      "row_counts_complete": true
+    },
+    {
+      "cell": "bank_controls/cells/imdb_gpt2_large/sft_cast_sv_prefill/high_effect",
+      "expected_rows": 20480,
+      "files": {
+        "generation/predictions.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        },
+        "generation/trajectory.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "None": 20480
+          },
+          "duplicate_ids": 0
+        },
+        "evaluation/per_sample_scores.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        }
+      },
+      "prediction_score_ids_match": true,
+      "row_counts_complete": true
+    },
+    {
+      "cell": "bank_controls/cells/imdb_gpt2_large/sft_cast_sv_prefill/low_effect",
+      "expected_rows": 20480,
+      "files": {
+        "generation/predictions.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        },
+        "generation/trajectory.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "None": 20480
+          },
+          "duplicate_ids": 0
+        },
+        "evaluation/per_sample_scores.jsonl.gz": {
+          "rows": 20480,
+          "per_alpha": {
+            "0.1": 2048,
+            "0.2": 2048,
+            "0.3": 2048,
+            "0.4": 2048,
+            "0.5": 2048,
+            "0.6": 2048,
+            "0.7": 2048,
+            "0.8": 2048,
+            "0.9": 2048,
+            "1.0": 2048
+          },
+          "duplicate_ids": 0
+        }
+      },
+      "prediction_score_ids_match": true,
+      "row_counts_complete": true
+    }
+  ],
+  "original_indexed_cells": 154,
+  "original_indexed_imdb_dpo_single_bank_cells": [],
+  "final_indexed_cells": 158,
+  "imdb_dpo_supplement": {
+    "source_run": "LOCAL_HOME/rpec_runs/imdb_dpo_singlebank_sv_20260926",
+    "status": "validated_completed_outputs_no_rerun",
+    "code_snapshot": "source/code_01",
+    "cases": [
+      {
+        "cell": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_all/high_effect",
+        "expected_rows": 20480,
+        "files": {
+          "generation/predictions.jsonl.gz": {
+            "rows": 20480,
+            "per_alpha": {
+              "0.1": 2048,
+              "0.2": 2048,
+              "0.3": 2048,
+              "0.4": 2048,
+              "0.5": 2048,
+              "0.6": 2048,
+              "0.7": 2048,
+              "0.8": 2048,
+              "0.9": 2048,
+              "1.0": 2048
+            },
+            "original_bytes": 52949045,
+            "compressed_bytes": 18986911
+          },
+          "generation/trajectory.jsonl.gz": {
+            "rows": 20480,
+            "per_alpha": {
+              "None": 20480
+            },
+            "original_bytes": 27845880,
+            "compressed_bytes": 8611937
+          },
+          "generation/component_scores.jsonl.gz": {
+            "rows": 81920,
+            "per_alpha": {
+              "None": 81920
+            },
+            "original_bytes": 8655750,
+            "compressed_bytes": 418719
+          },
+          "evaluation/per_sample_scores.jsonl.gz": {
+            "rows": 20480,
+            "per_alpha": {
+              "0.1": 2048,
+              "0.2": 2048,
+              "0.3": 2048,
+              "0.4": 2048,
+              "0.5": 2048,
+              "0.6": 2048,
+              "0.7": 2048,
+              "0.8": 2048,
+              "0.9": 2048,
+              "1.0": 2048
+            },
+            "original_bytes": 8393059,
+            "compressed_bytes": 1315682
+          }
+        },
+        "prediction_trajectory_score_ids_match": true,
+        "summary_max_absolute_error": 0.0
+      },
+      {
+        "cell": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_prefill/high_effect",
+        "expected_rows": 20480,
+        "files": {
+          "generation/predictions.jsonl.gz": {
+            "rows": 20480,
+            "per_alpha": {
+              "0.1": 2048,
+              "0.2": 2048,
+              "0.3": 2048,
+              "0.4": 2048,
+              "0.5": 2048,
+              "0.6": 2048,
+              "0.7": 2048,
+              "0.8": 2048,
+              "0.9": 2048,
+              "1.0": 2048
+            },
+            "original_bytes": 54581435,
+            "compressed_bytes": 19569704
+          },
+          "generation/trajectory.jsonl.gz": {
+            "rows": 20480,
+            "per_alpha": {
+              "None": 20480
+            },
+            "original_bytes": 28653477,
+            "compressed_bytes": 8902735
+          },
+          "generation/component_scores.jsonl.gz": {
+            "rows": 81920,
+            "per_alpha": {
+              "None": 81920
+            },
+            "original_bytes": 8655750,
+            "compressed_bytes": 418719
+          },
+          "evaluation/per_sample_scores.jsonl.gz": {
+            "rows": 20480,
+            "per_alpha": {
+              "0.1": 2048,
+              "0.2": 2048,
+              "0.3": 2048,
+              "0.4": 2048,
+              "0.5": 2048,
+              "0.6": 2048,
+              "0.7": 2048,
+              "0.8": 2048,
+              "0.9": 2048,
+              "1.0": 2048
+            },
+            "original_bytes": 8459653,
+            "compressed_bytes": 1341255
+          }
+        },
+        "prediction_trajectory_score_ids_match": true,
+        "summary_max_absolute_error": 0.0
+      },
+      {
+        "cell": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_all/high_effect",
+        "expected_rows": 20480,
+        "files": {
+          "generation/predictions.jsonl.gz": {
+            "rows": 20480,
+            "per_alpha": {
+              "0.1": 2048,
+              "0.2": 2048,
+              "0.3": 2048,
+              "0.4": 2048,
+              "0.5": 2048,
+              "0.6": 2048,
+              "0.7": 2048,
+              "0.8": 2048,
+              "0.9": 2048,
+              "1.0": 2048
+            },
+            "original_bytes": 53041644,
+            "compressed_bytes": 19048112
+          },
+          "generation/trajectory.jsonl.gz": {
+            "rows": 20480,
+            "per_alpha": {
+              "None": 20480
+            },
+            "original_bytes": 27818506,
+            "compressed_bytes": 8638589
+          },
+          "generation/component_scores.jsonl.gz": {
+            "rows": 81920,
+            "per_alpha": {
+              "None": 81920
+            },
+            "original_bytes": 8585580,
+            "compressed_bytes": 412051
+          },
+          "evaluation/per_sample_scores.jsonl.gz": {
+            "rows": 20480,
+            "per_alpha": {
+              "0.1": 2048,
+              "0.2": 2048,
+              "0.3": 2048,
+              "0.4": 2048,
+              "0.5": 2048,
+              "0.6": 2048,
+              "0.7": 2048,
+              "0.8": 2048,
+              "0.9": 2048,
+              "1.0": 2048
+            },
+            "original_bytes": 8399907,
+            "compressed_bytes": 1316766
+          }
+        },
+        "prediction_trajectory_score_ids_match": true,
+        "summary_max_absolute_error": 0.0
+      },
+      {
+        "cell": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_prefill/high_effect",
+        "expected_rows": 20480,
+        "files": {
+          "generation/predictions.jsonl.gz": {
+            "rows": 20480,
+            "per_alpha": {
+              "0.1": 2048,
+              "0.2": 2048,
+              "0.3": 2048,
+              "0.4": 2048,
+              "0.5": 2048,
+              "0.6": 2048,
+              "0.7": 2048,
+              "0.8": 2048,
+              "0.9": 2048,
+              "1.0": 2048
+            },
+            "original_bytes": 54777452,
+            "compressed_bytes": 19645087
+          },
+          "generation/trajectory.jsonl.gz": {
+            "rows": 20480,
+            "per_alpha": {
+              "None": 20480
+            },
+            "original_bytes": 28677415,
+            "compressed_bytes": 8927802
+          },
+          "generation/component_scores.jsonl.gz": {
+            "rows": 81920,
+            "per_alpha": {
+              "None": 81920
+            },
+            "original_bytes": 8585580,
+            "compressed_bytes": 412051
+          },
+          "evaluation/per_sample_scores.jsonl.gz": {
+            "rows": 20480,
+            "per_alpha": {
+              "0.1": 2048,
+              "0.2": 2048,
+              "0.3": 2048,
+              "0.4": 2048,
+              "0.5": 2048,
+              "0.6": 2048,
+              "0.7": 2048,
+              "0.8": 2048,
+              "0.9": 2048,
+              "1.0": 2048
+            },
+            "original_bytes": 8459097,
+            "compressed_bytes": 1340478
+          }
+        },
+        "prediction_trajectory_score_ids_match": true,
+        "summary_max_absolute_error": 0.0
+      }
+    ],
+    "excluded_redundant_restart_artifacts": [
+      "generation/generation_checkpoint.jsonl",
+      "generation/batch_checkpoints/",
+      "__pycache__/"
+    ],
+    "publication_member_count": 37
+  },
+  "supplement_sanitization": {
+    "scope": "Only the newly recovered IMDb DPO-start supplement. Original anonymous repository and nine archives were not modified.",
+    "status": "passed",
+    "redacted": "Account names, local home/scratch paths, private source revisions (mapped to source/code_01), and job identifiers; credential patterns checked.",
+    "scientific_records_unchanged": true,
+    "files_checked": 35,
+    "checks": [
+      {
+        "file": "bank_controls/execution_dpo_sv_20260926/cases.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": true
+      },
+      {
+        "file": "bank_controls/execution_dpo_sv_20260926/submission.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_all/high_effect/generation/predictions.jsonl.gz",
+        "rows": 20480,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_all/high_effect/generation/trajectory.jsonl.gz",
+        "rows": 20480,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_all/high_effect/generation/component_scores.jsonl.gz",
+        "rows": 81920,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_all/high_effect/evaluation/per_sample_scores.jsonl.gz",
+        "rows": 20480,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_all/high_effect/complete.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_all/high_effect/controller_view.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_all/high_effect/generation/backend_execution_manifest.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": false
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_all/high_effect/evaluation/summary_metrics.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": false
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_prefill/high_effect/generation/predictions.jsonl.gz",
+        "rows": 20480,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_prefill/high_effect/generation/trajectory.jsonl.gz",
+        "rows": 20480,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_prefill/high_effect/generation/component_scores.jsonl.gz",
+        "rows": 81920,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_prefill/high_effect/evaluation/per_sample_scores.jsonl.gz",
+        "rows": 20480,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_prefill/high_effect/complete.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_prefill/high_effect/controller_view.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_prefill/high_effect/generation/backend_execution_manifest.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": false
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_transfer_sv_prefill/high_effect/evaluation/summary_metrics.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": false
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_all/high_effect/generation/predictions.jsonl.gz",
+        "rows": 20480,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_all/high_effect/generation/trajectory.jsonl.gz",
+        "rows": 20480,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_all/high_effect/generation/component_scores.jsonl.gz",
+        "rows": 81920,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_all/high_effect/evaluation/per_sample_scores.jsonl.gz",
+        "rows": 20480,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_all/high_effect/complete.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_all/high_effect/controller_view.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_all/high_effect/generation/backend_execution_manifest.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": false
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_all/high_effect/evaluation/summary_metrics.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": false
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_prefill/high_effect/generation/predictions.jsonl.gz",
+        "rows": 20480,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_prefill/high_effect/generation/trajectory.jsonl.gz",
+        "rows": 20480,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_prefill/high_effect/generation/component_scores.jsonl.gz",
+        "rows": 81920,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_prefill/high_effect/evaluation/per_sample_scores.jsonl.gz",
+        "rows": 20480,
+        "scientific_records_unchanged": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_prefill/high_effect/complete.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_prefill/high_effect/controller_view.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": true
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_prefill/high_effect/generation/backend_execution_manifest.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": false
+      },
+      {
+        "file": "bank_controls/cells/imdb_gpt2_large/dpo_cast_nontransfer_sv_prefill/high_effect/evaluation/summary_metrics.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": false
+      },
+      {
+        "file": "bank_controls/imdb_dpo_sv_20260926_manifest.json",
+        "scientific_fields_unchanged": true,
+        "metadata_changed": true
+      }
+    ]
+  },
+  "final_indexed_path_count": 78307,
+  "final_missing_indexed_paths": []
+}
