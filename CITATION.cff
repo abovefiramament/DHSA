@@ -1,0 +1,48 @@
+cff-version: 1.2.0
+message: >-
+  Please cite the DHSA manuscript when using this software or its research
+  materials. Shengran Guo and Zexiao Wang contributed equally and share second
+  authorship. The arXiv identifier will be added when available.
+type: software
+title: 'DHSA: Direct Hidden-State Alignment'
+authors:
+  - family-names: Zhang
+    given-names: Fansheng
+    affiliation: Chengdu University
+  - family-names: Guo
+    given-names: Shengran
+    affiliation: North Carolina State University
+  - family-names: Wang
+    given-names: Zexiao
+    affiliation: Fudan University
+  - family-names: Yuan
+    given-names: Liang
+    affiliation: Australian Catholic University
+  - family-names: Chen
+    given-names: Jiyuan
+    affiliation: Chengdu University
+  - family-names: Luo
+    given-names: Ruikun
+    affiliation: University of Macau
+repository-code: 'https://github.com/abovefiramament/DHSA'
+url: 'https://github.com/abovefiramament/DHSA'
+license: Apache-2.0
+preferred-citation:
+  type: unpublished
+  title: 'Direct Hidden-State Alignment: Mapping and Controlling Preference Expression in LLMs'
+  authors:
+    - family-names: Zhang
+      given-names: Fansheng
+    - family-names: Guo
+      given-names: Shengran
+    - family-names: Wang
+      given-names: Zexiao
+    - family-names: Yuan
+      given-names: Liang
+    - family-names: Chen
+      given-names: Jiyuan
+    - family-names: Luo
+      given-names: Ruikun
+  year: 2026
+  notes: 'Research manuscript. Shengran Guo and Zexiao Wang contributed equally and share second authorship.'
+  url: 'https://github.com/abovefiramament/DHSA'
