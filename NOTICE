@@ -1,0 +1,16 @@
+Direct Hidden-State Alignment (DHSA)
+Copyright 2026 the DHSA contributors.
+
+This software accompanies the research manuscript:
+Direct Hidden-State Alignment: Mapping and Controlling Preference Expression in LLMs
+
+Paper authors:
+Fansheng Zhang, Shengran Guo, Zexiao Wang, Liang Yuan, Jiyuan Chen, and Ruikun Luo.
+Shengran Guo and Zexiao Wang contributed equally and share second authorship.
+
+Project and citation information:
+https://github.com/abovefiramament/DHSA
+See CITATION.bib and CITATION.cff for the manuscript citation.
+
+Third-party materials retain their applicable notices and terms as described
+in THIRD_PARTY_NOTICES.md.

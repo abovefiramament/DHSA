@@ -2,9 +2,11 @@
 
 Copyright 2026 the DHSA contributors.
 
-Original DHSA code, configurations, and documentation in this repository are licensed under the [Apache License, Version 2.0](LICENSE). This grant covers the project's original portions, including those in archived source snapshots. Any separately identified third-party material retains its existing terms and notices.
+Original DHSA code, configurations, and repository documentation are licensed under the [Apache License, Version 2.0](LICENSE). This grant covers the project's original portions, including those in archived source snapshots. [NOTICE](NOTICE) records the project's attribution information; retain applicable notices when redistributing as required by Apache-2.0. Any separately identified third-party material retains its existing terms and notices.
 
-The root code license does not grant new rights over upstream model weights, tokenizers, datasets, source text, external software, or third-party content preserved in predictions and evaluation traces. Their applicable upstream terms continue to govern reuse. Research artifacts in the Release are not blanket-relicensed as Apache-2.0 datasets or model weights. The paper's distribution license is selected separately when it is submitted to arXiv.
+The root code license does not grant new rights over upstream model weights, tokenizers, datasets, source text, external software, or third-party content preserved in predictions and evaluation traces. Their applicable upstream terms continue to govern reuse. Research artifacts in the Release are not blanket-relicensed as Apache-2.0 or CC BY 4.0 datasets or model weights.
+
+The accompanying paper and its original figures are licensed under [CC BY 4.0](LICENSE-PAPER.md), separately from the software. Third-party material is excluded from this grant. The README's academic citation request does not add a restriction to Apache-2.0.
 
 ## Baselines and supporting software
 

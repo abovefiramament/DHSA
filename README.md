@@ -115,7 +115,7 @@ Use the [paper-to-materials map](docs/PAPER_TO_ARTIFACTS.md) to locate a figure 
 
 ## Citation
 
-Please cite the paper when using DHSA, RCM, CAST, or the research materials. The current citation is also available in [CITATION.bib](CITATION.bib) and [CITATION.cff](CITATION.cff); it will be updated with the arXiv identifier.
+If your research uses or builds upon DHSA, RCM, CAST, or the accompanying code or experimental materials, please cite our paper using the reference below. The current citation is also available in [CITATION.bib](CITATION.bib) and [CITATION.cff](CITATION.cff); it will be updated with the arXiv identifier.
 
 ```bibtex
 @unpublished{zhang2026dhsa,
@@ -135,6 +135,8 @@ We thank the developers and maintainers of the models, datasets, evaluators, and
 
 ## License and contact
 
-Original DHSA code, configuration, and documentation are licensed under [Apache-2.0](LICENSE). Third-party code, datasets, model weights, and text embedded in research artifacts retain their applicable upstream terms; the code license does not relicense those materials. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Original DHSA code, configuration, and repository documentation are licensed under [Apache-2.0](LICENSE), with project and manuscript attribution recorded in [NOTICE](NOTICE). Redistributors must retain applicable notices as required by that license. The academic citation request above is separate from the software license conditions.
+
+The accompanying paper and its original figures are licensed under [CC BY 4.0](LICENSE-PAPER.md). Reuse under that license requires appropriate attribution, a license link, and an indication of changes. Third-party code, datasets, model weights, and text embedded in research artifacts retain their applicable upstream terms; neither license replaces those terms. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 For reproducibility questions, [open an issue](https://github.com/abovefiramament/DHSA/issues) with the evidence cell, source snapshot, command, environment, and relevant error. For research correspondence, contact Liang Yuan or Fansheng Zhang at the addresses above.
