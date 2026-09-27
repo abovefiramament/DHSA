@@ -1,0 +1,643 @@
+{
+  "protocol_id": "tldr_site_reft_direct_k8_disjoint_alpha_dev_20260725_v6",
+  "version": 6,
+  "last_updated": "2026-07-25",
+  "status": "amended_after_alpha_dev_evaluation_before_score_inspection_and_alpha_freeze",
+  "remote_source_of_truth": "LOCAL_HOME/RPEC/projects/screscomp",
+  "documentation": "docs/TLDR_SITE_REFT_DIRECT_K8_DISJOINT_ALPHA_DEV_FIXED_PROTOCOL_20260725_V6.md",
+  "reproduction": "docs/TLDR_SITE_REFT_DIRECT_K8_DISJOINT_ALPHA_DEV_REPRODUCTION_20260725_V6.md",
+  "runner": "scripts/paper/36_run_tldr_site_reft_direct_k8_disjoint_alpha_dev_serial.py",
+  "scope": {
+    "task": "tldr_summary_preference",
+    "table_family": "site_position_selector_with_common_single_head_audit_direct_pruned_K8_reft_and_disjoint_small_alpha_dev",
+    "claim": "selector usefulness after equal per-head open-generation auditing, exact pruning to K8, disjoint 40-row alpha selection, and untouched 320-row final testing",
+    "historical_expanded9_policy": "performance_table_provenance_only_not_site_selector_evidence",
+    "site_v12_policy": "independent_extension_do_not_modify_or_reuse_site_v12_outputs",
+    "supersedes": "tldr_site_reft_direct_k8_fixed_protocol_20260725_v5",
+    "supersession_reason": "version_5_incorrectly_swept_alpha_on_all_320_calibration_rows; version_6_separates_head_audit_[0,40), alpha_dev_[40,80), unused_reserve_[80,320), and final_test_320"
+  },
+  "model": {
+    "id": "CarperAI/openai_summarize_tldr_sft",
+    "path": "LOCAL_HOME/RPEC/hf_cache/hub/models--CarperAI--openai_summarize_tldr_sft/snapshots/5284f23cef13674869bdb95eea91cafd0fa6d124",
+    "revision": "5284f23cef13674869bdb95eea91cafd0fa6d124",
+    "tokenizer_path": "LOCAL_HOME/RPEC/hf_cache/hub/models--CarperAI--openai_summarize_tldr_sft/snapshots/5284f23cef13674869bdb95eea91cafd0fa6d124",
+    "use_chat_template": false,
+    "torch_dtype": "bfloat16",
+    "expected_architecture": {
+      "family": "gptj",
+      "attention_layers": 28,
+      "attention_heads_per_layer": 16,
+      "hidden_size": 4096,
+      "head_dim": 256,
+      "candidate_heads": 448
+    }
+  },
+  "inputs": {
+    "pairs_csv": "LOCAL_HOME/RPEC/projects/screscomp/data_tldr/tldr_gptj_prepared/pairs.csv",
+    "pairs_expected_bytes": 704239473,
+    "pair_build_manifest": "LOCAL_HOME/RPEC/projects/screscomp/data_tldr/tldr_gptj_prepared/pair_build_manifest.json",
+    "pair_build_manifest_sha256": "98febd6322a2519bc642ab34c21e9d79dad73720558dadf5b76d1c0ce3f386a4",
+    "event": "tldr_summary_preference",
+    "prompt_format": "openai_tldr_structured_v1",
+    "selector_groups": {
+      "source_split": "train",
+      "source_order": "pairs_csv_file_order",
+      "shuffle": false,
+      "unique_group_key": "prompt_id",
+      "pair_choice_within_group": "first_admitted_pair_in_file_order",
+      "duplicate_group_policy": "skip_and_continue_until_target_count",
+      "target_unique_groups": 300,
+      "shared_artifact": "input/selector_pairs_300.csv",
+      "admission_audit": "input/selector_pair_admission.jsonl"
+    },
+    "calibration": {
+      "path": "LOCAL_HOME/RPEC/projects/screscomp/data_tldr/tldr_gptj_prepared/tldr_site_reft_disjoint_eval_20260725_v6/alpha_dev_40.jsonl",
+      "sha256": "0a9d8a704350fb22d8bd2ea7a9c647359c75d141fcf4c104ff393999cfed7d51",
+      "rows": 40,
+      "purpose": "final_K8_alpha_selection_only",
+      "parent_row_range": [
+        40,
+        80
+      ]
+    },
+    "final": {
+      "path": "LOCAL_HOME/RPEC/projects/screscomp/data_tldr/tldr_gptj_prepared/tldr_site_reft_disjoint_eval_20260725_v6/final_test_320.jsonl",
+      "sha256": "f91f85b4421a1343031689860bc0686fb888adc2e87279dd36206e3e20ae6caa",
+      "rows": 320,
+      "purpose": "locked_single_final_evaluation_after_alpha_freeze",
+      "parent_row_range": null
+    },
+    "partition_manifest": {
+      "path": "LOCAL_HOME/RPEC/projects/screscomp/data_tldr/tldr_gptj_prepared/tldr_site_reft_disjoint_eval_20260725_v6/partition_manifest.json",
+      "sha256": "bea1711b666d57f4e46f037b6b96c06fafa990437f7d44ecc6dcbf45dd807841"
+    },
+    "head_audit_dev": {
+      "path": "LOCAL_HOME/RPEC/projects/screscomp/data_tldr/tldr_gptj_prepared/tldr_site_reft_disjoint_eval_20260725_v6/head_audit_dev_40.jsonl",
+      "sha256": "64ebab44f915b9a6cf73b2b45a42e95d5b6df9e7a6ef0451f682c51ee0ac9ea3",
+      "rows": 40,
+      "purpose": "frozen_single_head_selection_validation_only",
+      "parent_row_range": [
+        0,
+        40
+      ]
+    },
+    "calibration_reserve": {
+      "path": "LOCAL_HOME/RPEC/projects/screscomp/data_tldr/tldr_gptj_prepared/tldr_site_reft_disjoint_eval_20260725_v6/calibration_reserve_240.jsonl",
+      "sha256": "f20e4fce4404dac051c33b9a05f27416dd424323e2725cb9359dfe2e1c65e910",
+      "rows": 240,
+      "purpose": "unused_reserve_no_selection_or_final_claim",
+      "parent_row_range": [
+        80,
+        320
+      ]
+    }
+  },
+  "selection": {
+    "candidate_space": "pre_o_attention_head",
+    "component_id_pattern": "^L[0-9]+[.]attn[.]h[0-9]+$",
+    "selected_count": 8,
+    "candidate_pool": {
+      "heads_per_pool": 16,
+      "rcm_target_support_candidates": 8,
+      "rcm_competitor_support_candidates": 8,
+      "iti_unsigned_candidates": 16,
+      "random_unsigned_candidates": 16,
+      "final_heads": 8,
+      "final_rcm_role_quota": null,
+      "final_rule": "retain_exactly_eight_heads_after_equal_single_head_open_generation_audit"
+    },
+    "state_timing": "generation_decision_states",
+    "score": {
+      "endpoint": "mean_continuation_token_log_probability",
+      "competition": "avglogp_y_plus_minus_avglogp_y_minus",
+      "option_selection_mode": "model_max",
+      "max_aliases_per_side": 1
+    },
+    "bootstrap": {
+      "method": "paired_percentile_bootstrap",
+      "samples": 500,
+      "seed": 42,
+      "percentiles": [
+        2.5,
+        97.5
+      ]
+    },
+    "rcm_ranking": {
+      "role_source": "sign_of_candidate_own_mean_paired_effect",
+      "target_support_score": "ci95_low",
+      "competitor_support_score": "negative_ci95_high",
+      "order": "descending_within_role",
+      "ci_admission_gate": false,
+      "ci_crossing_policy": "retain_and_report",
+      "tie_break": "ascending_layer_then_head"
+    },
+    "coarse_to_fine": {
+      "coarse_unit": "complete_pre_o_attention_layer",
+      "coarse_beam_per_role": 4,
+      "head_refinement_pool": "every_head_in_union_of_eight_signed_parent_layers",
+      "coarse_groups": 300,
+      "head_groups": 300
+    },
+    "selectors": {
+      "rcm_zero_signed": {
+        "family": "causal_state_transition",
+        "delta": "C_native_minus_C_zero",
+        "operation": "zero_candidate_on_both_preference_endpoint_trajectories_at_every_generation_decision_state",
+        "direction": "signed_8_plus_8_candidate_pool_then_unconstrained_final_K8"
+      },
+      "rcm_patch_signed": {
+        "family": "causal_state_transition",
+        "delta": "C_clamp_minus_C_native",
+        "operation": "clamp_candidate_on_both_preference_endpoint_trajectories_to_target_prototype_at_every_generation_decision_state",
+        "prototype_source": "complete_y_plus_decision_trajectory_on_same_300_groups",
+        "prototype_aggregation": [
+          "mean_decision_states_within_y_plus_sequence",
+          "mean_sequences_across_groups"
+        ],
+        "prototype_dtype": "float32",
+        "patch_type": "constant_overwrite",
+        "patch_alpha": 1.0,
+        "direction": "signed_8_plus_8_candidate_pool_then_unconstrained_final_K8"
+      },
+      "iti": {
+        "family": "official_probe_localization",
+        "positive_state": "prompt_plus_complete_y_plus_sequence",
+        "negative_state": "prompt_plus_complete_y_minus_sequence",
+        "activation_position": "final_nonpadding_token_of_complete_labeled_sequence",
+        "folds": 2,
+        "fold_policy": "first_150_groups_to_second_150_then_reverse",
+        "ranking_score": "mean_grouped_twofold_heldout_accuracy",
+        "classifier": "sklearn.linear_model.LogisticRegression",
+        "penalty": "l2",
+        "C": 1.0,
+        "solver": "lbfgs",
+        "fit_intercept": true,
+        "class_weight": null,
+        "tol": 0.0001,
+        "max_iter": 1000,
+        "feature_standardization": "none",
+        "random_state": 42,
+        "official_repository": "LOCAL_HOME/RPEC/projects/baselines/honest_llama",
+        "official_commit": "2c6b2179be7b5aa8f0a171688cf9e01b812ca327"
+      },
+      "random": {
+        "family": "uniform_control",
+        "universe": "all_448_compatible_pre_o_attention_heads",
+        "replacement": false,
+        "stratification": "none",
+        "seeds": [
+          20260702,
+          20260703,
+          20260704
+        ]
+      }
+    }
+  },
+  "single_head_audit": {
+    "candidate_pool_heads": 16,
+    "audit_unit": "one_learned_ReFT_head_payload_applied_alone",
+    "not_leave_one_out": true,
+    "not_selector_zero_or_patch_at_generation": true,
+    "pool_training": "joint_before_single_head_payload_extraction",
+    "audit_split": "explicit_head_audit_dev_40_file",
+    "audit_rows": 40,
+    "alpha_grid": [
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7
+    ],
+    "shared_sft_generation_for_health_and_human_reference_baseline": true,
+    "primary_win_rate": {
+      "name": "balanced_head_vs_human_reference_pairwise_win_rate",
+      "formula": "mean(first_pass_head_win_rate,full_order_swap_head_win_rate)",
+      "judge_protocol": "tldr_dpo_appendix_c2_concise_pairwise_v1",
+      "full_order_swap": true
+    },
+    "secondary_evidence": [
+      "shared_sft_vs_human_reference_balanced_win_rate",
+      "avg_words",
+      "rouge_l_f1_vs_human",
+      "repeat_bigram_rate",
+      "repeat_trigram_rate",
+      "tldr_echo_rate",
+      "empty_output_rate",
+      "likely_unfinished_rate",
+      "unique_summary_ratio",
+      "distinct_1",
+      "distinct_2",
+      "distinct_3",
+      "top_skeleton_share",
+      "mean_nn_bigram_jaccard",
+      "blinded_sample_text"
+    ],
+    "side_effect_health_metrics": {
+      "lower_is_better": [
+        "repeat_bigram_rate",
+        "repeat_trigram_rate",
+        "tldr_echo_rate",
+        "empty_output_rate",
+        "likely_unfinished_rate",
+        "top_skeleton_share",
+        "mean_nn_bigram_jaccard"
+      ],
+      "higher_is_better": [
+        "unique_summary_ratio",
+        "distinct_1",
+        "distinct_2",
+        "distinct_3"
+      ]
+    },
+    "operating_point": "the_registered_alpha_with_highest_balanced_head_vs_human_reference_win_rate",
+    "overshoot_health_metrics": {
+      "lower_is_better": [
+        "likely_unfinished_rate",
+        "repeat_trigram_rate"
+      ],
+      "higher_is_better": [
+        "distinct_2"
+      ]
+    },
+    "overshoot_rule": "a_poor_larger_alpha_is_not_a_drop_reason_when_a_smaller_registered_alpha_recovers_win_rate_or_text_health",
+    "pure_side_effect_priority_rule": "drop_first_only_when_no_registered_alpha_improves_human_reference_win_rate_over_the_shared_sft_human_reference_baseline_and_the_registered_text_audit_shows_target_independent_degradation",
+    "selection_mode": "registered_blinded_win_rate_and_text_audit",
+    "blinding_seed": 20260723,
+    "decision_codes": [
+      "keep_clean",
+      "keep_overshoot_recovered",
+      "drop_pure_side_effect",
+      "drop_lower_priority"
+    ],
+    "final_heads_per_pool": 8,
+    "final_rcm_role_quota": null,
+    "final_tie_break": [
+      "higher_best_balanced_head_vs_human_reference_win_rate",
+      "higher_order_swap_agreement_at_best_alpha",
+      "healthier_registered_text_audit_at_best_alpha",
+      "lower_blinded_audit_id"
+    ],
+    "random_policy": "audit_each_registered_seed_pool_independently_and_report_all_three_without_best_seed_selection",
+    "audit_payload_reuse_in_final": true,
+    "final_policy": "compose_exact_retained_single_head_payloads_without_retraining",
+    "audit_start": 0,
+    "audit_subset": "LOCAL_HOME/RPEC/projects/screscomp/data_tldr/tldr_gptj_prepared/tldr_site_reft_disjoint_eval_20260725_v6/head_audit_dev_40.jsonl",
+    "audit_purpose": "candidate_head_tuning_and_side_effect_screen_only",
+    "require_aggregate_overshoot_signal_for_keep": false,
+    "decision_authority": "registered_generation_text_audit_with_numeric_metrics_as_supporting_evidence",
+    "post_audit_reselection": false,
+    "post_audit_role_rebalancing": false,
+    "final_shared_alpha_calibration": "explicit_disjoint_alpha_dev_40_file_and_six_alpha_grid"
+  },
+  "alpha_selection": {
+    "metric": "balanced_human_pairwise_win_rate",
+    "near_best_absolute_tolerance": 0.003,
+    "tolerance_unit": "absolute_rate_on_0_to_1_scale",
+    "selection_rule": "smallest_alpha_with_balanced_win_rate_within_0.003_of_controller_maximum",
+    "order_swap_agreement_role": "reported_only_not_used_after_near_best_filter",
+    "health_role": "reported_only_not_used_for_alpha_selection",
+    "amendment_timing": "fixed_by_user_after_alpha_dev_evaluation_completed_but_before_pairwise_summary_inspection_and_before_alpha_freeze",
+    "amendment_record": "docs/TLDR_SITE_REFT_ALPHA_SELECTION_AMENDMENT_20260725_V6.json",
+    "pre_amendment_config_sha256": "017b79c39283eb3bdd63c29a23f8fa4d0f218c096abe6541c39308b363d8387c"
+  },
+  "actuator": {
+    "family": "cast_low_rank_reft",
+    "base_model_frozen": true,
+    "native_selected_writes": "kept_active",
+    "locator_operation_present_during_training_or_generation": false,
+    "reft_mode": "low_rank",
+    "rank": 4,
+    "expected_trainable_parameters_per_head": 2048,
+    "expected_total_trainable_parameters_per_candidate_pool": 32768,
+    "initialization": {
+      "init_std": 0.01,
+      "warm_start": false,
+      "seed": 42
+    },
+    "partition": {
+      "rcm_candidate_pool": "two_independently_trained_eight_head_role_banks",
+      "rcm_final": "direct_tensor_union_of_retained_heads_in_their_original_role_banks_with_observed_role_counts",
+      "iti_candidate_pool": "one_jointly_trained_unsigned_sixteen_head_bank",
+      "iti_final": "direct_tensor_union_of_eight_retained_unsigned_single_head_payloads",
+      "random_candidate_pool": "one_jointly_trained_unsigned_sixteen_head_bank_per_registered_seed",
+      "random_final": "direct_tensor_union_of_eight_retained_unsigned_single_head_payloads_per_registered_seed",
+      "rcm_inference_composition": "target_support_bank_then_competitor_support_bank_on_disjoint_heads",
+      "shared_alpha_across_rcm_role_banks": true,
+      "independent_role_alpha_search": false,
+      "single_head_audit_payload": "exact_one_head_parameter_slice_extracted_from_its_jointly_trained_candidate_pool_bank",
+      "single_head_audit_retraining": false,
+      "final_retraining_from_scratch": false,
+      "final_payload_composition": "exact_tensor_union_of_retained_single_head_payloads",
+      "final_parameter_update_steps": 0,
+      "final_rescaling_or_normalization": false,
+      "final_role_rebalancing": false,
+      "candidate_training_parameter_accounting": "32768_parameters_trained_in_each_K16_candidate_pool_before_audit",
+      "final_active_parameter_accounting": "16384_parameters_active_in_each_pruned_K8_controller",
+      "alpha_selection_rows": 40,
+      "alpha_selection_source": "inputs.calibration_exact_alpha_dev_40"
+    },
+    "training": {
+      "pairs_csv": "LOCAL_HOME/RPEC/projects/screscomp/data_tldr/tldr_gptj_prepared/pairs.csv",
+      "event": "tldr_summary_preference",
+      "endpoint_objective": "pair_margin",
+      "train_split": "train",
+      "val_split": "val",
+      "shuffle_train": true,
+      "max_train_rows": 8192,
+      "max_val_rows": 512,
+      "epochs": 1,
+      "train_batch_size": 2,
+      "eval_batch_size": 2,
+      "optimizer": "torch.optim.AdamW",
+      "lr": 0.001,
+      "adam_beta1": 0.9,
+      "adam_beta2": 0.999,
+      "adam_eps": 1e-08,
+      "weight_decay": 0.01,
+      "amsgrad": false,
+      "scheduler": "none",
+      "gradient_clipping": "none",
+      "lambda_norm": 0.0001,
+      "alpha_train": 1.0,
+      "preference_loss_mode": "dpo",
+      "dpo_beta": 0.5,
+      "state_margin_weight": 0.0,
+      "gain_weight": 1.0,
+      "target_margin": 0.0,
+      "target_gain": 0.0,
+      "apply_mode": "all",
+      "score_mode": "avglogp",
+      "option_selection_mode": "model_max",
+      "max_aliases_per_side": 1,
+      "empty_cache_every": 25,
+      "seed": 42,
+      "skip_alpha_summary": true
+    },
+    "alpha_grid": [
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7
+    ],
+    "expected_active_parameters_per_K8_configuration": 16384
+  },
+  "generation": {
+    "split": "test",
+    "start": 0,
+    "apply_mode": "all",
+    "samples_per_prompt": 1,
+    "batch_size": 1,
+    "max_new_tokens": 100,
+    "stop_strings": [],
+    "do_sample": false,
+    "temperature": 0.0,
+    "top_p": 0.9,
+    "top_k": 0,
+    "seed": 42,
+    "sign": 1.0,
+    "same_seed_across_alpha": true,
+    "alpha_zero_policy": "generate_once_per_split_and_reuse_exact_SFT_rows"
+  },
+  "evaluation": {
+    "judge": {
+      "implementation": "screscomp.cli.evaluate_tldr_dpo_ds4",
+      "protocol": "tldr_dpo_appendix_c2_concise_pairwise_v1",
+      "model": "deepseek-v4-pro",
+      "thinking_mode": "disabled",
+      "reasoning_effort": "high",
+      "random_seed": 20260613,
+      "review_fraction": 1.0,
+      "single_head_audit_comparisons": "every_single_head_alpha_and_shared_sft_independently_vs_human_reference_only_no_direct_head_vs_sft_judgments",
+      "calibration_comparisons": "every_final_K8_alpha_vs_human_only",
+      "final_comparisons": "all_frozen_unique_points_pairwise_and_vs_human",
+      "row_count_source": "stage_specific_single_head_audit.audit_rows_or_inputs_split.rows"
+    },
+    "health": {
+      "implementation": "scripts/audit_tldr_text_health.py",
+      "required_metrics": [
+        "avg_words",
+        "rouge_l_f1_vs_human",
+        "repeat_bigram_rate",
+        "repeat_trigram_rate",
+        "tldr_echo_rate",
+        "empty_output_rate",
+        "likely_unfinished_rate",
+        "unique_summary_ratio",
+        "distinct_1",
+        "distinct_2",
+        "distinct_3",
+        "top_skeleton_share",
+        "mean_nn_bigram_jaccard"
+      ],
+      "hard_posthoc_replacement": false
+    },
+    "reported_selector_audit": [
+      "all_layer_and_head_effects",
+      "mean_effect",
+      "ci95_low",
+      "ci95_high",
+      "ci_crosses_zero",
+      "candidate_pool_16",
+      "candidate_pool_roles",
+      "candidate_pool_joint_training",
+      "single_head_payload_hashes",
+      "every_single_head_alpha_generation",
+      "head_vs_human_reference_first_swap_balanced_and_agreement",
+      "shared_sft_vs_human_reference_first_swap_balanced_and_agreement",
+      "single_head_text_health",
+      "overshoot_and_pure_side_effect_decisions",
+      "final_selected_K8_heads_and_roles",
+      "final_selected_alpha",
+      "cross_selector_final_head_overlap",
+      "actual_n",
+      "final_generation_health",
+      "direct_K8_composition_source_and_output_hashes",
+      "candidate_training_parameter_count",
+      "final_active_parameter_count",
+      "zero_final_optimizer_steps"
+    ]
+  },
+  "execution": {
+    "run_root": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_direct_k8_disjoint_alpha_dev_20260725_v6",
+    "curated_results": "results/tldr_site_reft_direct_k8_disjoint_alpha_dev_20260725_v6",
+    "serial_only": true,
+    "one_long_job_at_a_time": true,
+    "single_gpu_per_job": true,
+    "preferred_physical_gpu_indices": [
+      2,
+      3
+    ],
+    "gpu_selection_policy": "lower_observed_memory_used_at_stage_launch",
+    "gpu_co_tenancy_allowed": true,
+    "empty_gpu_required": false,
+    "existing_artifact_policy": "reuse_only_hash_sealed_V4_candidate_training_single_head_audit_decisions_and_payloads; forbid_all_V5_calibration_and_later_artifacts",
+    "failure_policy": "stop_without_fallback_retraining_reselection_rebalancing_or_protocol_mutation",
+    "head_freeze_requirement": "all_six_authoritative_pool_decisions_present_exactly_eight_retained_per_pool_and_hashed",
+    "final_unlock_requirement": "disjoint_40_row_alpha_dev_selection_manifest_complete_and_hashed",
+    "required_run_records": [
+      "config_snapshot_and_sha256",
+      "code_commit_and_dirty_tree_manifest",
+      "disjoint_partition_manifest_and_prompt_id_overlap_audit",
+      "V5_manual_stop_and_supersession_record",
+      "version_4_protocol_config_and_artifact_hashes",
+      "all_96_source_single_head_payload_and_manifest_hashes",
+      "all_six_registered_decision_source_hashes",
+      "global_96_row_head_decision_table",
+      "frozen_final_K8_head_and_role_manifests",
+      "direct_K8_bank_composition_source_tensor_and_output_hashes",
+      "candidate_training_and_final_active_parameter_accounting",
+      "GPU_launch_snapshot",
+      "stage_wall_seconds",
+      "40_row_alpha_dev_generation_judge_and_health_manifests",
+      "frozen_alpha_selection_manifest",
+      "320_row_final_generation_judge_and_health_manifests",
+      "actual_n"
+    ]
+  },
+  "source_audit": {
+    "protocol_id": "tldr_site_reft_head_audit_fixed_protocol_20260724_v4",
+    "protocol": "LOCAL_HOME/RPEC/projects/screscomp/docs/TLDR_SITE_REFT_HEAD_AUDIT_FIXED_PROTOCOL_20260724_V4.md",
+    "protocol_sha256": "fd65c2993ebe7f7ff04af86955418e1c969d08cdbb24ed35954f301cb18612e0",
+    "config": "LOCAL_HOME/RPEC/projects/screscomp/configs/tldr_site_reft_head_audit_fixed_protocol_20260724_v4.json",
+    "config_sha256": "2edc2e7b05cedeefb60db6397ecf508ed414628de3b590393495a06a04cedbf3",
+    "run_root": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4",
+    "accepted_artifact_config_sha256": [
+      "512a793ae77351789ba541b7490ff9f1f87a6276341905b8ffa1ffe421325e60",
+      "2edc2e7b05cedeefb60db6397ecf508ed414628de3b590393495a06a04cedbf3",
+      "017b79c39283eb3bdd63c29a23f8fa4d0f218c096abe6541c39308b363d8387c"
+    ],
+    "artifacts": {
+      "candidate_pools": {
+        "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/selector_import/candidate_pools.json",
+        "sha256": "253aaeea9b7728b583a5d06f46b8a9e2af65ab357dad74993929a047762b59b9"
+      },
+      "candidate_pool_rows": {
+        "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/selector_import/candidate_pool_rows.csv",
+        "sha256": "c0dd8083eee2ce791ba07648c947e89431560efd04d3c090398f879c9f5d621e"
+      },
+      "selector_import_manifest": {
+        "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/selector_import/selector_import_manifest.json",
+        "sha256": "c1e1ff2f63a17e70246932f7ba602cc50ccad7b831e6bafce7ab9fadcf2369a6"
+      },
+      "head_metrics": {
+        "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/head_metrics.csv",
+        "sha256": "e55b553dbc674b6e883ae3e8d903b98b70d14dea3d360f2ff2558446ca1bee58"
+      }
+    },
+    "decision_sources": [
+      {
+        "name": "rcm_zero_signed",
+        "csv": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/rcm_zero_signed_v2.csv",
+          "sha256": "03a565bf3128c7408664eea7a13b405af1f3192c1349bac61a6774a5970e01d5"
+        },
+        "evidence": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/rcm_zero_signed_v2.evidence.json",
+          "sha256": "78411d016197d6f108a425c3f8653a1c1405c6d75c81a9be813b753809bf15a1"
+        },
+        "manifest": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/rcm_zero_signed_v2.manifest.json",
+          "sha256": "896d539c644d798166120abf5b8a58ad44bc836515d7401fbe174911e3132396"
+        }
+      },
+      {
+        "name": "rcm_patch_signed",
+        "csv": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/rcm_patch_signed.csv",
+          "sha256": "ef63515477a1924b4c9cc10e3f230d4ec5ee71df71d1951ea5ac5d8922eb1353"
+        },
+        "evidence": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/rcm_patch_signed.evidence.json",
+          "sha256": "fda9b055952ddab6395ef7f6dfb419634f14ba6f7d2275354bd75a2d71167fbd"
+        },
+        "manifest": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/rcm_patch_signed.manifest.json",
+          "sha256": "422853ef16c2646538e85016b514169a4c8d4db3d1ac074a8dbe9d695e9e063d"
+        }
+      },
+      {
+        "name": "iti",
+        "csv": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/iti.csv",
+          "sha256": "1068e2ba0a86c9bcbafcdd7fdb1df4e2e6be6eec3b6a181b3451d8e446abf1ff"
+        },
+        "evidence": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/iti.evidence.json",
+          "sha256": "21db2d4ab64564af8f9bb6cb13db46b0a0a7d88da1fc9d449cf516a65f0b4f2e"
+        },
+        "manifest": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/iti.manifest.json",
+          "sha256": "2d72afb2044af9f41f48a098b70a27aac468e29b0952cffd385d66001dcb5572"
+        }
+      },
+      {
+        "name": "random_seed_20260702",
+        "csv": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/random_seed_20260702.csv",
+          "sha256": "719daf7698307ed0c7c574f2c143bb00e8e240423742e139a76792f97c56a629"
+        },
+        "evidence": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/random_seed_20260702.evidence.json",
+          "sha256": "1add0cc385bb76eb27a8c3d0bca17f07f5c15eda32e661fef4e5917997c00c9b"
+        },
+        "manifest": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/random_seed_20260702.manifest.json",
+          "sha256": "4b53f2fe2d6f0eb5c3103adf6b80afa97f39d1e6cbdab96db146d9f7bf8d6d45"
+        }
+      },
+      {
+        "name": "random_seed_20260703",
+        "csv": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/random_seed_20260703.csv",
+          "sha256": "c48652b372241a9f124dc03f030b835eb06b3f1ab936eff40cb84dee030ddeb7"
+        },
+        "evidence": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/random_seed_20260703.evidence.json",
+          "sha256": "cf17ca9f44d7b66708d1ea3ddb262ce20eb62d30eb8a1072ad71aa12f2e0b3ac"
+        },
+        "manifest": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/random_seed_20260703.manifest.json",
+          "sha256": "afd8579e780b2d0465fe181eb6b178443c9650f4a05d12b3b8277592698e9d9c"
+        }
+      },
+      {
+        "name": "random_seed_20260704",
+        "csv": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/random_seed_20260704.csv",
+          "sha256": "b44865021990dd6aa696b63ca2d9bebeeeaac21213346b3932c43ef6d5e25825"
+        },
+        "evidence": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/random_seed_20260704.evidence.json",
+          "sha256": "158ef0b516c716eaf03ecb8b158b83877bfc318849fc2b806c5bfd4946c7b936"
+        },
+        "manifest": {
+          "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4/head_audit/registered_decisions/random_seed_20260704.manifest.json",
+          "sha256": "80932d58a05c57e0957af12e6e9edc01164d10f5fc2cf46d50ef4e990617bd83"
+        }
+      }
+    ],
+    "single_head_payload_source": "version_4_single_head_payloads_exact_tensor_reuse",
+    "single_head_payload_inventory": "protocol/source_single_head_inventory.json",
+    "allowed_reuse": [
+      "candidate_pool_metadata",
+      "head_metrics",
+      "registered_head_decisions",
+      "all_96_single_head_payloads_and_manifests"
+    ],
+    "forbidden_reuse": [
+      "version_4_final_K8_retraining",
+      "version_4_calibration_outputs",
+      "version_4_held_out_outputs"
+    ]
+  },
+  "superseded_v5": {
+    "protocol_id": "tldr_site_reft_direct_k8_fixed_protocol_20260725_v5",
+    "run_root": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_direct_k8_20260725_v5",
+    "stop_record": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_direct_k8_20260725_v5/protocol/manual_stop_disjoint_alpha_dev_correction_20260725.json",
+    "stop_record_sha256": "7a4fadf5206766c5220969b219eee2300ab02c411755a965b3e4c51d97d8a340",
+    "reuse_policy": "forbidden_as_V6_alpha_selection_or_final_evidence"
+  }
+}

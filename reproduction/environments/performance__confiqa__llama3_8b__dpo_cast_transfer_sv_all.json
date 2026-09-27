@@ -1,0 +1,85 @@
+{
+  "cell_id": "performance__confiqa__llama3_8b__dpo_cast_transfer_sv_all",
+  "kind": "recovered_original_run_snapshot",
+  "source_filename": "config/runtime_environment.local.json",
+  "preserved_fields": {
+    "actual": {
+      "cuda_runtime": "12.4",
+      "cudnn": 90100,
+      "python": "3.11.3",
+      "torch": "2.5.1+cu124",
+      "transformers": "4.46.3"
+    },
+    "cell_id": "performance__confiqa__llama3_8b__dpo_cast_transfer_sv_all",
+    "status": "not_bound"
+  },
+  "portable_transform": "machine-specific interpreter path omitted; exact original retained in run-local recovery workspace",
+  "source_run_code_revision": "source/code_15",
+  "attribution": "snapshot from source cell launch; not proof of unchanged environment at later resumes or upstream cached stages",
+  "stages": {
+    "alpha_evaluate": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "alpha_freeze": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "alpha_generate": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "bank_train": {
+      "status": "completed",
+      "imported_evidence": true,
+      "environment_attribution": "requires_upstream_source_snapshot"
+    },
+    "data": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "position_freeze": {
+      "status": "completed",
+      "imported_evidence": true,
+      "environment_attribution": "requires_upstream_source_snapshot"
+    },
+    "position_resolve": {
+      "status": "completed",
+      "imported_evidence": true,
+      "environment_attribution": "requires_upstream_source_snapshot"
+    },
+    "position_search": {
+      "status": "completed",
+      "imported_evidence": true,
+      "environment_attribution": "requires_upstream_source_snapshot"
+    },
+    "test_evaluate": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "test_gate": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "test_generate": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    }
+  },
+  "remaining_unknowns": [
+    "complete_original_dependency_set",
+    "GPU_driver_at_each_stage",
+    "actual_attention_kernels",
+    "TF32_and_reduction_flags",
+    "parameter_and_buffer_dtypes",
+    "per_attempt_environment_changes",
+    "upstream_shared_cache_environment"
+  ]
+}

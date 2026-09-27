@@ -1,0 +1,290 @@
+{
+  "backend_binding": {
+    "id": "site_data_tldr",
+    "version": 1
+  },
+  "construction": {
+    "allowed_role_overlap": [
+      [
+        "selector",
+        "training"
+      ]
+    ],
+    "calibration": {
+      "alpha_dev_range": [
+        40,
+        80
+      ],
+      "head_audit_range": [
+        0,
+        40
+      ],
+      "reserve_range": [
+        80,
+        320
+      ],
+      "shuffle_seed": 20260619
+    },
+    "clean_split": {
+      "calibration_rows": 320,
+      "contaminated_source_prefix_rows": 320,
+      "original_final_guard_rows": 320,
+      "shuffle_algorithm": "CPython_random_Random_shuffle",
+      "shuffle_seed": 20260619,
+      "source_rows": 6553,
+      "source_split": "test",
+      "test_reserve_rows": 5593
+    },
+    "prompt_format": "openai_tldr_structured_v1",
+    "roles": {
+      "alpha_dev": {
+        "target_count": 40,
+        "unit": "clean_calibration_prompt"
+      },
+      "head_audit": {
+        "target_count": 40,
+        "unit": "clean_calibration_prompt"
+      },
+      "reserve": {
+        "target_count": 240,
+        "unit": "clean_calibration_prompt"
+      },
+      "selector": {
+        "target_count": 300,
+        "unit": "unique_prompt_id_group"
+      },
+      "test": {
+        "target_count": 512,
+        "unit": "clean_test_prompt"
+      },
+      "training": {
+        "target_count": 8192,
+        "unit": "preference_pair"
+      },
+      "validation": {
+        "target_count": 512,
+        "unit": "preference_pair"
+      }
+    },
+    "selector": {
+      "duplicate_policy": "skip_and_refill",
+      "pair_within_group": "first_admitted",
+      "source_order": "preference_pair_order",
+      "source_split": "train",
+      "target_unique_groups": 300,
+      "unique_key": "prompt_id"
+    },
+    "subsets": [
+      "summary_preference"
+    ],
+    "test": {
+      "clean_pool_offset": 320,
+      "first_rows": 512,
+      "future_evaluation_only_extension": "after_primary_clean320_is_verified_and_frozen",
+      "reorder": false,
+      "source": "original_final_guard_then_reserve",
+      "source_order": "post_clean_shuffle_original_final_order"
+    },
+    "training": {
+      "first_rows": 8192,
+      "seed": 42,
+      "shuffle_before_take": true,
+      "shuffle_each_epoch": true,
+      "source_split": "train"
+    },
+    "validation": {
+      "first_rows": 512,
+      "source_split": "validation"
+    }
+  },
+  "model_family": "gptj_6b",
+  "prompt_registry": {
+    "registry_path": "configs/prompts/prompt_registry_20260831_v1.json",
+    "selections": {
+      "confiqa": {
+        "official_rag": "confiqa.official_rag.context_dpo_v1"
+      },
+      "imdb": {
+        "base_state": "imdb.base_state_v1",
+        "good_state": "imdb.good_state_v1",
+        "preference_prefix": "imdb.preference_prefix_v1"
+      },
+      "tldr": {
+        "source_prompt": "tldr.source_prompt_passthrough_v1"
+      }
+    }
+  },
+  "protocol": {
+    "id": "performance_non_tulu_site_aligned_20260831_v1",
+    "path": "outputs/dpo_cast_test512_20260919/performance__tldr__gptj_6b__dpo_cast_nontransfer_reft_all.json"
+  },
+  "provenance": {
+    "adapter_id": "site_data_tldr",
+    "ordering": {
+      "source": {
+        "algorithm": "preserve_pinned_snapshot_order",
+        "enabled": false
+      },
+      "training": {
+        "algorithm": "CPython_random_Random_shuffle",
+        "enabled": true,
+        "seed": 42
+      }
+    },
+    "pipeline": [
+      {
+        "id": "tldr_openai_comparisons_decode_v1",
+        "parameters": {
+          "config": "comparisons",
+          "row_identity": "source_row_index",
+          "source_fields": [
+            "info",
+            "summaries",
+            "choice"
+          ]
+        },
+        "version": 1
+      },
+      {
+        "id": "tldr_preference_pair_projection_v1",
+        "parameters": {
+          "chosen": "summaries[choice]",
+          "prompt_format": "openai_tldr_structured_v1",
+          "rejected": "the_compared_nonchosen_summary",
+          "source_order": "preserve"
+        },
+        "version": 1
+      },
+      {
+        "id": "tldr_clean_split_v1",
+        "parameters": {
+          "calibration_rows": 320,
+          "contaminated_source_prefix_rows": 320,
+          "original_final_guard_rows": 320,
+          "prompt_id_disjointness": "strict",
+          "seed": 20260619,
+          "source_test_rows": 6553,
+          "test_reserve_min_rows": 2048,
+          "test_reserve_rows": 5593
+        },
+        "version": 1
+      },
+      {
+        "id": "tldr_training_epoch_shuffle_v1",
+        "parameters": {
+          "rng": "CPython random.Random",
+          "scope": "training_batches",
+          "seed": 42
+        },
+        "version": 1
+      }
+    ],
+    "role_mapping": {
+      "alpha_dev": {
+        "assignment": "rows_40_80",
+        "counts_ref": "protocol.data.construction_profiles.tldr.roles.alpha_dev",
+        "source_split": "clean_calibration"
+      },
+      "head_audit": {
+        "assignment": "rows_0_40",
+        "counts_ref": "protocol.data.construction_profiles.tldr.roles.head_audit",
+        "source_split": "clean_calibration"
+      },
+      "reserve": {
+        "assignment": "rows_80_320",
+        "counts_ref": "protocol.data.construction_profiles.tldr.roles.reserve",
+        "source_split": "clean_calibration"
+      },
+      "selector": {
+        "assignment": "first_300_unique_prompt_id_groups",
+        "counts_ref": "protocol.data.construction_profiles.tldr.roles.selector",
+        "source_split": "preference_train"
+      },
+      "test": {
+        "assignment": "all_320_without_reordering",
+        "counts_ref": "protocol.data.construction_profiles.tldr.roles.test",
+        "source_split": "clean_original_final_guard"
+      },
+      "training": {
+        "assignment": "first_8192_pairs",
+        "counts_ref": "protocol.data.construction_profiles.tldr.roles.training",
+        "source_split": "preference_train"
+      },
+      "validation": {
+        "assignment": "first_512_pairs",
+        "counts_ref": "protocol.data.construction_profiles.tldr.roles.validation",
+        "source_split": "preference_validation"
+      }
+    },
+    "sources": [
+      {
+        "files": [
+          {
+            "path": "summarize_from_feedback.py",
+            "uri": "https://huggingface.co/datasets/openai/summarize_from_feedback/resolve/b8f7d168b6f4e95b2a92e84768bd6c955bed2f29/summarize_from_feedback.py"
+          }
+        ],
+        "id": "openai_summarize_from_feedback_upstream",
+        "kind": "huggingface_dataset_script",
+        "revision": "b8f7d168b6f4e95b2a92e84768bd6c955bed2f29",
+        "uri": "https://huggingface.co/datasets/openai/summarize_from_feedback/tree/b8f7d168b6f4e95b2a92e84768bd6c955bed2f29"
+      }
+    ],
+    "test_extension": {
+      "additional_count": 192,
+      "order": "unchanged clean-pool order; original guard followed by first 192 reserve rows",
+      "preserved_prefix_count": 320,
+      "selection": "all upstream artifacts and validation-selected alpha frozen; no test-based reselection",
+      "source": "original_final_guard_then_reserve",
+      "target_count": 512
+    }
+  },
+  "role_outputs": {
+    "alpha_manifest": "alpha_dev",
+    "audit_manifest": "head_audit",
+    "reserve_manifest": "reserve",
+    "selector_manifest": "selector",
+    "test_manifest": "test",
+    "training_manifest": "training",
+    "validation_manifest": "validation"
+  },
+  "roles": {
+    "alpha_dev": {
+      "purpose": "calibration"
+    },
+    "head_audit": {
+      "purpose": "calibration"
+    },
+    "reserve": {
+      "purpose": "reserve"
+    },
+    "selector": {
+      "purpose": "selection"
+    },
+    "test": {
+      "purpose": "final_test"
+    },
+    "training": {
+      "purpose": "training"
+    },
+    "validation": {
+      "purpose": "training_validation"
+    }
+  },
+  "shared_artifact_key": "performance_data__site_reproduction_20260829_v1__tldr__summary_preference__gptj_6b__formal__test512",
+  "sources": {
+    "tldr_pairs": {
+      "format": "csv",
+      "location": "registered_source/pairs.csv",
+      "source_id": "tldr_openai_preference_pairs",
+      "upstream_source_id": "openai_summarize_from_feedback_upstream"
+    },
+    "tldr_test_prompts": {
+      "format": "jsonl",
+      "location": "registered_source/test_prompts.jsonl",
+      "source_id": "tldr_openai_test_prompt_projection",
+      "upstream_source_id": "openai_summarize_from_feedback_upstream"
+    }
+  },
+  "subset": "summary_preference"
+}

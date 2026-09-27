@@ -1,0 +1,23 @@
+{
+  "job_id": "REDACTED",
+  "method": "loreft",
+  "phase": "controller",
+  "python": "3.11.3 (main, Jan 24 2026, 04:27:47) [GCC 12.3.0]",
+  "executable": "LOCAL_HOME/venvs/rpec_external/bin/python",
+  "platform": "Linux-5.14.0-687.29.1.el9_8.x86_64-x86_64-with-glibc2.34",
+  "packages": {
+    "torch": "2.6.0",
+    "transformers": "4.48.2",
+    "trl": null,
+    "datasets": "3.0.1",
+    "pyreft": "0.1.0",
+    "peft": "0.13.2",
+    "accelerate": "1.1.1",
+    "numpy": "2.3.5"
+  },
+  "code_revision": "SOURCE_SNAPSHOT_NOT_YET_PACKAGED",
+  "registry": "LOCAL_HOME/rpec_runs/imdb_external_budget_20260923/runtime_registry.json",
+  "cuda": "12.4",
+  "cudnn": 90100,
+  "gpu": "NVIDIA H100 80GB HBM3"
+}

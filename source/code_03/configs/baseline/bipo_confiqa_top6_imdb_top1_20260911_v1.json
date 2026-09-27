@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "protocol_id": "bipo_confiqa_top6_imdb_top1_20260911_v1",
+  "status": "canonical_formal_baseline_protocol",
+  "method": "bipo",
+  "implementation": "baseline/implementations/bipo.py",
+  "position_implementation": "baseline/implementations/caa.py",
+  "official_sources": {
+    "bipo": {
+      "repository": "https://github.com/CaoYuanpu/BiPO",
+      "revision": "cef1d00ab108d0e265578589e6b344b200ea3db8",
+      "trainer": "trl/trainer/bipo_trainer.py"
+    },
+    "caa": {
+      "repository": "https://github.com/nrimsky/CAA",
+      "revision": "5dabbbd9a0bca5f25e174501e959de378806aa48",
+      "vector_construction": "generate_vectors.py"
+    }
+  },
+  "native_operator": {
+    "component": "block_output",
+    "layers_per_candidate": 1,
+    "trainable_vectors_per_candidate": 1,
+    "application_positions": "all_token_positions",
+    "bidirectional_shared_vector": true,
+    "positive_multiplier": 1.0,
+    "negative_multiplier": -1.0,
+    "initialization": "zeros"
+  },
+  "caa_site_search": {
+    "vector_role": "training",
+    "vector_definition": "mean_final_response_state_positive_minus_negative_per_layer",
+    "layers": "all_transformer_blocks",
+    "normalization": "none",
+    "selection_role": "selector",
+    "selection_multipliers": [
+      -1.0,
+      1.0
+    ],
+    "selection_score": "half_positive_minus_negative_behavior_advantage",
+    "candidate_count": 3,
+    "tie_break": "lower_layer_index",
+    "human_audit": false,
+    "test_access": false,
+    "adaptation_note": "CAA is the author-side BiPO localization family. Full-depth CAA and top-3 complete BiPO training expand candidate opportunity without changing BiPO's native single-layer shared-vector geometry."
+  },
+  "author_side_training": {
+    "beta": 0.1,
+    "batch_size": 4,
+    "eval_batch_size": 1,
+    "gradient_accumulation_steps": 1,
+    "learning_rate": 0.0005,
+    "weight_decay": 0.05,
+    "weight_decay_note": "The official script exposes 0.05 but omits forwarding it to DPOConfig; explicitly applying 0.05 is a preregistered project adaptation, not a claim of reproducing the script's effective default.",
+    "optimizer": "adamw_torch",
+    "lr_scheduler": "cosine",
+    "warmup_steps": 100,
+    "seed": 42,
+    "seed_note": "Preregistered execution setting; not presented as an author-recommended task default.",
+    "max_prompt_length": 2048,
+    "max_length": 2048,
+    "loss_type": "sigmoid",
+    "candidate_training": "each_of_the_three_CAA_layers_is_trained_independently_to_the_registered_epoch_budget"
+  },
+  "search": {
+    "sequence": [
+      "construct_all_layer_CAA_vectors_on_training_role",
+      "evaluate_all_layers_at_fixed_plus_minus_one_on_selector_role",
+      "freeze_CAA_top3_layers",
+      "train_one_native_BiPO_vector_at_each_frozen_layer",
+      "select_the_three_trained_candidates_at_multiplier_one_on_selector_role",
+      "calibrate_multiplier_only_for_the_selected_candidate",
+      "freeze_without_test_access",
+      "evaluate_final_test_once"
+    ],
+    "candidate_order": [
+      "caa_rank_1",
+      "caa_rank_2",
+      "caa_rank_3"
+    ],
+    "candidate_selection_multiplier": 1.0,
+    "layer_multiplier_cartesian_search": false,
+    "seed_search": false,
+    "componentwise_human_audit": false,
+    "test_based_selection": false
+  },
+  "datasets": {
+    "confiqa": {
+      "candidate_budget": {
+        "amendment_id": "bipo_confiqa_caa_top6_20260911",
+        "rule": "fixed_candidate_count",
+        "count": 6,
+        "rationale": "Both ConFiQA models use CAA top6, independently train or reuse six candidates, select on the registered selector at factor1, then calibrate on independent alpha-dev. Native single-layer bidirectional geometry is unchanged; candidate expansion is a project adaptation."
+      },
+      "scope": "joint_qa_mr_mc",
+      "training_role": "training_240",
+      "selector_role": "selector_300",
+      "candidate_primary_metric": "logic_score",
+      "epochs": 20,
+      "factor_selection_role": "alpha_dev_120",
+      "factor_grid": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0,
+        1.2,
+        1.4,
+        1.6,
+        1.8,
+        2.0
+      ],
+      "factor_primary_metric": "logic_score",
+      "factor_tie_break": "smallest_factor",
+      "test_role": "test_2048"
+    },
+    "imdb": {
+      "scope": "sentiment",
+      "training_role": "training_1024",
+      "selector_role": "selector_300",
+      "candidate_primary_metric": "mean_positive_sentiment_score",
+      "epochs": 5,
+      "factor_selection_role": null,
+      "factor_grid": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0,
+        1.2,
+        1.4,
+        1.6,
+        1.8,
+        2.0
+      ],
+      "factor_policy": "report_full_reward_kl_curve_on_test",
+      "test_role": "test_2048",
+      "candidate_budget": {
+        "amendment_id": "bipo_imdb_caa_top1_20260911",
+        "rule": "fixed_candidate_count",
+        "count": 1,
+        "rationale": "CAA ranks registered full-layer candidates; train only the top-ranked layer. Single-candidate author-style flow, with preregistered task-specific data, scorer, epochs and strength evaluation unchanged."
+      }
+    },
+    "tldr": {
+      "scope": "summary_preference",
+      "training_role": "training_8192",
+      "selector_role": "selector_300",
+      "candidate_primary_metric": "balanced_win_rate_against_human_summary",
+      "epochs": 1,
+      "factor_selection_role": "alpha_dev_40",
+      "factor_grid": [
+        0.5,
+        1.0,
+        1.5,
+        2.0,
+        2.5,
+        3.0
+      ],
+      "factor_primary_metric": "balanced_win_rate_against_human_summary",
+      "factor_tie_break": "smallest_factor_within_0.003_of_best",
+      "test_role": "test_2048"
+    }
+  },
+  "fairness_statement": "Main text uses ConFiQA top6 for both models and IMDb top1; TLDR retains its existing default. Native CAA-to-single-layer bidirectional operator and registered optimizer settings remain unchanged. ConFiQA candidate expansion is a project adaptation, not strict equal-budget matching. Prior budget results remain historical experiment records."
+}

@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "round": {
+    "index": 0,
+    "auto_previous_control": false,
+    "prev_scale": 1.0
+  },
+  "model": {
+    "path": "LOCAL_HOME/.cache/huggingface/hub/models--deepseek-ai--deepseek-math-7b-instruct",
+    "device": "auto",
+    "torch_dtype": "auto",
+    "use_chat_template": false
+  },
+  "output": {
+    "root": "data_gsm8k/rounds/deepseek_sampled_answer_arbitration_att_rescan_full_around_fixed_mlp"
+  },
+  "task": {
+    "adapter": "gsm8k_sampled_answer_arbitration",
+    "name": "gsm8k_deepseek_sampled_answer_arbitration_att_rescan_full_around_fixed_mlp",
+    "event": "gsm8k_sampled_answer_arbitration",
+    "source_jsonl": "data_gsm8k/raw/train.jsonl",
+    "prompt_key": "deepseek_math",
+    "prompt_semantics": "DeepSeek Math prompt (no CoT): question + boxed answer format",
+    "val_mod": 5,
+    "continuation_prefix": " ",
+    "require_parse_certified": true,
+    "dedupe_answers_per_question": false,
+    "max_pairs_per_question": 0
+  },
+  "pairs": {
+    "max_rows": null,
+    "continuation_policy": "sampled_answer_correctness_arbitration"
+  },
+  "discovery": {
+    "component_source": "reselect",
+    "reselect_components": true,
+    "reuse_components": "",
+    "component_types": [
+      "attn"
+    ],
+    "component_type_apply_modes": {
+      "attn": "all"
+    },
+    "rows": 500,
+    "attn_layer_topk": 4,
+    "exclude_attn_layers": "0,1",
+    "scan_min_sign_consistency": 0.55,
+    "allow_ci_cross_zero": false,
+    "require_directional_ci": false,
+    "attn_min_sign_consistency": 0.55,
+    "attn_require_directional_ci": true,
+    "min_sign_consistency": 0.55,
+    "min_attn_abs_mean_delta": 0.3,
+    "head_scan_rows": 500,
+    "head_scan_factors": [
+      0.0,
+      1.5
+    ],
+    "head_topk": 4,
+    "head_require_directional_ci": true
+  },
+  "training": {
+    "score_mode": "answer_rest_margin",
+    "option_selection_mode": "model_max",
+    "max_aliases_per_side": 3,
+    "train_split": "train",
+    "val_split": "val",
+    "max_train_rows": 1000,
+    "max_val_rows": 500,
+    "epochs": 1,
+    "lr": 0.05,
+    "lambda_norm": 0.0001,
+    "alpha_train": 1.0,
+    "state_margin_weight": 1.0,
+    "gain_weight": 0.0,
+    "target_margin": 0.0,
+    "target_gain": 0.0,
+    "empty_cache_every": 25,
+    "mlp": {
+      "enabled": false,
+      "reuse_actuators": {
+        "mlp_positive__prefill": "data_gsm8k/rounds/deepseek_sampled_answer_arbitration_multiround_repair_stop04/round_00/draft/train/train_mlp_positive_prefill/fixed_actuator.pt"
+      },
+      "train_apply_mode": "prompt_last",
+      "generation_apply_mode": "prefill",
+      "timing_grid": [
+        {
+          "name": "prefill",
+          "train_apply_mode": "prompt_last",
+          "generation_apply_mode": "prefill"
+        }
+      ]
+    },
+    "attention": {
+      "enabled": true,
+      "train_apply_mode": "all",
+      "generation_apply_mode": "all"
+    },
+    "full": {
+      "enabled": true,
+      "select_after_small_tune": true
+    }
+  },
+  "alpha": {
+    "scan": true,
+    "mlp": [
+      0.02,
+      0.03
+    ],
+    "att": [
+      0.005,
+      0.01,
+      0.02,
+      0.03,
+      0.04
+    ],
+    "full": {
+      "search_mode": "around_single_winners",
+      "search_window": 1
+    },
+    "train_sweep": [
+      0.0,
+      1.0
+    ]
+  },
+  "selection": {
+    "metric": "strict_final_exact",
+    "minimum_material_gain": 0.004,
+    "residual_min_gain_over_prev": 0.004,
+    "tie_breakers": [
+      "numeric_valid",
+      "parse_certified",
+      "smaller_alpha"
+    ],
+    "write_best_config": "selection/best_small_tune_config.json"
+  },
+  "evaluation": {
+    "enabled": true,
+    "name": "gsm8k_val_500",
+    "eval_open_rows": "data_gsm8k/raw/train.jsonl",
+    "generation_prompt_key": "deepseek_math",
+    "scoring_kind": "gsm8k",
+    "split": "all",
+    "start": 1500,
+    "max_rows": 500,
+    "generation_apply_mode": "prefill",
+    "max_new_tokens": 512,
+    "stop_strings": "\\nUser:",
+    "flush_every": 1,
+    "summary_every": 50,
+    "empty_cache_every": 25
+  },
+  "baselines": {
+    "base": {
+      "enabled": true,
+      "model": "LOCAL_HOME/.cache/huggingface/hub/models--deepseek-ai--deepseek-math-7b-instruct",
+      "control": ""
+    }
+  }
+}

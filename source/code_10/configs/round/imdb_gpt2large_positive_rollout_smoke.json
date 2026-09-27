@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "round": {
+    "index": 0,
+    "auto_previous_control": false
+  },
+  "model": {
+    "path": "edbeeching/gpt2-large-imdb",
+    "device": "cuda",
+    "torch_dtype": "bfloat16",
+    "use_chat_template": false
+  },
+  "output": {
+    "root": "runs/imdb_gpt2large_positive_rollout_unified_smoke"
+  },
+  "task": {
+    "adapter": "imdb_sentiment_scored_generations",
+    "name": "imdb_gpt2large_positive_rollout_smoke",
+    "event": "imdb_positive_sentiment",
+    "scored_generations": "runs/imdb_sentiment_smoke_clean_20260604_155603/start_policy/scored_generations.jsonl",
+    "prompts_jsonl": "runs/imdb_dpo_prompt_positive_rollout_scan_20260605_115624/env/prompts.jsonl",
+    "score_field": "positive_sentiment_score"
+  },
+  "pairs": {
+    "min_score_margin": 0.1,
+    "max_pairs_per_prompt": 0,
+    "max_prompts_per_split": 0,
+    "keep_rejected_rows": true
+  },
+  "discovery": {
+    "component_source": "reselect",
+    "reselect_components": true,
+    "scan_mode": "rollout",
+    "prompts_jsonl": "runs/imdb_dpo_prompt_positive_rollout_scan_20260605_115624/env/prompts.jsonl",
+    "component_types": [
+      "attn",
+      "mlp"
+    ],
+    "component_type_apply_modes": {
+      "attn": "all",
+      "mlp": "all"
+    },
+    "split": "train",
+    "rows": 300,
+    "rollout": {
+      "samples_per_prompt": 1,
+      "generation_batch_size": 8,
+      "max_new_tokens": 64,
+      "do_sample": true,
+      "temperature": 1.0,
+      "top_p": 1.0,
+      "top_k": 50,
+      "seed": 42
+    },
+    "scorer": {
+      "model": "siebert/sentiment-roberta-large-english",
+      "target_label": "POSITIVE",
+      "source_label": "NEGATIVE",
+      "score_text": "completion",
+      "batch_size": 16,
+      "max_length": 512,
+      "device": 0
+    },
+    "mlp_topk": 4,
+    "mlp_negative_topk": 4,
+    "attn_layer_topk": 4,
+    "exclude_mlp_layers": "0",
+    "exclude_attn_layers": "0",
+    "allow_ci_cross_zero": false,
+    "mlp_require_directional_ci": true,
+    "attn_require_directional_ci": true,
+    "min_directional_transition_rate": 0.5,
+    "min_ablated_format_ok": 0.9,
+    "max_format_collapse_rate": 0.1,
+    "min_abs_mean_target_drop": 0.04,
+    "min_abs_mean_source_rise": 0.04,
+    "min_mlp_abs_mean_delta": 0.08,
+    "min_attn_abs_mean_delta": 0.08,
+    "mlp_min_sign_consistency": 0.0,
+    "attn_min_sign_consistency": 0.0,
+    "allow_empty_attn": false,
+    "head_scan_rows": 0,
+    "head_topk": 0
+  },
+  "training": {
+    "score_mode": "avglogp",
+    "option_selection_mode": "model_max",
+    "max_aliases_per_side": 1,
+    "train_split": "train",
+    "val_split": "val",
+    "max_train_rows": 240,
+    "max_val_rows": 60,
+    "epochs": 2,
+    "lr": 0.05,
+    "lambda_norm": 0.0001,
+    "alpha_train": 1.0,
+    "state_margin_weight": 0.0,
+    "gain_weight": 1.0,
+    "target_margin": 0.0,
+    "target_gain": 0.0,
+    "empty_cache_every": 25,
+    "mlp": {
+      "enabled": true,
+      "train_apply_mode": "decision_tokens",
+      "generation_apply_mode": "prefill"
+    },
+    "attention": {
+      "enabled": false
+    },
+    "full": {
+      "enabled": false
+    }
+  },
+  "alpha": {
+    "scan": false,
+    "mlp": [
+      0.25,
+      0.5,
+      0.75,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "train_sweep": [
+      0.0,
+      1.0
+    ]
+  },
+  "selection": {
+    "enabled": false
+  },
+  "evaluation": {
+    "enabled": false
+  }
+}

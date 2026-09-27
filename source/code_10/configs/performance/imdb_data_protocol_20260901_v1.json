@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "protocol_id": "performance_imdb_20260901_v1",
+  "status": "canonical_formal_data_protocol",
+  "dataset": "imdb",
+  "scope": "performance_only",
+  "site_split_reused": false,
+  "shared_functionality": [
+    "IMDb parquet decoding",
+    "tokenizer prefix projection",
+    "model-native four-candidate preference-pair construction",
+    "registered Siebert sentiment scoring"
+  ],
+  "public_source": {
+    "dataset": "stanfordnlp/imdb",
+    "repository": "https://huggingface.co/datasets/stanfordnlp/imdb",
+    "revision": "e6281661ce1c48d982bc483cf8a173c1bbeb5d31",
+    "train_file": "plain_text/train-00000-of-00001.parquet",
+    "test_file": "plain_text/test-00000-of-00001.parquet"
+  },
+  "construction": {
+    "roles": {
+      "selector": {"unit": "paired_model_native_state_group", "target_count": 300},
+      "training": {"unit": "preference_pair", "target_count": 1024},
+      "validation": {"unit": "preference_pair", "target_count": 256},
+      "test": {"unit": "prompt", "target_count": 2048}
+    },
+    "source_order": {
+      "max_rows": 25000,
+      "shuffle": true,
+      "algorithm": "CPython_random_Random_shuffle",
+      "seed": 42,
+      "permutation_scope": "one_shared_train_permutation_reused_by_selector_and_pair_roles",
+      "window_basis": "zero_based_half_open_position_in_shared_permutation",
+      "rng_stream": "one_CPython_Random_stream_for_prefix_lengths_then_shuffle"
+    },
+    "prefix": {"mode": "tokenizer", "min_tokens": 2, "max_tokens": 8},
+    "selector_state_generation": {
+      "conditions": ["good", "base"],
+      "source_prompt_window": [0, 300],
+      "prompt_rows": 300,
+      "generation_batch_size": 16,
+      "batch_seed_stride": 1009,
+      "good_template": "{prefix}\n\nContinue the review with a positive sentiment:",
+      "base_template": "{prefix}",
+      "max_new_tokens": 64,
+      "do_sample": true,
+      "temperature": 1.0,
+      "top_p": 1.0,
+      "top_k": 50,
+      "seed": 42,
+      "common_random_numbers_across_conditions": true,
+      "generate_once_per_model_and_reuse_exact_token_ids": true
+    },
+    "pair_preparation": {
+      "model_native": true,
+      "train_source_prompt_window": [300, 1836],
+      "validation_source_prompt_window": [1836, 2220],
+      "train_source_prompts": 1536,
+      "validation_source_prompts": 384,
+      "completions_per_prompt": 4,
+      "generation_batch_size": 16,
+      "batch_seed_stride": 1009,
+      "completion_seed_stride": 9176,
+      "max_new_tokens": 48,
+      "do_sample": true,
+      "temperature": 1.0,
+      "top_p": 1.0,
+      "top_k": 50,
+      "seed": 42,
+      "selection": "top_bottom_by_registered_sentiment_reward",
+      "strict_positive_margin": true,
+      "fixed_window_no_refill": true
+    },
+    "reserved_unused_after_validation": {
+      "source_split": "train",
+      "post_shuffle_window": [2220, 2260],
+      "purpose": "preserve the preregistered disjoint boundary; no formal method reads these rows",
+      "overlap_with_selector_training_validation_test": false
+    },
+    "test": {
+      "source_split": "test",
+      "source_start": 0,
+      "max_source_rows": 25000,
+      "shuffle": true,
+      "algorithm": "CPython_random_Random_shuffle",
+      "seed": 42,
+      "post_shuffle_window": [0, 2048],
+      "target_prompts": 2048
+    },
+    "allowed_role_overlap": []
+  },
+  "formal_scaled_gpu_counts": {"selector": 10, "training": 8, "validation": 2, "test": 3},
+  "randomness": {"source_shuffle_seed": 42, "generation_seed": 42}
+}

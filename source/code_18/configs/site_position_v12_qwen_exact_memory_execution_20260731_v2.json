@@ -1,0 +1,74 @@
+{
+  "amendment_id": "site_position_v12_qwen_exact_memory_execution_20260731_v2",
+  "status": "locked_before_recovery_execution",
+  "supersedes": "site_position_v12_qwen_exact_memory_execution_20260731_v1",
+  "supersession_reason": "V1 preserved exact computation but generic pinned offload also copied autograd-saved frozen-weight tensors and retained approximately 103-108 GB host RSS after the first step. V2 keeps frozen model storage on GPU and offloads only non-model saved tensors without pinning.",
+  "base_protocol_id": "site_position_full_fixed_protocol_20260719_v12",
+  "base_config": "configs/site_position_full_fixed_protocol_20260719_v12.json",
+  "base_config_sha256": "87c3b77316304b87f0aa0ade73be15a6da691c94625296214e9032aae406b45e",
+  "scientific_settings_changed": false,
+  "scope": {
+    "model_keys": [
+      "qwen25_14b"
+    ],
+    "stages": [
+      "actuator_training"
+    ]
+  },
+  "execution": {
+    "signed_role_process_isolation": true,
+    "role_manifest_required_before_merge": true,
+    "saved_tensor_storage": {
+      "mode": "cpu_offload_exact_selective",
+      "implementation": "torch.autograd.graph.saved_tensors_hooks",
+      "selection_rule": "retain tensors whose CUDA storage pointer belongs to a frozen base-model parameter; copy every other CUDA tensor saved for backward to CPU",
+      "pin_memory": false,
+      "lossless": true,
+      "description": "Every offloaded tensor retains its original dtype and values and is synchronously copied back to its original CUDA device for the unchanged backward graph."
+    },
+    "forbidden_changes": {
+      "quantization": false,
+      "component_reselection": false,
+      "sample_change": false,
+      "batch_change": false,
+      "gradient_accumulation": false,
+      "objective_change": false,
+      "optimizer_change": false,
+      "step_change": false,
+      "sequence_truncation_change": false
+    }
+  },
+  "superseded_attempt": {
+    "log": "/dev/shm/screscomp_runs/site_position_full_20260719_v12/logs/qwen_mr_rcm_zero_exact_memory_v1.log",
+    "log_sha256": "1b43947b0dea92d05624f560ea547600452b46fceee911628b8ccecc123937d4",
+    "completed_optimizer_steps": 1,
+    "reusable_artifacts": "none",
+    "status": "stopped_for_excessive_host_memory_before_any_role_payload_or_manifest"
+  },
+  "recovery_adoptions": [
+    {
+      "job_id": "REDACTED",
+      "training_group": "target_support",
+      "reason": "The role completed both locked epochs and its validation audit before the parent process was killed during the later competitor-support role.",
+      "artifact_hashes": {
+        "head_actuator.pt": "2701a8a2453d7686034fd1555d0ca9f5ad2268cbb2097091de61d91cb7c5ebe2",
+        "training_history.csv": "5e3b91a73b08d31f582369da45c9f2c1829de6ac68cab99c8a432ca94ed04623",
+        "vector_summary.csv": "c635c717e5de3165aba5646f00a13546a78d96b43f267491b8bf63c3815fc022",
+        "teacher_forced_audit.csv": "758591a99ccfe05a5fa23ea3ce5f51c83ec8886acf081c9c6499bf6a5837be0d"
+      },
+      "selected_heads_sha256": "d0a5c1484f95d6df7523a58e7aa8f082d0e6d97bf9edfc095a07462d44f5e68d",
+      "pair_artifact_sha256": "a0c5b04fae532e210c596b2b3f505c10f8336c21cb926f586c49ea296e43f785",
+      "source_log": "/dev/shm/screscomp_runs/site_position_full_20260719_v12/logs/qwen_confiqa_serial_v4_gpu3.log",
+      "source_log_sha256": "9fe65134344ed29325aa9261dee53b6fb28c2eecc3d7115a68f16b2f892c4390",
+      "original_saved_tensor_storage": "gpu",
+      "model_path": "LOCAL_HOME/.cache/huggingface/hub/models--Qwen--Qwen2.5-14B-Instruct/snapshots/cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+      "resolved_dtype": "torch.bfloat16",
+      "gpu_provenance": {
+        "requested_device": "cuda:3",
+        "physical_index": "3",
+        "role_level_snapshot_status": "not_persisted_before_parent_sigkill",
+        "evidence": "The hash-locked source log records the exact cuda:3 child command and complete target-support output."
+      }
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "protocol_id": "site_reproduction_20260829_v1",
+  "protocol_version": 1,
+  "status": "canonical_formal",
+  "matrix": "configs/site/site_cell_matrix_20260829_v1.json",
+  "entrypoints": {
+    "cell": "experiments/site/site_cell_controller.py",
+    "matrix": "experiments/site/run_site_reproduction.py",
+    "compiler": "experiments/shared/experiment_controller.py",
+    "executor": "experiments/shared/flow_executor.py"
+  },
+  "orchestration": {
+    "single_site_entrypoint": true,
+    "site_layer_calls_only_registered_functions": true,
+    "scorer_owner": "experiments/shared/evaluation_controller.py",
+    "position_owner": "experiments/shared/position_search_controller.py",
+    "dataset_split_owner": "data/*/controller.py",
+    "bank_audit_owner": "baseline/controllers/"
+  },
+  "matrix_contract": {
+    "dataset_families": 3,
+    "model_families_per_dataset": 2,
+    "presentation_model_cells": 6,
+    "execution_strata": 10,
+    "jobs_per_stratum": 6,
+    "formal_jobs": 60,
+    "confiqa_strata": ["qa", "mr", "mc"],
+    "imdb_strata": ["sentiment"],
+    "tldr_strata": ["summary_preference"]
+  },
+  "flow": {
+    "id": "site_cast_fixed_flow_v1",
+    "dataset_order": ["dataset", "position_search", "position_controller", "position_freeze"],
+    "cast_order": ["bank_execute", "generation", "evaluation", "alpha_freeze", "test_gate", "generation", "evaluation", "evidence_freeze"],
+    "tldr_audit_insert": ["post_training_audit_prepare", "manual_audit", "post_training_audit_freeze", "bank_finalize_audit"],
+    "test_isolation": true,
+    "trajectory_default": {"enabled": true, "coverage": "all_samples"}
+  },
+  "profiles": {
+    "formal": {
+      "publishable": true,
+      "gpu_required": true,
+      "sample_counts": "protocol.data"
+    },
+    "formal_scaled_gpu": {
+      "publishable": false,
+      "gpu_required": true,
+      "same_flow": true,
+      "only_override": ["explicit_registered_sample_counts"],
+      "synthetic_data_forbidden": true,
+      "fake_backend_forbidden": true
+    }
+  },
+  "backend_policy": {
+    "typed_registration_required": true,
+    "unregistered_status": "pending_external_registration",
+    "legacy_fallback": false,
+    "parallel_method_implementations": false
+  },
+  "implementation_boundary": {
+    "new_framework_only": true,
+    "prior_protocol_code_forbidden": true,
+    "prior_runner_or_backend_forbidden": true,
+    "prior_frozen_data_or_result_import_forbidden": true,
+    "public_source_reconstruction_required": true
+  },
+  "data_provenance_policy": {
+    "required": true,
+    "owner": "protocol.data.provenance",
+    "network_source_is_scientific_identity": true,
+    "machine_registry_may_only_bind_local_mirror": true,
+    "must_pin": ["source_uri", "source_revision", "operation_chain", "shuffle_or_order_rule", "role_mapping"],
+    "must_emit": ["data_request.local.json", "dataset_manifest.json", "roles/{role}.manifest.json"],
+    "compile_rejects_missing_provenance": true
+  },
+  "randomness_policy": {
+    "owner": "protocol.randomness",
+    "all_stochastic_scopes_must_be_registered": true,
+    "implicit_or_time_seed": "forbidden",
+    "seed_drift": "compile_rejects"
+  },
+  "evidence": {
+    "one_root_per_matrix_job": true,
+    "immutable_outputs": true,
+    "trajectory_and_component_scores": "registered_by_shared_trajectory_controller",
+    "audit_pause_resume": "shared_manual_audit_controller",
+    "prior_result_or_data_migration": "forbidden_in_current_protocol_implementation_phase"
+  }
+}

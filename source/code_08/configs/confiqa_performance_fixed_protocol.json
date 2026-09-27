@@ -1,0 +1,576 @@
+{
+  "protocol_id": "confiqa_performance_fixed_protocol",
+  "schema_version": 1,
+  "fixed_date": "2026-08-27",
+  "status": "fixed_before_new_gpu_execution",
+  "gpu_execution_authorized": false,
+  "documentation": "docs/CONFIQA_PERFORMANCE_FIXED_PROTOCOL.md",
+  "supersedes_current_file": "docs/CONFIQA_PERFORMANCE_JOINT_SPLIT_AMENDMENT_20260821_V1.md",
+  "scope": {
+    "task": "confiqa",
+    "experiment": "performance",
+    "mixture": "joint_qa_mr_mc_only",
+    "per_subset_non_mixed_row_allowed": false,
+    "external_rcm_position_baselines_allowed": false,
+    "k16_to_k8_audit_allowed": false,
+    "main_claim": "complete_preregistered_method_pipeline_performance",
+    "parameterization_claim_source": "matched_cast_sv_vs_cast_reft_only"
+  },
+  "models": {
+    "llama3_8b": {
+      "sft": {
+        "id": "meta-llama/Meta-Llama-3-8B-Instruct",
+        "revision": "8afb486c1db24fe5011ec46dfbe5b5dccdb575c2"
+      },
+      "dpo": {
+        "id": "Bibaolong/Context-Faithful-LLaMA-3-8b-instruct",
+        "revision": "d6b570c51a8c579e6105da558c0f6e9fb1235962"
+      },
+      "num_layers": 32
+    },
+    "qwen2_7b": {
+      "sft": {
+        "id": "Qwen/Qwen2-7B-Instruct",
+        "revision": "f2826a00ceef68f0f2b946d945ecc0477ce4450c"
+      },
+      "dpo": {
+        "id": "Bibaolong/Context-Faithful-Qwen2-7B-Instruct",
+        "revision": "bc9db6ba9dbcdc3c1899e94d38065abe2830c991"
+      },
+      "num_layers": 28
+    }
+  },
+  "dataset": {
+    "repository": "https://github.com/byronBBL/Context-DPO",
+    "commit": "557dadeeb9f47407890a5626128ca99907770b22",
+    "source_directory": "ConFiQA",
+    "source_order": "official_file_order",
+    "shuffle": false,
+    "source_file_sha256": {
+      "qa": "9b201a7e2f2bbf8ad8ae3364eb87c194cf5d6007789c8b5302c091fa8fae74e4",
+      "mr": "dbb76f361831b754b87219344d80a386eaf83078ffe5888272dbe9d8e6c0eede",
+      "mc": "a058e0ca631b90bc799ddedc3bb92aea56d249c604f8a12d309cbcd4ec627994"
+    },
+    "prompt_contract": {
+      "id": "context_dpo_official_v1",
+      "template": "{context}\nQ: {question}\nA: ",
+      "preserve_final_ascii_space": true,
+      "normalization": "preserve_exact",
+      "byte_exact_assertion": true
+    },
+    "validity_and_refill": {
+      "validity": "existing_confiqa_competition_group_validator",
+      "rejection_reasons": [
+        "missing_required_question_context_or_endpoint",
+        "identical_normalized_competition_endpoints",
+        "empty_endpoint_after_alias_cleanup"
+      ],
+      "fill_rejected_rows": true,
+      "fill_order": "continue_official_file_order",
+      "required_audit_artifacts": [
+        "sample_admission_manifest.json",
+        "admitted_source_rows.csv",
+        "rejected_source_rows.jsonl",
+        "replacement_source_rows.jsonl"
+      ]
+    },
+    "joint_admitted": {
+      "source_start_per_subset": 0,
+      "target_valid_groups_per_subset": 100,
+      "interleave_order": [
+        "qa",
+        "mr",
+        "mc"
+      ],
+      "total_groups": 300,
+      "role": "training_and_position_localization",
+      "selector_and_train_overlap_allowed": true
+    },
+    "train_validation": {
+      "ordinal_basis": "zero_based_within_subset_admitted_order",
+      "validation_rule": "j_mod_5_equals_0",
+      "train_per_subset": 80,
+      "validation_per_subset": 20,
+      "joint_train": 240,
+      "joint_validation": 60,
+      "method_specific_split_allowed": false
+    },
+    "alpha_dev": {
+      "source_start_per_subset": 301,
+      "target_valid_rows_per_subset": 40,
+      "interleave_order": [
+        "qa",
+        "mr",
+        "mc"
+      ],
+      "total_rows": 120,
+      "refill_rejections": true,
+      "role": "inference_strength_selection_only",
+      "disjoint_from": [
+        "joint_admitted",
+        "qa_test",
+        "mr_test",
+        "mc_test"
+      ]
+    },
+    "final_test": {
+      "source_start_per_subset": 1500,
+      "target_valid_rows_per_subset": 2048,
+      "refill_rejections": true,
+      "shuffle": false,
+      "subsets": [
+        "qa",
+        "mr",
+        "mc"
+      ],
+      "reporting": "per_subset_then_equal_weight_macro",
+      "pooled_only_evidence_allowed": false
+    }
+  },
+  "behavior_edge": {
+    "name": "closed_context_over_prior_competition_margin",
+    "target": "context_supported_counterfactual_answer",
+    "alternative": "original_parametric_prior_answer",
+    "endpoint_objective": "pair_margin",
+    "score_mode": "answer_rest_margin",
+    "option_selection_mode": "model_max",
+    "open_generation_used_for_position_selection": false
+  },
+  "cast_position_manifest": {
+    "role": "internal_cast_stage_not_a_result_row",
+    "unit": "pre_o_attention_head",
+    "joint_across_subsets": true,
+    "site_count": 8,
+    "target_support_count": 4,
+    "competitor_support_count": 4,
+    "distinct_sites_required": true,
+    "source_rows": "dataset.joint_admitted",
+    "frozen_before_payload_training": true,
+    "validation_driven_position_change_allowed": false,
+    "k16_candidate_pool": false,
+    "single_head_audit": false,
+    "manual_replacement": false,
+    "external_baseline_position_reuse": false
+  },
+  "cast_common": {
+    "base_model_frozen": true,
+    "train_rows": 240,
+    "pair_validation_rows": 60,
+    "loss": {
+      "preference_loss_mode": "margin_gain",
+      "state_margin_weight": 0.0,
+      "gain_weight": 1.0,
+      "target_gain": 0.0,
+      "alpha_train": 1.0,
+      "lambda_norm": 0.0001
+    },
+    "optimizer": {
+      "name": "AdamW",
+      "lr": 0.05,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0.01,
+      "scheduler": "none",
+      "gradient_clipping": "none"
+    },
+    "epochs": 2,
+    "effective_batch": 4,
+    "seed": 42,
+    "shuffle_seed": 42,
+    "parameter_dtype": "float32",
+    "role_banks": {
+      "train_independently": true,
+      "shared_pairs": true,
+      "shared_optimizer_profile": true,
+      "shared_seed": true,
+      "compose_at_inference": "sum",
+      "shared_alpha": true,
+      "per_role_or_per_head_alpha_allowed": false
+    },
+    "timings": {
+      "all_token": {
+        "train_apply_mode": "all",
+        "generation_apply_mode": "all"
+      },
+      "prefill_only": {
+        "train_apply_mode": "prefill",
+        "generation_apply_mode": "prefill"
+      },
+      "payload_shared_across_timings": false,
+      "position_manifest_shared_across_timings": true
+    },
+    "alpha": {
+      "grid": [
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        1.0
+      ],
+      "selection_rows": "dataset.alpha_dev",
+      "selection_metric": "equal_weight_macro_logic_score_over_qa_mr_mc",
+      "logic_score_formula": "context_only_rate+short_exact_context_rate-prior_hit_rate-neither_rate-mean_chars/400",
+      "tie_break": "smallest_alpha",
+      "one_alpha_for_all_subsets": true,
+      "alpha_zero_reuse": "once_per_byte_identical_receiving_checkpoint_prompt_decoding_and_rows"
+    }
+  },
+  "cast_sv": {
+    "geometry": "one_d_head_vector_per_selected_head",
+    "site_count": 8,
+    "initialization": "float32_zeros",
+    "parameter_count_formula": "8*d_head"
+  },
+  "cast_reft": {
+    "identity": "internal_head_local_cast_reft_not_external_loreft_lm",
+    "reft_mode": "low_rank",
+    "rank": 4,
+    "site_count": 8,
+    "site_kind": "pre_o_attention_head",
+    "formula": "h_prime=h+alpha*((h@D)@U)/sqrt(rank)",
+    "down_shape": "d_head_x_rank",
+    "up_shape": "rank_x_d_head",
+    "bias": false,
+    "share_across_sites": false,
+    "warm_start": false,
+    "down_initialization": "normal_mean_0_std_0.01",
+    "up_initialization": "zeros",
+    "parameter_dtype": "float32",
+    "parameter_count_formula": "8*2*d_head*4",
+    "same_position_manifest_as_cast_sv": true,
+    "same_loss_and_training_budget_as_cast_sv": true,
+    "factor_specific_retraining": false,
+    "k16_to_k8_audit": false,
+    "required_runner_assertions": [
+      "reft_mode_is_low_rank",
+      "rank_is_4",
+      "site_count_is_8",
+      "warm_start_is_false",
+      "training_and_generation_apply_modes_match"
+    ]
+  },
+  "dpo_cast": {
+    "transfer": {
+      "reuse_sft_position_manifest": true,
+      "reuse_sft_payload_byte_exact": true,
+      "relocalize": false,
+      "retrain": false,
+      "warm_start_or_adaptation": false,
+      "alpha_reselected_on_dpo_alpha_dev120": true,
+      "k16_to_k8_audit": false
+    },
+    "nontransfer": {
+      "position_manifest": "dpo_checkpoint_own_joint_k8",
+      "train_new_payload": true,
+      "same_joint_data_roles": true,
+      "same_geometry_timing_optimizer_and_alpha_rules_as_corresponding_sft_row": true,
+      "k16_to_k8_audit": false
+    },
+    "required_geometries": [
+      "sv",
+      "reft"
+    ],
+    "required_timings": [
+      "all_token",
+      "prefill_only"
+    ]
+  },
+  "external_baselines": {
+    "bipo_sv_native_task_adapted": {
+      "official_repository": "https://github.com/CaoYuanpu/BiPO",
+      "commit": "cef1d00ab108d0e265578589e6b344b200ea3db8",
+      "fidelity_label": "task_adapted_not_original_table_reproduction",
+      "component": "one_full_hidden_vector_at_one_residual_layer",
+      "simultaneous_intervention_layers": 1,
+      "timing": "all_token",
+      "reference_model": "separate_frozen_same_checkpoint_model",
+      "loss": "official_bidirectional_bipo_sigmoid_dpo",
+      "beta": 0.1,
+      "label_smoothing": 0.0,
+      "optimizer": {
+        "name": "AdamW",
+        "lr": 0.0005,
+        "effective_batch": 4,
+        "weight_decay": 0.05,
+        "scheduler": "cosine",
+        "warmup_steps": 100
+      },
+      "layer_candidates": {
+        "reference_32_layer": [
+          11,
+          13,
+          15,
+          17
+        ],
+        "llama3_8b": [
+          11,
+          13,
+          15,
+          17
+        ],
+        "qwen2_7b": [
+          10,
+          11,
+          13,
+          15
+        ]
+      },
+      "epoch_candidates": [
+        1,
+        5,
+        10,
+        20,
+        40
+      ],
+      "trained_configuration_count": 20,
+      "checkpoint_selection": "minimum_native_bipo_heldout_loss_on_joint_pair_validation60",
+      "strength_grid": [
+        1.0,
+        2.0
+      ],
+      "strength_selection": "equal_weight_macro_logic_score_on_joint_alpha_dev120",
+      "rcm_position_variant_allowed": false
+    },
+    "loreft_lm_native_matched_budget": {
+      "official_repositories": [
+        {
+          "url": "https://github.com/stanfordnlp/axbench",
+          "commit": "41c8332543e5a631f9a8c0a9df38799893ace758"
+        },
+        {
+          "url": "https://github.com/stanfordnlp/pyreft",
+          "commit": "dafd0995a366d7b47160a337dcc388eda7431821"
+        }
+      ],
+      "fidelity_label": "matched_budget_task_adaptation_not_full_official_grid",
+      "loss": "chosen_only_teacher_forced_causal_lm_token_nll",
+      "reads_rejected_response": false,
+      "rank": 4,
+      "simultaneous_intervention_layers": 4,
+      "positions": "f5+l5",
+      "timing": "prefill_only",
+      "share_weights_within_layer_positions": true,
+      "share_weights_across_layers": false,
+      "source_tuple": {
+        "model": "google/gemma-2-9b-it",
+        "num_layers": 42,
+        "layers": [
+          12,
+          20,
+          31,
+          39
+        ],
+        "selection": "fixed_in_official_axbench_config_not_task_searched"
+      },
+      "normalized_depth_formula": "round(source_layer/(source_num_layers-1)*(target_num_layers-1))",
+      "mapped_layers": {
+        "llama3_8b": [
+          9,
+          15,
+          23,
+          29
+        ],
+        "qwen2_7b": [
+          8,
+          13,
+          20,
+          26
+        ]
+      },
+      "layer_tuple_task_search_allowed": false,
+      "optimizer": {
+        "name": "AdamW",
+        "weight_decay": 0.0,
+        "scheduler": "linear",
+        "warmup_ratio": 0.0
+      },
+      "training_configurations": [
+        {
+          "effective_batch": 12,
+          "lr": 0.04,
+          "epochs": 6,
+          "dropout": 0.0
+        },
+        {
+          "effective_batch": 12,
+          "lr": 0.04,
+          "epochs": 12,
+          "dropout": 0.0
+        },
+        {
+          "effective_batch": 12,
+          "lr": 0.04,
+          "epochs": 18,
+          "dropout": 0.0
+        },
+        {
+          "effective_batch": 12,
+          "lr": 0.08,
+          "epochs": 12,
+          "dropout": 0.0
+        }
+      ],
+      "checkpoint_selection": "minimum_chosen_response_token_nll_on_joint_pair_validation60",
+      "factor_grid": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0,
+        1.2,
+        1.4,
+        1.6,
+        1.8,
+        2.0,
+        2.5,
+        3.0,
+        4.0,
+        5.0
+      ],
+      "factor_selection": "equal_weight_macro_logic_score_on_joint_alpha_dev120",
+      "rcm_position_variant_allowed": false
+    }
+  },
+  "casthead_controls": {
+    "timing": "all_token",
+    "geometry": "cast_sv",
+    "mixture": "joint_qa_mr_mc",
+    "pos": "target_support_k4_only",
+    "neg": "competitor_support_k4_only",
+    "same_data_loss_optimizer_alpha_and_test": true,
+    "per_head_alpha_allowed": false
+  },
+  "tuning_fairness": {
+    "common_selection_roles": [
+      "joint_train240",
+      "joint_pair_validation60",
+      "joint_alpha_dev120",
+      "qa_mr_mc_test2048"
+    ],
+    "test_feedback_allowed": false,
+    "numeric_strength_grid_must_match_across_method_families": false,
+    "method_native_grid_required": true,
+    "cost_fields_required": [
+      "position_candidate_evaluations",
+      "trained_configuration_count",
+      "optimizer_steps_per_configuration",
+      "strength_evaluation_count",
+      "generated_dev_examples",
+      "gpu_hours",
+      "peak_gpu_memory_mib"
+    ],
+    "ledger": {
+      "cast_sv_per_timing": {
+        "trained_configs": 1,
+        "strength_evaluations": 10
+      },
+      "cast_reft_per_timing": {
+        "trained_configs": 1,
+        "strength_evaluations": 10
+      },
+      "bipo_sv_native": {
+        "trained_configs": 20,
+        "strength_evaluations": 2
+      },
+      "loreft_lm_native": {
+        "trained_configs": 4,
+        "strength_evaluations": 14
+      },
+      "casthead_pos_or_neg": {
+        "trained_configs": 1,
+        "strength_evaluations": 10
+      }
+    }
+  },
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 64,
+    "stop_strings": [
+      "Q:"
+    ]
+  },
+  "metrics": {
+    "primary": [
+      "pc",
+      "context_only"
+    ],
+    "required": [
+      "actual_n",
+      "pc",
+      "po",
+      "mr",
+      "em",
+      "context_only",
+      "prior_only",
+      "both",
+      "neither",
+      "short_exact_context",
+      "mean_chars",
+      "health"
+    ],
+    "alpha_selection_only": "logic_score",
+    "report_per_subset": true,
+    "report_equal_weight_macro": true
+  },
+  "matrix_rows": [
+    "base_sft",
+    "official_rag",
+    "strong_rag",
+    "context_dpo",
+    "sft_cast_sv_all",
+    "sft_cast_sv_prefill",
+    "sft_cast_reft_all",
+    "sft_cast_reft_prefill",
+    "dpo_cast_sv_transfer_all",
+    "dpo_cast_sv_transfer_prefill",
+    "dpo_cast_reft_transfer_all",
+    "dpo_cast_reft_transfer_prefill",
+    "dpo_cast_sv_nontransfer_all",
+    "dpo_cast_sv_nontransfer_prefill",
+    "dpo_cast_reft_nontransfer_all",
+    "dpo_cast_reft_nontransfer_prefill",
+    "bipo_sv_native_task_adapted",
+    "loreft_lm_native_matched_budget",
+    "casthead_pos_all",
+    "casthead_neg_all"
+  ],
+  "forbidden_substitutions": [
+    "per_subset_controller_for_joint_row",
+    "per_subset_alpha_for_joint_row",
+    "pooled_only_test_for_three_subset_test",
+    "all_token_payload_with_prefill_only_inference_label",
+    "k16_to_k8_audit",
+    "manual_head_replacement",
+    "bipo_or_loreft_rcm_position_variant",
+    "cast_reft_gated_vector_mode",
+    "cast_reft_warm_start",
+    "wrong_loreft_native_tuple",
+    "test_selected_position_checkpoint_or_strength"
+  ],
+  "required_evidence": [
+    "source_and_split_audit",
+    "disjointness_validation",
+    "model_and_tokenizer_revisions",
+    "prompt_byte_hash",
+    "method_source_commit",
+    "all_training_config_validation_results",
+    "selected_training_config_and_tie_break",
+    "position_manifest_where_applicable",
+    "payload_or_adapter_hash",
+    "parameter_count_and_optimizer_step_audit",
+    "full_strength_selection_summary",
+    "qa_mr_mc_test2048_generations_and_summaries",
+    "macro_summary",
+    "run_local_manifest",
+    "reproduction_command",
+    "gpu_cost_ledger"
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "protocol_id": "performance_experiment_partial_lock_20260801_v3",
+  "version": 3,
+  "lock_date": "2026-08-01",
+  "status": "partial_lock_no_execution",
+  "execution_authorized": false,
+  "remote_source_of_truth": "LOCAL_HOME/RPEC/projects/screscomp",
+  "documentation": "docs/PERFORMANCE_EXPERIMENT_PARTIAL_LOCK_20260801_V3.md",
+  "supersedes_for_scope_only": "docs/PERFORMANCE_EXPERIMENT_PARTIAL_LOCK_20260801_V2.md",
+  "v2_scope_change": "replace_tulu3_wildbench_with_open_domain_precise_instruction_following",
+  "protected_protocols": [
+    "docs/SITE_POSITION_FULL_FIXED_PROTOCOL_20260719_V12.md",
+    "configs/site_position_full_fixed_protocol_20260719_v12.json",
+    "docs/MLP_SITE_TRANSFER_FIXED_PROTOCOL_20260722_V1.md",
+    "configs/mlp_site_transfer_fixed_protocol_20260722_v1.json",
+    "docs/IMDB_PERFORMANCE_FIXED_PROTOCOL_20260726_V2.md",
+    "configs/imdb_performance_fixed_protocol_20260726_v2.json",
+    "docs/PERFORMANCE_EVIDENCE_FREEZE_20260726_V1.md",
+    "configs/performance_evidence_freeze_20260726_v1.json"
+  ],
+  "main_performance_tasks": [
+    "confiqa",
+    "imdb",
+    "tldr",
+    "tulu3_precise_instruction_following"
+  ],
+  "official_code": {
+    "context_dpo": {
+      "repository": "https://github.com/byronBBL/Context-DPO",
+      "revision": "557dadeeb9f47407890a5626128ca99907770b22"
+    },
+    "lion_alignment": {
+      "repository": "https://github.com/Columbia-NLP-Lab/LionAlignment",
+      "revision": "a144ae584dcada02a08cce700c61fc88e018bbea"
+    },
+    "open_instruct": {
+      "repository": "https://github.com/allenai/open-instruct",
+      "revision": "b18cfc57c07c37f6a90d8b86e4c2b24934944b50"
+    },
+    "ifbench": {
+      "repository": "https://github.com/allenai/IFBench",
+      "revision": "c6767a19bd82ac0536cab950f2f8f6bcc6fabe7c"
+    }
+  },
+  "tasks": {
+    "confiqa": {
+      "inherited_from_v2_without_change": false,
+      "executable_authority": "configs/confiqa_performance_fixed_protocol.json",
+      "documentation": "docs/CONFIQA_PERFORMANCE_FIXED_PROTOCOL.md",
+      "mixture": "joint_qa_mr_mc_only",
+      "k16_to_k8_audit": false,
+      "external_rcm_position_baselines": false,
+      "existing_frozen_family": {
+        "model": "Bibaolong/Context-Faithful-LLaMA-3-8b-instruct",
+        "revision": "d6b570c51a8c579e6105da558c0f6e9fb1235962",
+        "mutation_allowed": false
+      },
+      "qwen2_extension": {
+        "base_model": {
+          "id": "Qwen/Qwen2-7B-Instruct",
+          "revision": "f2826a00ceef68f0f2b946d945ecc0477ce4450c"
+        },
+        "official_context_dpo_adapter": {
+          "id": "Bibaolong/Context-Faithful-Qwen2-7B-Instruct",
+          "revision": "bc9db6ba9dbcdc3c1899e94d38065abe2830c991",
+          "classification": "released_official_peft_checkpoint_evaluation"
+        },
+        "required_rows_ref": "configs/confiqa_performance_fixed_protocol.json#matrix_rows",
+        "reuse_llama_components_or_actuators": false,
+        "comparison_scope": "within_qwen2_family"
+      },
+      "unresolved_before_execution": []
+    },
+    "imdb": {
+      "authority": "configs/imdb_performance_fixed_protocol_20260726_v2.json",
+      "changed_by_this_protocol": false
+    },
+    "tldr": {
+      "inherited_from_v2_without_change": true,
+      "existing_evidence_changed": false,
+      "modern_checkpoint_extension": {
+        "sft": {
+          "id": "Columbia-NLP/LION-LLaMA-3-8b-sft-v1.0",
+          "revision": "6b40eac401b5d450e88fe76083ef8a58fe82943c"
+        },
+        "dpo": {
+          "id": "Columbia-NLP/LION-LLaMA-3-8b-dpo-v1.0",
+          "revision": "a53afeff7f584ebef91da4a67666bdf7d20b4b1d",
+          "classification": "released_broad_preference_checkpoint_evaluation"
+        },
+        "required_rows": [
+          "lion_sft",
+          "lion_sft_plus_cast",
+          "lion_dpo",
+          "lion_dpo_plus_cast"
+        ],
+        "evaluation_contract": "existing_tldr_clean320_human_reference_full_order_swap",
+        "candidate_vs_candidate_replaces_human_reference": false,
+        "same_sample_efficiency_claim_allowed": false,
+        "comparison_scope": "within_lion_family"
+      },
+      "unresolved_before_execution": [
+        "executable_task_protocol",
+        "shared_scientific_config",
+        "cast_edge_and_score",
+        "component_and_actuator_specification",
+        "train_validation_ids_and_hashes",
+        "adaptation_budget",
+        "alpha_validation_rule",
+        "generation_manifest_and_exact_inherited_evaluator_hashes"
+      ]
+    },
+    "tulu3_precise_instruction_following": {
+      "task_role": "open_domain_precise_instruction_following",
+      "single_behavioral_object": true,
+      "content_domains_may_vary": true,
+      "behavioral_edge": {
+        "target_state": "same request completed while satisfying all original explicit verifiable constraints",
+        "competing_state": "same request remains relevant but fails at least one original explicit constraint",
+        "score_family": "constraint_compliance",
+        "general_helpfulness_edge_allowed": false
+      },
+      "training_preference_source": {
+        "id": "allenai/tulu-3-pref-personas-instruction-following",
+        "revision": "cdf475940025c0434a22dbd0bbed336a746942fe",
+        "split": "train",
+        "published_rows": 19890,
+        "construction": "chosen_satisfies_original_constraints_rejected_from_one_constraint_relaxed_prompt",
+        "role": "cast_training_and_localization_source_only"
+      },
+      "excluded_primary_pair_sources": [
+        "allenai/llama-3.1-tulu-3-8b-preference-mixture",
+        "allenai/olmo-2-1124-13b-preference-mix",
+        "allenai/tulu-3-IF-augmented-on-policy-8b",
+        "allenai/tulu-3-wildchat-if-on-policy-8b"
+      ],
+      "same_pair_source_across_model_families": true,
+      "same_exact_pair_ids_and_budget_required": true,
+      "model_families": {
+        "llama31_8b": {
+          "sft": {
+            "id": "allenai/Llama-3.1-Tulu-3-8B-SFT",
+            "revision": "f2a0b46b0cfda21003c6141b1ff837b7e165524d"
+          },
+          "dpo": {
+            "id": "allenai/Llama-3.1-Tulu-3-8B-DPO",
+            "revision": "a7beb67e33ffd01cc87ac3b46cadc1000985b8db"
+          }
+        },
+        "olmo2_13b": {
+          "sft": {
+            "id": "allenai/OLMo-2-1124-13B-SFT",
+            "revision": "b7ec47ed94f3f1d244d9d3cc53eb5d269f8eceec"
+          },
+          "dpo": {
+            "id": "allenai/OLMo-2-1124-13B-DPO",
+            "revision": "97a7f33fc8b419808db4ff92795244021e5cf5c2"
+          },
+          "preview_checkpoints_allowed": false
+        }
+      },
+      "required_rows_per_family": [
+        "sft",
+        "sft_plus_cast",
+        "dpo",
+        "dpo_plus_cast"
+      ],
+      "controller_reuse_between_sft_and_dpo_allowed": false,
+      "native_if_rlvr_reference": {
+        "required": false,
+        "status": "unresolved_official_checkpoint_provenance",
+        "local_approximation_allowed_under_native_name": false
+      },
+      "evaluation": {
+        "dataset": "allenai/IFBench_test",
+        "revision": "2e8a48de45ff3bf41242f927254ca81b59ca3ae2",
+        "config": "default",
+        "hf_split_name": "train",
+        "scientific_role": "final_test_only",
+        "rows": 300,
+        "constraint_types": 58,
+        "multiturn_included": false,
+        "may_select_components_pairs_or_alpha": false,
+        "temperature": 0.0,
+        "primary_metric": "official_prompt_level_loose_accuracy",
+        "additional_metrics": "all_other_official_ifbench_verifier_aggregates",
+        "health_audit": [
+          "empty_output",
+          "repetition",
+          "truncation",
+          "invalid_output",
+          "length"
+        ]
+      },
+      "cross_model_absolute_method_claim_allowed": false,
+      "same_sample_efficiency_claim_against_released_dpo_allowed": false,
+      "unresolved_before_execution": [
+        "executable_task_protocol_and_shared_scientific_config",
+        "exact_pair_admission_ids_split_and_overlap_audit",
+        "rcm_component_family_state_score_intervention_operator_and_timing",
+        "adaptation_sample_counts",
+        "optimizer_epochs_batch_size_and_trainable_dimension",
+        "alpha_grid_and_validation_rule",
+        "maximum_generation_length_and_deterministic_decoding_manifest",
+        "health_audit_implementation",
+        "backend_hook_compatibility_and_exact_memory_plan",
+        "optional_native_if_rlvr_reference_checkpoint_provenance"
+      ]
+    }
+  },
+  "reserved_script_paths": [
+    "scripts/paper/run_confiqa_qwen2_performance_20260801_v1.sh",
+    "scripts/paper/run_tldr_lion_performance_20260801_v1.sh",
+    "scripts/paper/run_tulu3_precise_if_performance_20260801_v1.sh",
+    "scripts/paper/validate_performance_expansion_20260801_v2.py"
+  ],
+  "reserved_paths_are_implemented": false,
+  "claim_boundaries": [
+    "No universal superiority over RLHF, DPO, or RLVR.",
+    "No direct absolute-score method claim across different base models.",
+    "No sample-efficiency claim against released checkpoints with unmatched training budgets.",
+    "No broad WildBench or general chat-quality claim from IFBench.",
+    "No reasoning, factuality, safety, or creativity claim from IFBench alone.",
+    "No new result is created or authorized by this partial lock."
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "protocol_id": "site_heldout_2048_tldr_human_only_judge_amendment_20260727_v1",
+  "version": 1,
+  "status": "locked_after_generation_before_valid_judging",
+  "last_updated": "2026-07-27",
+  "remote_source_of_truth": "LOCAL_HOME/RPEC/projects/screscomp",
+  "scope": "tldr_heldout_2048_judge_only",
+  "reason": "Only fixed-candidate versus human-reference comparisons are required; candidate-versus-candidate judgments add no evidence for the reported final table.",
+  "parent": {
+    "protocol_id": "site_heldout_2048_fixed_protocol_20260726_v1",
+    "config": "LOCAL_HOME/RPEC/projects/screscomp/configs/site_heldout_2048_fixed_protocol_20260726_v1.json",
+    "config_sha256": "5702b06d3a02ef5e041998873d135d2e254ec16338c75cb8d8ed084fbe267717"
+  },
+  "invariants": {
+    "generation_reuse_required": true,
+    "generation_rerun": false,
+    "component_or_head_reselection": false,
+    "actuator_retraining": false,
+    "alpha_reselection": false,
+    "prompt_change": false,
+    "decoding_change": false,
+    "judge_model_change": false,
+    "metric_change": false,
+    "candidate_selection": false,
+    "candidate_vs_candidate_comparisons": false
+  },
+  "judge": {
+    "comparison_scope": "each_fixed_candidate_vs_human_reference_only",
+    "runner_mode": "human",
+    "expected_rows": 2048,
+    "candidate_count": 7,
+    "candidate_names": [
+      "sft",
+      "F__rcm_zero_signed__pool_00",
+      "F__rcm_patch_signed__pool_00",
+      "F__iti__pool_00",
+      "F__random__seed_20260702",
+      "F__random__seed_20260703",
+      "F__random__seed_20260704"
+    ],
+    "include_sft": true,
+    "reference": "human",
+    "first_pass_packets": 14336,
+    "review_fraction": 1.0,
+    "review_mode": "full_order_swap",
+    "review_packets": 14336,
+    "maximum_total_judgments": 28672,
+    "output_dir": "tldr/judge_human_only",
+    "superseded_output_dir": "tldr/judge",
+    "superseded_partial_first_pass_rows": 2308,
+    "superseded_partial_has_summary": false,
+    "superseded_partial_evidence_status": "forbidden"
+  }
+}

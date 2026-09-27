@@ -1,0 +1,299 @@
+{
+  "backend_binding": {
+    "id": "site_data_confiqa",
+    "version": 1
+  },
+  "construction": {
+    "allocation_rule": "split each registered total as evenly as possible and assign the remainder in subset order",
+    "allowed_role_overlap": [
+      [
+        "selector",
+        "training"
+      ],
+      [
+        "selector",
+        "validation"
+      ]
+    ],
+    "alpha_dev": {
+      "admission": "from the registered source start, scan official order until the registered valid count is reached",
+      "refill_rejected": true,
+      "window_by_subset": {
+        "mc": [
+          327,
+          367
+        ],
+        "mr": [
+          325,
+          365
+        ],
+        "qa": [
+          315,
+          355
+        ]
+      }
+    },
+    "merge_order": [
+      "qa",
+      "mr",
+      "mc"
+    ],
+    "mode": "one_mixed_controller_over_three_subsets",
+    "reserved_unused_after_selector": {
+      "purpose": "preserve the preregistered disjoint alpha-dev boundary; no formal method reads these rows",
+      "refill_rejected": false,
+      "window_by_subset": {
+        "mc": [
+          314,
+          327
+        ],
+        "mr": [
+          312,
+          325
+        ],
+        "qa": [
+          301,
+          315
+        ]
+      }
+    },
+    "roles": {
+      "alpha_dev": {
+        "target_count": 120
+      },
+      "selector": {
+        "target_count": 300
+      },
+      "test": {
+        "target_count": 2048
+      },
+      "training": {
+        "target_count": 240
+      },
+      "validation": {
+        "target_count": 60
+      }
+    },
+    "selector": {
+      "admission": "scan official order until the registered valid count is reached",
+      "initial_window": [
+        0,
+        300
+      ],
+      "refill_rejected": true,
+      "rejection_reasons": [
+        "missing_required_question_context_or_endpoint",
+        "identical_normalized_competition_endpoints",
+        "empty_endpoint_after_alias_cleanup"
+      ],
+      "source_start": 0,
+      "train_validation_rule": "prepared_row_index_mod_5_equals_0_is_validation_else_training"
+    },
+    "subset_order": [
+      "qa",
+      "mr",
+      "mc"
+    ],
+    "test": {
+      "admission": "scan official order from source_start until the registered valid count is reached",
+      "original_500_test_in_scope": false,
+      "refill_rejected": true,
+      "source_start": 1500,
+      "target_valid_rows": 2048
+    },
+    "training_epoch_shuffle": {
+      "algorithm": "CPython_random_Random_shuffle",
+      "enabled": true,
+      "scope": "merged_qa_mr_mc_training_rows",
+      "seed": 42
+    }
+  },
+  "model_family": "qwen2_7b",
+  "prompt_registry": {
+    "registry_path": "configs/prompts/prompt_registry_20260831_v1.json",
+    "selections": {
+      "confiqa": {
+        "official_rag": "confiqa.official_rag.context_dpo_v1"
+      },
+      "imdb": {
+        "base_state": "imdb.base_state_v1",
+        "good_state": "imdb.good_state_v1",
+        "preference_prefix": "imdb.preference_prefix_v1"
+      },
+      "tldr": {
+        "source_prompt": "tldr.source_prompt_passthrough_v1"
+      }
+    }
+  },
+  "protocol": {
+    "id": "performance_non_tulu_site_aligned_20260831_v1",
+    "path": "configs/performance/confiqa_qwen_dual_formal_20260912.local.json"
+  },
+  "provenance": {
+    "adapter_id": "site_data_confiqa",
+    "ordering": {
+      "source": {
+        "algorithm": "preserve_official_source_order",
+        "enabled": false
+      },
+      "training": {
+        "algorithm": "CPython_random_Random_shuffle",
+        "enabled": true,
+        "seed": 42
+      }
+    },
+    "pipeline": [
+      {
+        "id": "confiqa_json_decode_v1",
+        "parameters": {
+          "encoding": "utf-8",
+          "row_identity": "source_row_index"
+        },
+        "version": 1
+      },
+      {
+        "id": "confiqa_role_projection_v1",
+        "parameters": {
+          "assignment": "ordered_nonoverlap_by_role_order",
+          "ordering": "official_source_order",
+          "source_shuffle": false
+        },
+        "version": 1
+      },
+      {
+        "id": "confiqa_training_epoch_shuffle_v1",
+        "parameters": {
+          "rng": "CPython random.Random",
+          "scope": "training_batches",
+          "seed": 42
+        },
+        "version": 1
+      }
+    ],
+    "role_mapping": {
+      "alpha_dev": {
+        "assignment": "fixed_nonrefilled_post_selector_window",
+        "counts_ref": "protocol.data.construction_profiles.confiqa.roles.alpha_dev",
+        "source_split": "registered_subset"
+      },
+      "selector": {
+        "assignment": "valid_group_refill_in_official_order",
+        "counts_ref": "protocol.data.construction_profiles.confiqa.roles.selector",
+        "source_split": "registered_subset"
+      },
+      "test": {
+        "assignment": "heldout_2048_valid_refill_from_row_1500",
+        "counts_ref": "protocol.data.construction_profiles.confiqa.roles.test",
+        "source_split": "registered_subset"
+      },
+      "training": {
+        "assignment": "prepared_index_mod_5_nonzero",
+        "counts_ref": "protocol.data.construction_profiles.confiqa.roles.training",
+        "source_split": "selector_admitted_groups"
+      },
+      "validation": {
+        "assignment": "prepared_index_mod_5_zero",
+        "counts_ref": "protocol.data.construction_profiles.confiqa.roles.validation",
+        "source_split": "selector_admitted_groups"
+      }
+    },
+    "sources": [
+      {
+        "files": [
+          {
+            "path": "ConFiQA-QA.json",
+            "uri": "https://raw.githubusercontent.com/byronBBL/Context-DPO/557dadeeb9f47407890a5626128ca99907770b22/ConFiQA/ConFiQA-QA.json"
+          },
+          {
+            "path": "ConFiQA-MR.json",
+            "uri": "https://raw.githubusercontent.com/byronBBL/Context-DPO/557dadeeb9f47407890a5626128ca99907770b22/ConFiQA/ConFiQA-MR.json"
+          },
+          {
+            "path": "ConFiQA-MC.json",
+            "uri": "https://raw.githubusercontent.com/byronBBL/Context-DPO/557dadeeb9f47407890a5626128ca99907770b22/ConFiQA/ConFiQA-MC.json"
+          }
+        ],
+        "id": "confiqa_context_dpo_repo",
+        "kind": "github_repository",
+        "revision": "557dadeeb9f47407890a5626128ca99907770b22",
+        "uri": "https://github.com/byronBBL/Context-DPO/tree/557dadeeb9f47407890a5626128ca99907770b22/ConFiQA"
+      }
+    ]
+  },
+  "role_counts_by_subset": {
+    "mc": {
+      "alpha_dev": 40,
+      "selector": 100,
+      "test": 682,
+      "training": 80,
+      "validation": 20
+    },
+    "mr": {
+      "alpha_dev": 40,
+      "selector": 100,
+      "test": 683,
+      "training": 80,
+      "validation": 20
+    },
+    "qa": {
+      "alpha_dev": 40,
+      "selector": 100,
+      "test": 683,
+      "training": 80,
+      "validation": 20
+    }
+  },
+  "role_outputs": {
+    "alpha_manifest": "alpha_dev",
+    "selector_manifest": "selector",
+    "test_manifest": "test",
+    "training_manifest": "training",
+    "validation_manifest": "validation"
+  },
+  "roles": {
+    "alpha_dev": {
+      "purpose": "calibration"
+    },
+    "selector": {
+      "purpose": "selection"
+    },
+    "test": {
+      "purpose": "final_test"
+    },
+    "training": {
+      "purpose": "training"
+    },
+    "validation": {
+      "purpose": "training_validation"
+    }
+  },
+  "shared_artifact_key": "performance_data__performance_confiqa_joint_20260831_v1__confiqa__joint__qwen2_7b__formal",
+  "sources": {
+    "confiqa_mc": {
+      "format": "json",
+      "location": "public_source/557dadeeb9f47407890a5626128ca99907770b22/ConFiQA-MC.json",
+      "source_id": "confiqa_context_dpo_repo"
+    },
+    "confiqa_mr": {
+      "format": "json",
+      "location": "public_source/557dadeeb9f47407890a5626128ca99907770b22/ConFiQA-MR.json",
+      "source_id": "confiqa_context_dpo_repo"
+    },
+    "confiqa_qa": {
+      "format": "json",
+      "location": "public_source/557dadeeb9f47407890a5626128ca99907770b22/ConFiQA-QA.json",
+      "source_id": "confiqa_context_dpo_repo"
+    }
+  },
+  "subset": "joint",
+  "subset_sources": {
+    "mc": "confiqa_mc",
+    "mr": "confiqa_mr",
+    "qa": "confiqa_qa"
+  },
+  "subsets": [
+    "qa",
+    "mr",
+    "mc"
+  ]
+}

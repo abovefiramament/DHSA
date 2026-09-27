@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "round": {
+    "index": 0,
+    "auto_previous_control": false,
+    "prev_scale": 1.0
+  },
+  "model": {
+    "path": "LOCAL_HOME/.cache/huggingface/hub/models--deepseek-ai--deepseek-math-7b-instruct",
+    "device": "auto",
+    "torch_dtype": "auto",
+    "use_chat_template": false
+  },
+  "output": {
+    "root": "data_gsm8k/rounds/deepseek_trajectory_dpo_480_120"
+  },
+  "task": {
+    "adapter": "gsm8k_trajectory_preference",
+    "name": "gsm8k_deepseek_trajectory_dpo_480_120_tune",
+    "event": "gsm8k_full_trajectory_preference",
+    "source_jsonl": "data_gsm8k/raw/train.jsonl",
+    "rollouts_jsonl": "data_gsm8k/rounds/deepseek_trajectory_dpo_480_120/rollouts/base_pool/generation_rows.jsonl",
+    "prompt_key": "deepseek_math_cot",
+    "prompt_semantics": "DeepSeek Math CoT prompt: Please reason step by step, and put your final answer within \\boxed{}.",
+    "val_mod": 5,
+    "require_complete_rollout_controls": true,
+    "memory_rollouts_jsonl": [],
+    "enable_recovery_memory": false,
+    "allow_current_mixed_pairs": true,
+    "allow_recovery_memory_pairs": true,
+    "require_current_negative_evidence": true,
+    "require_parse_certified": true,
+    "positive_quality_filter": true,
+    "require_positive_boxed": true,
+    "min_positive_reasoning_chars": 40,
+    "min_positive_reasoning_number_mentions": 2,
+    "min_correct_options": 1,
+    "min_wrong_options": 1,
+    "max_correct_options": 4,
+    "max_memory_correct_options": 4,
+    "max_wrong_answer_clusters": 3,
+    "max_wrong_options_per_cluster": 1
+  },
+  "pairs": {
+    "max_rows": null,
+    "continuation_policy": "sampled_full_trajectory_preference"
+  },
+  "discovery": {
+    "component_source": "reselect",
+    "reselect_components": true,
+    "reuse_components": "",
+    "component_types": [
+      "attn"
+    ],
+    "component_type_apply_modes": {
+      "attn": "all"
+    },
+    "rows": 160,
+    "mlp_topk": 0,
+    "mlp_negative_topk": 0,
+    "attn_layer_topk": 4,
+    "exclude_attn_layers": "0,1",
+    "scan_min_sign_consistency": 0.55,
+    "allow_ci_cross_zero": false,
+    "require_directional_ci": true,
+    "min_sign_consistency": 0.55,
+    "min_mlp_abs_mean_delta": 0.0001,
+    "min_attn_abs_mean_delta": 0.005,
+    "head_scan_rows": 64,
+    "head_scan_factors": [
+      0.0,
+      1.5
+    ],
+    "head_topk": 4,
+    "head_require_directional_ci": true
+  },
+  "training": {
+    "score_mode": "avglogp",
+    "option_selection_mode": "model_max",
+    "max_aliases_per_side": 3,
+    "train_split": "train",
+    "val_split": "val",
+    "max_train_rows": 480,
+    "max_val_rows": 120,
+    "epochs": 2,
+    "lr": 0.05,
+    "lambda_norm": 0.0001,
+    "alpha_train": 1.0,
+    "state_margin_weight": 0.0,
+    "gain_weight": 1.0,
+    "target_margin": 0.0,
+    "target_gain": 0.0,
+    "empty_cache_every": 25,
+    "mlp": {
+      "enabled": false,
+      "train_apply_mode": "prompt_last",
+      "generation_apply_mode": "prefill",
+      "timing_grid": [
+        {
+          "name": "prefill",
+          "train_apply_mode": "prompt_last",
+          "generation_apply_mode": "prefill"
+        },
+        {
+          "name": "first_decode",
+          "train_apply_mode": "decision_tokens",
+          "generation_apply_mode": "first_decode"
+        }
+      ]
+    },
+    "attention": {
+      "enabled": true,
+      "train_apply_mode": "all",
+      "generation_apply_mode": "all"
+    },
+    "full": {
+      "enabled": true,
+      "select_after_small_tune": true
+    }
+  },
+  "alpha": {
+    "scan": true,
+    "mlp": [
+      0.02,
+      0.03,
+      0.04,
+      0.05,
+      0.06
+    ],
+    "att": [
+      0.0625,
+      0.1,
+      0.15,
+      0.2,
+      0.25
+    ],
+    "full": {
+      "grid_mode": "paired_centerline",
+      "pairs": [
+        {
+          "mlp": 0.02,
+          "att": 0.0625
+        },
+        {
+          "mlp": 0.03,
+          "att": 0.1
+        },
+        {
+          "mlp": 0.04,
+          "att": 0.15
+        },
+        {
+          "mlp": 0.05,
+          "att": 0.2
+        },
+        {
+          "mlp": 0.06,
+          "att": 0.25
+        }
+      ]
+    },
+    "train_sweep": [
+      0.0,
+      1.0
+    ]
+  },
+  "selection": {
+    "metric": "strict_final_exact",
+    "minimum_material_gain": 0.01,
+    "residual_min_gain_over_prev": 0.005,
+    "tie_breakers": [
+      "numeric_valid",
+      "parse_certified",
+      "smaller_alpha"
+    ],
+    "write_best_config": "selection/best_small_tune_config.json"
+  },
+  "evaluation": {
+    "enabled": true,
+    "name": "gsm8k_val_120",
+    "eval_open_rows": "data_gsm8k/raw/test.jsonl",
+    "generation_prompt_key": "deepseek_math_cot",
+    "scoring_kind": "gsm8k",
+    "split": "all",
+    "start": 0,
+    "max_rows": 120,
+    "generation_apply_mode": "prefill",
+    "max_new_tokens": 512,
+    "stop_strings": "\\nUser:",
+    "flush_every": 1,
+    "summary_every": 50,
+    "empty_cache_every": 25
+  },
+  "baselines": {
+    "base": {
+      "enabled": true,
+      "model": "LOCAL_HOME/.cache/huggingface/hub/models--deepseek-ai--deepseek-math-7b-instruct",
+      "control": ""
+    },
+    "rl": {
+      "enabled": true,
+      "model": "LOCAL_HOME/.cache/huggingface/hub/models--deepseek-ai--deepseek-math-7b-rl",
+      "control": ""
+    }
+  }
+}

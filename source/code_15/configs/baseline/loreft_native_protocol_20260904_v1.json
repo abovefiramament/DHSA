@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "protocol_id": "loreft_native_budget_matched_20260904_v1",
+  "status": "canonical_formal_baseline_protocol",
+  "method": "loreft",
+  "implementation": "baseline/implementations/loreft.py",
+  "official_sources": {
+    "pyreft": {
+      "repository": "https://github.com/stanfordnlp/pyreft",
+      "revision": "dafd0995a366d7b47160a337dcc388eda7431821",
+      "runtime_registry_entry": "registry://code/pyreft_official"
+    },
+    "axbench_configuration": {
+      "repository": "https://github.com/stanfordnlp/axbench",
+      "revision": "41c8332543e5a631f9a8c0a9df38799893ace758",
+      "path": "axbench/sweep/wuzhengx/2b/l10/loreft.yaml"
+    }
+  },
+  "native_operator": {
+    "component": "block_output",
+    "rank": 4,
+    "positions": "f5+l5",
+    "share_weights_across_position_groups": true,
+    "joint_layer_training": true,
+    "layers_per_candidate": 4
+  },
+  "author_side_training": {
+    "batch_size": 18,
+    "gradient_accumulation_steps": 2,
+    "epochs": 24,
+    "learning_rate": 0.0009,
+    "weight_decay": 0.0,
+    "lr_scheduler": "linear",
+    "warmup_ratio": 0.0,
+    "seed": 42,
+    "train_on_negative": false,
+    "exclude_bos": true,
+    "binarize_dataset": false
+  },
+  "search": {
+    "sequence": [
+      "train_each_preregistered_four_layer_tuple_once",
+      "select_tuple_at_factor_1_on_registered_selector_role",
+      "scan_full_factor_grid_only_for_selected_tuple",
+      "freeze_factor_without_test_access",
+      "evaluate_final_test_once"
+    ],
+    "candidate_order": ["author", "shallow", "deep", "stratified"],
+    "normalized_tuples": {
+      "author": [0.2, 0.4, 0.6, 0.8],
+      "shallow": [0.1, 0.3, 0.5, 0.7],
+      "deep": [0.3, 0.5, 0.7, 0.9],
+      "stratified": [0.125, 0.375, 0.625, 0.875]
+    },
+    "candidate_rationale": {
+      "author": "Architecture-neutral mapping of AxBench's joint [5,10,15,20] tuple on its 26-layer source model.",
+      "shallow": "Preregistered shallow-depth alternative without changing four-layer joint geometry.",
+      "deep": "Preregistered deep-depth alternative without changing four-layer joint geometry.",
+      "stratified": "Preregistered evenly spaced alternative covering the full residual stack."
+    },
+    "mapping": "round_half_up(p*(L-1))",
+    "mapping_status": "project_preregistered_architecture_adaptation_not_an_author_recommended_search",
+    "tuple_selection_factor": 1.0,
+    "factor_grid": [0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.5, 3.0, 4.0, 5.0],
+    "cartesian_tuple_factor_search": false,
+    "sequential_search_rationale": "Four tuple trainings expand site opportunity; the full author-side factor grid is evaluated only for the validation-selected tuple to avoid Cartesian overtuning.",
+    "componentwise_human_audit": false,
+    "test_based_selection": false
+  },
+  "registered_layer_maps": {
+    "28": {
+      "author": [5, 11, 16, 22],
+      "shallow": [3, 8, 14, 19],
+      "deep": [8, 14, 19, 24],
+      "stratified": [3, 10, 17, 24]
+    },
+    "32": {
+      "author": [6, 12, 19, 25],
+      "shallow": [3, 9, 16, 22],
+      "deep": [9, 16, 22, 28],
+      "stratified": [4, 12, 19, 27]
+    },
+    "36": {
+      "author": [7, 14, 21, 28],
+      "shallow": [4, 11, 18, 25],
+      "deep": [11, 18, 25, 32],
+      "stratified": [4, 13, 22, 31]
+    },
+    "48": {
+      "author": [9, 19, 28, 38],
+      "shallow": [5, 14, 24, 33],
+      "deep": [14, 24, 33, 42],
+      "stratified": [6, 18, 29, 41]
+    }
+  },
+  "datasets": {
+    "confiqa": {
+      "scope": "joint_qa_mr_mc",
+      "training_role": "training_240",
+      "tuple_selection_role": "selector_300",
+      "tuple_primary_metric": "logic_score",
+      "factor_selection_role": "alpha_dev_120",
+      "factor_primary_metric": "logic_score",
+      "factor_tie_break": "smallest_factor",
+      "test_role": "test_2048",
+      "candidate_budget": {
+        "amendment_id": "loreft_confiqa_eight_joint_tuples_pinned_pyreft_20260910_v2",
+        "rule": "preregistered_eight_joint_four_layer_tuples",
+        "candidate_order": [
+          "author", "shallow", "deep", "stratified",
+          "early", "late", "wide", "center"
+        ],
+        "additional_normalized_tuples": {
+          "early": [0.05, 0.2, 0.35, 0.5],
+          "late": [0.5, 0.65, 0.8, 0.95],
+          "wide": [0.05, 0.35, 0.65, 0.95],
+          "center": [0.275, 0.425, 0.575, 0.725]
+        },
+        "additional_candidate_rationale": {
+          "early": "Four-layer joint intervention concentrated in the first half of the residual stack.",
+          "late": "Depth-symmetric counterpart of early, concentrated in the second half.",
+          "wide": "Four-layer joint intervention spanning near-boundary and interior depths.",
+          "center": "Four-layer joint intervention densely covering the middle residual stack."
+        },
+        "registered_layer_maps": {
+          "28": {
+            "early": [1, 5, 9, 14],
+            "late": [14, 18, 22, 26],
+            "wide": [1, 9, 18, 26],
+            "center": [7, 11, 16, 20]
+          },
+          "32": {
+            "early": [2, 6, 11, 16],
+            "late": [16, 20, 25, 29],
+            "wide": [2, 11, 20, 29],
+            "center": [9, 13, 18, 22]
+          }
+        },
+        "budget_basis": {
+          "rcm_accounting_minutes": 50.0,
+          "cast_two_bank_training_minutes": 1.82,
+          "measured_four_tuple_training_and_selector_minutes": 24.7,
+          "estimated_eight_tuple_training_and_selector_minutes": 49.3,
+          "factor_calibration_accounting": "reported_separately_after_winner_selection"
+        },
+        "rationale": "Eight preregistered four-layer joint tuples approximately match the measured ConFiQA RCM plus CAST localization-and-training budget while preserving native LoReFT geometry."
+      }
+    },
+    "imdb": {
+      "scope": "sentiment",
+      "training_role": "training_1024",
+      "tuple_selection_role": "selector_300",
+      "tuple_primary_metric": "mean_positive_sentiment_score",
+      "factor_selection_role": null,
+      "factor_policy": "report_full_reward_kl_curve_on_test",
+      "test_role": "test_2048"
+    },
+    "tldr": {
+      "scope": "summary_preference",
+      "candidate_budget_by_model_family": {
+        "gptj_6b": {
+          "amendment_id": "tldr_gptj_loreft_author_only_cost_20260914_v1",
+          "rule": "preregistered_joint_tuple_subset",
+          "candidate_order": ["author"],
+          "rationale": "Current 20260915 microbatch2 x accumulation18 measurement estimates 196.03 training minutes for the author tuple versus 158.72 for the larger cached CAST timing row. No tuple selection; retain four-layer geometry, 24 epochs and all 14 calibration factors. This is small-sample extrapolation, not equal realized cost.",
+          "budget_record": "results/tldr_cache_budget_20260915_v1/budget_estimates.json"
+        },
+        "lion_llama3_8b": {
+          "amendment_id": "tldr_lion_loreft_two_tuples_cost_20260915_v1",
+          "rule": "preregistered_joint_tuple_subset",
+          "candidate_order": ["author", "shallow"],
+          "rationale": "User-approved two-tuple budget on 20260915. Keep the first two entries in the previously registered candidate order: author and shallow; no test-score-based choice. Estimated 294.69 minutes from the three-tuple mean versus CAST 266.44 minutes. Keep four-layer joint geometry, selector300, 24 epochs and all 14 winner calibration factors. Historical deep-tuple evidence remains separate.",
+          "budget_record": "results/tldr_cache_budget_20260915_v1/budget_estimates.json"
+        }
+      },
+      "training_execution_by_model_family": {
+        "lion_llama3_8b": {
+          "batch_size": 9,
+          "gradient_accumulation_steps": 4,
+          "rationale": "User-approved H100 memory adaptation after shallow tuple OOM at microbatch18: all registered tuples use 9 x 4 (effective batch36). Current 20260915 timing uses this split. Old 18 x 2 artifacts remain historical only for this comparison."
+        },
+        "gptj_6b": {
+          "batch_size": 2,
+          "gradient_accumulation_steps": 18,
+          "rationale": "User-approved 2026-09-14 single-GPU execution adaptation after batch 18 exceeded H100 80GB memory. Effective batch remains 36; both cost measurement and future formal GPT-J LoReFT training use this split. Throughput must be measured under this execution configuration."
+        }
+      },
+      "training_role": "training_8192",
+      "tuple_selection_role": "selector_300",
+      "tuple_primary_metric": "pair_avglogp_margin",
+      "selector_amendment": "tldr_preference_pair_selector_20260912",
+      "selector_definition": "At factor 1, mean over selector rows of avglogp(chosen|prompt) minus avglogp(rejected|prompt), using full registered continuations. No generated summaries or API calls at tuple selection. Alpha-dev and final human-reference judging unchanged.",
+      "factor_selection_role": "alpha_dev_40",
+      "factor_primary_metric": "balanced_win_rate_against_human_summary",
+      "factor_tie_break": "smallest_factor_within_0.003_of_best",
+      "test_role": "test_2048"
+    }
+  },
+  "fairness_statement": "LoReFT retains its native four-layer joint geometry and author-side training hyperparameters, with explicitly registered single-device microbatch/accumulation adaptations preserving effective batch. The added tuple search expands baseline opportunity under the same registered data-role isolation as RCM; only the winning tuple receives factor calibration, so tuple and factor are not searched as a Cartesian product."
+}

@@ -1,0 +1,636 @@
+{
+  "protocol_id": "performance_current_result_freeze_20260826_v1",
+  "schema_version": 1,
+  "freeze_date": "2026-08-26",
+  "status": "metadata_only_result_identity_freeze",
+  "source_artifact_commit": "e4f31167229d9c286e51fc74e2d9d5e5d6f6c65e",
+  "repository": "PROJECT_SOURCE",
+  "external_evidence_repositories": [
+    "https://github.com/ANON/RPEC-results"
+  ],
+  "inspection_policy": {
+    "raw_result_content_inspected": false,
+    "sample_content_inspected": false,
+    "generation_text_inspected": false,
+    "detailed_scores_inspected": false,
+    "verification_inputs": [
+      "repository_paths",
+      "artifact_notes",
+      "protocol_and_manifest_labels",
+      "git_object_identity",
+      "completion_declarations"
+    ],
+    "result_regeneration": false
+  },
+  "status_enum": [
+    "complete_frozen",
+    "complete_variant_only",
+    "incomplete",
+    "not_run_no_evidence",
+    "excluded_nonconforming",
+    "legacy_frozen"
+  ],
+  "timing_enum": [
+    "all_token",
+    "prefill_only",
+    "not_applicable"
+  ],
+  "mixture_enum": [
+    "joint_mixed",
+    "per_subset_non_mixed",
+    "not_applicable_single_task",
+    "not_applicable"
+  ],
+  "formal_admission_enum": [
+    "admitted",
+    "variant_only",
+    "pending",
+    "excluded"
+  ],
+  "method_identity": {
+    "cast": {
+      "timing_must_be_explicit": true,
+      "payload_shared_across_timings": false,
+      "checkpoint_relation_must_be_explicit": true,
+      "confiqa_mixture": "joint_mixed_only",
+      "confiqa_k16_to_k8_audit": false,
+      "scientific_config": "configs/confiqa_performance_fixed_protocol.json"
+    },
+    "cast_reft": {
+      "identity": "internal_head_local_rank4_low_rank_cast_not_external_loreft_lm",
+      "same_k8_as_cast_sv": true,
+      "reft_mode": "low_rank",
+      "rank": 4,
+      "warm_start": false
+    },
+    "bipo_sv_native": {
+      "component": "single_residual_layer_full_hidden_vector",
+      "timing": "all_token",
+      "cross_task_name": "BiPO-SV-native-task-adapted",
+      "simultaneous_intervention_layers": 1,
+      "confiqa_layer_candidates": 4,
+      "confiqa_epoch_candidates": 5
+    },
+    "loreft_native": {
+      "required_layers": 4,
+      "required_rank": 4,
+      "required_positions": "f5+l5",
+      "required_timing": "prefill_only",
+      "share_weights_within_layer_positions": true,
+      "qwen2_7b_fixed_layers": [
+        8,
+        13,
+        20,
+        26
+      ],
+      "llama3_8b_fixed_layers": [
+        9,
+        15,
+        23,
+        29
+      ],
+      "layer_tuple_selected_by_confiqa_validation": false
+    },
+    "external_rcm_variants": {
+      "included_in_current_performance_main_table": false,
+      "reason": "user_fixed_native_only_external_baselines_and_site_experiment_owns_position_selector_attribution"
+    }
+  },
+  "confiqa_cells": {
+    "protocol": "configs/confiqa_performance_fixed_protocol.json",
+    "one_evidence_root_per_cell": true,
+    "llama3_8b": {
+      "base_sft": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "official_rag": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "strong_rag": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "context_dpo": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "sft_cast_sv_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "sft_cast_sv_prefill": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "sft_cast_reft_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "sft_cast_reft_prefill": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_sv_transfer_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_sv_transfer_prefill": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_reft_transfer_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_reft_transfer_prefill": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_sv_nontransfer_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_sv_nontransfer_prefill": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_reft_nontransfer_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_reft_nontransfer_prefill": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "bipo_sv_native_task_adapted": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "loreft_lm_native_matched_budget": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "casthead_pos_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "casthead_neg_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      }
+    },
+    "qwen2_7b": {
+      "base_sft": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": "PROJECT_SOURCE",
+        "reason": "待扩到QA/MR/MC各2048"
+      },
+      "official_rag": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "strong_rag": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": "PROJECT_SOURCE",
+        "reason": "待扩到QA/MR/MC各2048"
+      },
+      "context_dpo": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": "PROJECT_SOURCE",
+        "reason": "待扩且缺正式三子集汇总"
+      },
+      "sft_cast_sv_all": {
+        "status": "complete_variant_only",
+        "formal_admission": "variant_only",
+        "evidence_root": "https://github.com/ANON/RPEC-results/tree/2a0cfa55a4b20eaa5d76c461e69b785cf257fff7/afterrevise/CAST-RCM_confiqa_qwen2-7b_joint",
+        "observed_n": 1996,
+        "observed_pc": 0.8271543086172345,
+        "reason": "已跑pooled汇总，待shared alpha下QA/MR/MC各2048"
+      },
+      "sft_cast_sv_prefill": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "sft_cast_reft_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "sft_cast_reft_prefill": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_sv_transfer_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": "https://github.com/ANON/RPEC-results/tree/2a0cfa55a4b20eaa5d76c461e69b785cf257fff7/afterrevise/SFT-CAST-to-DPO_joint_confiqa_qwen2-7b",
+        "reason": "来源为per-subset actuator和alpha，不能填joint格"
+      },
+      "dpo_cast_sv_transfer_prefill": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_reft_transfer_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_reft_transfer_prefill": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_sv_nontransfer_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_sv_nontransfer_prefill": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_reft_nontransfer_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "dpo_cast_reft_nontransfer_prefill": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "bipo_sv_native_task_adapted": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": "https://github.com/ANON/RPEC-results/tree/2a0cfa55a4b20eaa5d76c461e69b785cf257fff7/afterrevise/BiPO-SV-native_confiqa_qwen2-7b",
+        "reason": "仅per-subset QA/MR，缺joint MC和最终证据"
+      },
+      "loreft_lm_native_matched_budget": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": "https://github.com/ANON/RPEC-results/tree/2a0cfa55a4b20eaa5d76c461e69b785cf257fff7/afterrevise/LoReFT-LM-native_confiqa_qwen2-7b",
+        "reason": "待核对固定tuple、joint split轨迹和统一测试"
+      },
+      "casthead_pos_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      },
+      "casthead_neg_all": {
+        "status": "incomplete",
+        "formal_admission": "pending",
+        "evidence_root": null
+      }
+    }
+  },
+  "rows": [
+    {
+      "id": "imdb_sft_dpo_references",
+      "task": "imdb",
+      "model": "ma921_gpt2_large",
+      "method": "sft_and_released_dpo_references",
+      "variant": "native_checkpoints",
+      "timing": "not_applicable",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "evaluation_only",
+      "status": "complete_frozen",
+      "formal_admission": "admitted",
+      "evidence_roots": [
+        "IMDb_ma921_GPT2-Large"
+      ]
+    },
+    {
+      "id": "imdb_cast_sft_all",
+      "task": "imdb",
+      "model": "ma921_gpt2_large",
+      "method": "cast_head_rcm",
+      "variant": "sft_all",
+      "timing": "all_token",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "trained_and_applied_on_sft",
+      "status": "complete_frozen",
+      "formal_admission": "admitted",
+      "evidence_roots": [
+        "IMDb_ma921_GPT2-Large/CAST-RCM_imdb_ma921_gpt2_large_sft"
+      ]
+    },
+    {
+      "id": "imdb_cast_sft_prefill",
+      "task": "imdb",
+      "model": "ma921_gpt2_large",
+      "method": "cast_head_rcm",
+      "variant": "sft_prefill",
+      "timing": "prefill_only",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "trained_and_applied_on_sft",
+      "status": "incomplete",
+      "formal_admission": "pending",
+      "evidence_roots": []
+    },
+    {
+      "id": "imdb_dpo_cast_all",
+      "task": "imdb",
+      "model": "ma921_gpt2_large_dpo",
+      "method": "dpo_plus_cast",
+      "variant": "relocalized_retrained_all",
+      "timing": "all_token",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "localized_trained_and_applied_on_dpo",
+      "status": "complete_frozen",
+      "formal_admission": "admitted",
+      "evidence_roots": [
+        "IMDb_ma921_GPT2-Large/DPO-CAST-RCM_imdb_gpt2-large"
+      ]
+    },
+    {
+      "id": "imdb_dpo_cast_prefill",
+      "task": "imdb",
+      "model": "ma921_gpt2_large_dpo",
+      "method": "dpo_plus_cast",
+      "variant": "relocalized_retrained_prefill",
+      "timing": "prefill_only",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "localized_trained_and_applied_on_dpo",
+      "status": "incomplete",
+      "formal_admission": "pending",
+      "evidence_roots": []
+    },
+    {
+      "id": "imdb_sft_to_dpo_transfer_all",
+      "task": "imdb",
+      "model": "ma921_gpt2_large_dpo",
+      "method": "cast_transfer",
+      "variant": "sft_payload_on_dpo_all",
+      "timing": "all_token",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "trained_on_sft_applied_on_dpo_without_retraining",
+      "status": "complete_frozen",
+      "formal_admission": "admitted",
+      "evidence_roots": [
+        "IMDb_ma921_GPT2-Large/CAST-RCM-SFT-to-DPO_imdb_ma921_gpt2_large"
+      ]
+    },
+    {
+      "id": "imdb_sft_to_dpo_transfer_prefill",
+      "task": "imdb",
+      "model": "ma921_gpt2_large_dpo",
+      "method": "cast_transfer",
+      "variant": "sft_payload_on_dpo_prefill",
+      "timing": "prefill_only",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "trained_on_sft_applied_on_dpo_without_retraining",
+      "status": "incomplete",
+      "formal_admission": "pending",
+      "evidence_roots": []
+    },
+    {
+      "id": "imdb_bipo_sv_native",
+      "task": "imdb",
+      "model": "ma921_gpt2_large",
+      "method": "bipo_sv_native",
+      "variant": "native",
+      "timing": "all_token",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "trained_and_applied_on_sft",
+      "status": "complete_frozen",
+      "formal_admission": "admitted",
+      "evidence_roots": [
+        "IMDb_ma921_GPT2-Large/BiPO-SV-native"
+      ]
+    },
+    {
+      "id": "imdb_loreft_native",
+      "task": "imdb",
+      "model": "ma921_gpt2_large",
+      "method": "loreft_lm",
+      "variant": "native_only",
+      "timing": "prefill_only",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "trained_and_applied_on_sft",
+      "status": "incomplete",
+      "formal_admission": "pending",
+      "evidence_roots": [
+        "IMDb_ma921_GPT2-Large/LoReFT-LM-native"
+      ],
+      "incomplete_reason": "missing_reward_kl_and_active_performance_v2_provenance_closure"
+    },
+    {
+      "id": "tldr_lion_sft_dpo_references",
+      "task": "tldr",
+      "model": "lion_llama3_8b",
+      "method": "sft_and_released_dpo_references",
+      "variant": "native_checkpoints",
+      "timing": "not_applicable",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "evaluation_only",
+      "status": "complete_frozen",
+      "formal_admission": "admitted",
+      "evidence_roots": [
+        "results/tldr_lion_increment_20260823_v2/native_baselines_clean320_first_swap_judge_v1"
+      ]
+    },
+    {
+      "id": "tldr_lion_cast_sft_all",
+      "task": "tldr",
+      "model": "lion_llama3_8b",
+      "method": "cast_reft",
+      "variant": "sft_all",
+      "timing": "all_token",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "trained_and_applied_on_sft",
+      "status": "complete_frozen",
+      "formal_admission": "admitted",
+      "evidence_roots": [
+        "results/tldr_lion_increment_20260823_v2/cast_clean320_v1",
+        "results/tldr_lion_increment_20260823_v2/cast_clean320_first_swap_judge_v1"
+      ]
+    },
+    {
+      "id": "tldr_lion_cast_sft_prefill",
+      "task": "tldr",
+      "model": "lion_llama3_8b",
+      "method": "cast_reft",
+      "variant": "sft_prefill",
+      "timing": "prefill_only",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "trained_and_applied_on_sft",
+      "status": "complete_frozen",
+      "formal_admission": "admitted",
+      "evidence_roots": [
+        "results/tldr_lion_increment_20260823_v2/cast_clean320_v1",
+        "results/tldr_lion_increment_20260823_v2/cast_clean320_first_swap_judge_v1"
+      ]
+    },
+    {
+      "id": "tldr_lion_dpo_cast_all",
+      "task": "tldr",
+      "model": "lion_llama3_8b_dpo",
+      "method": "dpo_plus_cast",
+      "variant": "relocalized_retrained_all",
+      "timing": "all_token",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "localized_trained_and_applied_on_dpo",
+      "status": "complete_frozen",
+      "formal_admission": "admitted",
+      "evidence_roots": [
+        "results/tldr_lion_increment_20260823_v2/cast_clean320_v1",
+        "results/tldr_lion_increment_20260823_v2/cast_clean320_first_swap_judge_v1"
+      ]
+    },
+    {
+      "id": "tldr_lion_dpo_cast_prefill",
+      "task": "tldr",
+      "model": "lion_llama3_8b_dpo",
+      "method": "dpo_plus_cast",
+      "variant": "relocalized_retrained_prefill",
+      "timing": "prefill_only",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "localized_trained_and_applied_on_dpo",
+      "status": "complete_frozen",
+      "formal_admission": "admitted",
+      "evidence_roots": [
+        "results/tldr_lion_increment_20260823_v2/cast_clean320_v1",
+        "results/tldr_lion_increment_20260823_v2/cast_clean320_first_swap_judge_v1"
+      ]
+    },
+    {
+      "id": "tldr_lion_sft_to_dpo_transfer_all",
+      "task": "tldr",
+      "model": "lion_llama3_8b_dpo",
+      "method": "cast_transfer",
+      "variant": "sft_payload_on_dpo_all",
+      "timing": "all_token",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "trained_on_sft_applied_on_dpo_without_retraining",
+      "status": "complete_frozen",
+      "formal_admission": "admitted",
+      "evidence_roots": [
+        "results/tldr_lion_increment_20260823_v1/sft_to_dpo_transfer",
+        "results/tldr_lion_increment_20260823_v2/cast_clean320_first_swap_judge_v1"
+      ]
+    },
+    {
+      "id": "tldr_lion_sft_to_dpo_transfer_prefill",
+      "task": "tldr",
+      "model": "lion_llama3_8b_dpo",
+      "method": "cast_transfer",
+      "variant": "sft_payload_on_dpo_prefill",
+      "timing": "prefill_only",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "trained_on_sft_applied_on_dpo_without_retraining",
+      "status": "complete_frozen",
+      "formal_admission": "admitted",
+      "evidence_roots": [
+        "results/tldr_lion_increment_20260823_v1/sft_to_dpo_transfer",
+        "results/tldr_lion_increment_20260823_v2/cast_clean320_first_swap_judge_v1"
+      ]
+    },
+    {
+      "id": "tldr_lion_loreft_native",
+      "task": "tldr",
+      "model": "lion_llama3_8b",
+      "method": "loreft_lm_native",
+      "variant": "native_only",
+      "timing": "prefill_only",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "trained_and_applied_on_sft",
+      "status": "incomplete",
+      "formal_admission": "pending",
+      "evidence_roots": [
+        "results/tldr_lion_increment_20260823_v1/external_baseline_new"
+      ],
+      "incomplete_reason": "native_only_cell_requires_one_method_specific_evidence_root_and_formal_result_registration"
+    },
+    {
+      "id": "tldr_lion_bipo_sv_native",
+      "task": "tldr",
+      "model": "lion_llama3_8b",
+      "method": "bipo_sv_native",
+      "variant": "native",
+      "timing": "all_token",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "trained_and_applied_on_sft",
+      "status": "not_run_no_evidence",
+      "formal_admission": "pending",
+      "evidence_roots": []
+    },
+    {
+      "id": "tldr_gptj_legacy_freeze",
+      "task": "tldr",
+      "model": "gptj_6b",
+      "method": "legacy_performance_and_v6",
+      "variant": "historical_frozen",
+      "timing": "all_token",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "historical_protocol",
+      "status": "legacy_frozen",
+      "formal_admission": "variant_only",
+      "evidence_roots": [
+        "results/performance_evidence_freeze_20260726_v1"
+      ]
+    },
+    {
+      "id": "tulu8b_formal_performance",
+      "task": "tulu_precise_instruction_following",
+      "model": "llama31_tulu3_8b",
+      "method": "sft_dpo_cast_dpo_plus_cast",
+      "variant": "formal_matrix",
+      "timing": "all_token",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "not_run",
+      "status": "not_run_no_evidence",
+      "formal_admission": "pending",
+      "evidence_roots": []
+    },
+    {
+      "id": "tulu13b_formal_performance",
+      "task": "tulu_precise_instruction_following",
+      "model": "olmo2_13b",
+      "method": "sft_dpo_cast_dpo_plus_cast",
+      "variant": "formal_matrix",
+      "timing": "all_token",
+      "mixture": "not_applicable_single_task",
+      "checkpoint_relation": "not_run",
+      "status": "not_run_no_evidence",
+      "formal_admission": "pending",
+      "evidence_roots": []
+    }
+  ],
+  "immutability": {
+    "evidence_overwrite_allowed": false,
+    "canonical_registry_updated_in_place": true,
+    "status_change_requires_new_version": false,
+    "status_change_requires_new_evidence_or_protocol_commit": true,
+    "excluded_artifact_relabel_allowed": false
+  }
+}

@@ -1,0 +1,630 @@
+{
+  "entries": {
+    "performance__tldr__gptj_6b__sft_cast_reft_prefill__legacy_prefill_k16_20260828_v2": {
+      "cell_id": "performance__tldr__gptj_6b__sft_cast_reft_prefill",
+      "eligibility": "attested_legacy",
+      "machine_registry_key": "evidence/performance__tldr__gptj_6b__sft_cast_reft_prefill__legacy_prefill_k16_20260828_v2",
+      "primary": false,
+      "reusable_stages": [
+        "legacy_prefill_k16_bank_train"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/evidence/tldr_gptj_reft_prefill_k16_legacy_20260828_v2/payload/legacy_source",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "4fc4328119b37380e512903b41ea99b8ff3e49d5"
+      }
+    },
+    "performance_confiqa_llama3_8b_bipo_native_20260912_v1": {
+      "cell_id": "performance__confiqa__llama3_8b__bipo_native",
+      "eligibility": "exact_cell",
+      "machine_registry_key": "evidence/performance_confiqa_llama3_8b_bipo_native_20260912_v1",
+      "primary": false,
+      "reusable_stages": [
+        "position_search",
+        "position_resolve",
+        "position_freeze",
+        "bipo_train_caa_rank_1",
+        "bipo_select_generate_caa_rank_1",
+        "bipo_select_evaluate_caa_rank_1",
+        "bipo_train_caa_rank_2",
+        "bipo_select_generate_caa_rank_2",
+        "bipo_select_evaluate_caa_rank_2",
+        "bipo_train_caa_rank_3",
+        "bipo_select_generate_caa_rank_3",
+        "bipo_select_evaluate_caa_rank_3",
+        "bipo_train_caa_rank_4",
+        "bipo_select_generate_caa_rank_4",
+        "bipo_select_evaluate_caa_rank_4",
+        "bipo_train_caa_rank_5",
+        "bipo_select_generate_caa_rank_5",
+        "bipo_select_evaluate_caa_rank_5",
+        "bipo_train_caa_rank_6",
+        "bipo_select_generate_caa_rank_6",
+        "bipo_select_evaluate_caa_rank_6",
+        "bipo_candidate_freeze",
+        "alpha_generate",
+        "alpha_evaluate",
+        "alpha_freeze",
+        "test_gate",
+        "test_generate",
+        "test_evaluate"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/confiqa_non_dpo_cast_freeze_20260912_v1/llama3_8b/bipo_native",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "main"
+      }
+    },
+    "performance_confiqa_llama3_8b_dpo_20260912_v1": {
+      "cell_id": "performance__confiqa__llama3_8b__dpo",
+      "eligibility": "exact_cell",
+      "machine_registry_key": "evidence/performance_confiqa_llama3_8b_dpo_20260912_v1",
+      "primary": false,
+      "reusable_stages": [
+        "test_gate",
+        "test_generate",
+        "test_evaluate"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/confiqa_non_dpo_cast_freeze_20260912_v1/llama3_8b/dpo",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "main"
+      }
+    },
+    "performance_confiqa_llama3_8b_loreft_native_20260912_v1": {
+      "cell_id": "performance__confiqa__llama3_8b__loreft_native",
+      "eligibility": "exact_cell",
+      "machine_registry_key": "evidence/performance_confiqa_llama3_8b_loreft_native_20260912_v1",
+      "primary": false,
+      "reusable_stages": [
+        "loreft_train_author",
+        "loreft_select_generate_author",
+        "loreft_select_evaluate_author",
+        "loreft_train_shallow",
+        "loreft_select_generate_shallow",
+        "loreft_select_evaluate_shallow",
+        "loreft_train_deep",
+        "loreft_select_generate_deep",
+        "loreft_select_evaluate_deep",
+        "loreft_train_stratified",
+        "loreft_select_generate_stratified",
+        "loreft_select_evaluate_stratified",
+        "loreft_train_early",
+        "loreft_select_generate_early",
+        "loreft_select_evaluate_early",
+        "loreft_train_late",
+        "loreft_select_generate_late",
+        "loreft_select_evaluate_late",
+        "loreft_train_wide",
+        "loreft_select_generate_wide",
+        "loreft_select_evaluate_wide",
+        "loreft_train_center",
+        "loreft_select_generate_center",
+        "loreft_select_evaluate_center",
+        "loreft_candidate_freeze",
+        "alpha_generate",
+        "alpha_evaluate",
+        "alpha_freeze",
+        "test_gate",
+        "test_generate",
+        "test_evaluate"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/confiqa_non_dpo_cast_freeze_20260912_v1/llama3_8b/loreft_native",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "main"
+      }
+    },
+    "performance_confiqa_llama3_8b_sft_20260912_v1": {
+      "cell_id": "performance__confiqa__llama3_8b__sft",
+      "eligibility": "exact_cell",
+      "machine_registry_key": "evidence/performance_confiqa_llama3_8b_sft_20260912_v1",
+      "primary": false,
+      "reusable_stages": [
+        "test_gate",
+        "test_generate",
+        "test_evaluate"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/confiqa_non_dpo_cast_freeze_20260912_v1/llama3_8b/sft",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "main"
+      }
+    },
+    "performance_confiqa_llama3_8b_sft_cast_sv_all_20260912_v1": {
+      "cell_id": "performance__confiqa__llama3_8b__sft_cast_sv_all",
+      "eligibility": "exact_cell",
+      "machine_registry_key": "evidence/performance_confiqa_llama3_8b_sft_cast_sv_all_20260912_v1",
+      "primary": false,
+      "reusable_stages": [
+        "position_search",
+        "position_resolve",
+        "position_freeze",
+        "bank_train",
+        "alpha_generate",
+        "alpha_evaluate",
+        "alpha_freeze",
+        "test_gate",
+        "test_generate",
+        "test_evaluate"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/confiqa_non_dpo_cast_freeze_20260912_v1/llama3_8b/sft_cast_sv_all",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "main"
+      }
+    },
+    "performance_confiqa_llama3_8b_sft_cast_sv_prefill_20260912_v1": {
+      "cell_id": "performance__confiqa__llama3_8b__sft_cast_sv_prefill",
+      "eligibility": "exact_cell",
+      "machine_registry_key": "evidence/performance_confiqa_llama3_8b_sft_cast_sv_prefill_20260912_v1",
+      "primary": false,
+      "reusable_stages": [
+        "position_search",
+        "position_resolve",
+        "position_freeze",
+        "bank_train",
+        "alpha_generate",
+        "alpha_evaluate",
+        "alpha_freeze",
+        "test_gate",
+        "test_generate",
+        "test_evaluate"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/confiqa_non_dpo_cast_freeze_20260912_v1/llama3_8b/sft_cast_sv_prefill",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "main"
+      }
+    },
+    "performance_confiqa_qwen2_7b_bipo_native_20260912_v1": {
+      "cell_id": "performance__confiqa__qwen2_7b__bipo_native",
+      "eligibility": "exact_cell",
+      "machine_registry_key": "evidence/performance_confiqa_qwen2_7b_bipo_native_20260912_v1",
+      "primary": false,
+      "reusable_stages": [
+        "position_search",
+        "position_resolve",
+        "position_freeze",
+        "bipo_train_caa_rank_1",
+        "bipo_select_generate_caa_rank_1",
+        "bipo_select_evaluate_caa_rank_1",
+        "bipo_train_caa_rank_2",
+        "bipo_select_generate_caa_rank_2",
+        "bipo_select_evaluate_caa_rank_2",
+        "bipo_train_caa_rank_3",
+        "bipo_select_generate_caa_rank_3",
+        "bipo_select_evaluate_caa_rank_3",
+        "bipo_train_caa_rank_4",
+        "bipo_select_generate_caa_rank_4",
+        "bipo_select_evaluate_caa_rank_4",
+        "bipo_train_caa_rank_5",
+        "bipo_select_generate_caa_rank_5",
+        "bipo_select_evaluate_caa_rank_5",
+        "bipo_train_caa_rank_6",
+        "bipo_select_generate_caa_rank_6",
+        "bipo_select_evaluate_caa_rank_6",
+        "bipo_candidate_freeze",
+        "alpha_generate",
+        "alpha_evaluate",
+        "alpha_freeze",
+        "test_gate",
+        "test_generate",
+        "test_evaluate"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/confiqa_non_dpo_cast_freeze_20260912_v1/qwen2_7b/bipo_native",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "main"
+      }
+    },
+    "performance_confiqa_qwen2_7b_dpo_20260912_v1": {
+      "cell_id": "performance__confiqa__qwen2_7b__dpo",
+      "eligibility": "exact_cell",
+      "machine_registry_key": "evidence/performance_confiqa_qwen2_7b_dpo_20260912_v1",
+      "primary": false,
+      "reusable_stages": [
+        "test_gate",
+        "test_generate",
+        "test_evaluate"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/confiqa_non_dpo_cast_freeze_20260912_v1/qwen2_7b/dpo",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "main"
+      }
+    },
+    "performance_confiqa_qwen2_7b_loreft_native_20260912_v1": {
+      "cell_id": "performance__confiqa__qwen2_7b__loreft_native",
+      "eligibility": "exact_cell",
+      "machine_registry_key": "evidence/performance_confiqa_qwen2_7b_loreft_native_20260912_v1",
+      "primary": false,
+      "reusable_stages": [
+        "loreft_train_author",
+        "loreft_select_generate_author",
+        "loreft_select_evaluate_author",
+        "loreft_train_shallow",
+        "loreft_select_generate_shallow",
+        "loreft_select_evaluate_shallow",
+        "loreft_train_deep",
+        "loreft_select_generate_deep",
+        "loreft_select_evaluate_deep",
+        "loreft_train_stratified",
+        "loreft_select_generate_stratified",
+        "loreft_select_evaluate_stratified",
+        "loreft_train_early",
+        "loreft_select_generate_early",
+        "loreft_select_evaluate_early",
+        "loreft_train_late",
+        "loreft_select_generate_late",
+        "loreft_select_evaluate_late",
+        "loreft_train_wide",
+        "loreft_select_generate_wide",
+        "loreft_select_evaluate_wide",
+        "loreft_train_center",
+        "loreft_select_generate_center",
+        "loreft_select_evaluate_center",
+        "loreft_candidate_freeze",
+        "alpha_generate",
+        "alpha_evaluate",
+        "alpha_freeze",
+        "test_gate",
+        "test_generate",
+        "test_evaluate"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/confiqa_non_dpo_cast_freeze_20260912_v1/qwen2_7b/loreft_native",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "main"
+      }
+    },
+    "performance_confiqa_qwen2_7b_sft_20260912_v1": {
+      "cell_id": "performance__confiqa__qwen2_7b__sft",
+      "eligibility": "exact_cell",
+      "machine_registry_key": "evidence/performance_confiqa_qwen2_7b_sft_20260912_v1",
+      "primary": false,
+      "reusable_stages": [
+        "test_gate",
+        "test_generate",
+        "test_evaluate"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/confiqa_non_dpo_cast_freeze_20260912_v1/qwen2_7b/sft",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "main"
+      }
+    },
+    "performance_confiqa_qwen_sv_all_20260912_v1": {
+      "cell_id": "performance__confiqa__qwen2_7b__sft_cast_sv_all",
+      "eligibility": "exact_cell",
+      "machine_registry_key": "evidence/performance_confiqa_qwen_sv_all_20260912_v1",
+      "primary": false,
+      "reusable_stages": [
+        "position_search",
+        "position_resolve",
+        "position_freeze",
+        "bank_train",
+        "alpha_generate",
+        "alpha_evaluate",
+        "alpha_freeze",
+        "test_gate",
+        "test_generate",
+        "test_evaluate"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/confiqa_qwen_dual_formal_20260912_v1/all",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "main"
+      }
+    },
+    "performance_confiqa_qwen_sv_prefill_20260912_v1": {
+      "cell_id": "performance__confiqa__qwen2_7b__sft_cast_sv_prefill",
+      "eligibility": "exact_cell",
+      "machine_registry_key": "evidence/performance_confiqa_qwen_sv_prefill_20260912_v1",
+      "primary": false,
+      "reusable_stages": [
+        "position_search",
+        "position_resolve",
+        "position_freeze",
+        "bank_train",
+        "alpha_generate",
+        "alpha_evaluate",
+        "alpha_freeze",
+        "test_gate",
+        "test_generate",
+        "test_evaluate"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/confiqa_qwen_dual_formal_20260912_v1/prefill",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "main"
+      }
+    },
+    "performance_imdb_gpt2_bipo_native_20260912_v1": {
+      "cell_id": "performance__imdb__gpt2_large__bipo_native",
+      "eligibility": "exact_cell",
+      "machine_registry_key": "evidence/performance_imdb_gpt2_bipo_native_20260912_v1",
+      "primary": false,
+      "reusable_stages": [
+        "position_search",
+        "position_resolve",
+        "position_freeze",
+        "bipo_train_caa_rank_1",
+        "bipo_select_generate_caa_rank_1",
+        "bipo_select_evaluate_caa_rank_1",
+        "bipo_candidate_freeze",
+        "test_gate",
+        "test_generate",
+        "test_evaluate"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/imdb_gpt2_non_dpo_cast_source_freeze_20260912_v1/external/bipo_native",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "evidence/imdb-native-freeze-20260912"
+      }
+    },
+    "performance_imdb_gpt2_loreft_native_20260912_v1": {
+      "cell_id": "performance__imdb__gpt2_large__loreft_native",
+      "eligibility": "exact_cell",
+      "machine_registry_key": "evidence/performance_imdb_gpt2_loreft_native_20260912_v1",
+      "primary": false,
+      "reusable_stages": [
+        "loreft_train_author",
+        "loreft_select_generate_author",
+        "loreft_select_evaluate_author",
+        "loreft_train_shallow",
+        "loreft_select_generate_shallow",
+        "loreft_select_evaluate_shallow",
+        "loreft_train_deep",
+        "loreft_select_generate_deep",
+        "loreft_select_evaluate_deep",
+        "loreft_train_stratified",
+        "loreft_select_generate_stratified",
+        "loreft_select_evaluate_stratified",
+        "loreft_candidate_freeze",
+        "test_gate",
+        "test_generate",
+        "test_evaluate"
+      ],
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/imdb_gpt2_non_dpo_cast_source_freeze_20260912_v1/external/loreft_native",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "evidence/imdb-native-freeze-20260912"
+      }
+    }
+  },
+  "frozen_registrations": [
+    {
+      "eligibility": "exact_cell",
+      "expected_target_count": 18,
+      "experiment": "site",
+      "maximum_reuse_stage": "test",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "primary": true,
+      "registration_id": "site_confiqa_llama3_8b_final",
+      "source_cell_id": "confiqa__llama3_8b",
+      "target_selector": {
+        "dataset": "confiqa",
+        "model_family": "llama3_8b"
+      }
+    },
+    {
+      "eligibility": "exact_stage",
+      "expected_target_count": 18,
+      "experiment": "site",
+      "maximum_reuse_stage": "alpha",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "primary": false,
+      "registration_id": "site_confiqa_qwen25_14b_pending_test_expansion",
+      "remaining_work": "expand_test_to_registered_2048_contract",
+      "source_cell_id": "confiqa__qwen25_14b",
+      "target_selector": {
+        "dataset": "confiqa",
+        "model_family": "qwen25_14b"
+      }
+    },
+    {
+      "eligibility": "exact_cell",
+      "expected_target_count": 6,
+      "experiment": "site",
+      "maximum_reuse_stage": "test",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "primary": true,
+      "registration_id": "site_imdb_ma921_gpt2_large_final",
+      "source_cell_id": "imdb__ma921_gpt2_large_sft",
+      "target_selector": {
+        "dataset": "imdb",
+        "model_family": "ma921_gpt2_large_sft"
+      }
+    },
+    {
+      "eligibility": "exact_cell",
+      "expected_target_count": 6,
+      "experiment": "site",
+      "maximum_reuse_stage": "test",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "payload_availability": "frozen_reference_only",
+      "primary": true,
+      "registration_id": "site_imdb_qwen25_14b_final",
+      "source_cell_id": "imdb__qwen25_14b",
+      "target_selector": {
+        "dataset": "imdb",
+        "model_family": "qwen25_14b"
+      }
+    },
+    {
+      "eligibility": "exact_cell",
+      "expected_target_count": 6,
+      "experiment": "site",
+      "maximum_reuse_stage": "test",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "primary": true,
+      "registration_id": "site_tldr_gptj_6b_final",
+      "source_cell_id": "tldr__gptj_6b",
+      "target_selector": {
+        "dataset": "tldr",
+        "model_family": "gptj_6b"
+      }
+    },
+    {
+      "eligibility": "exact_cell",
+      "expected_target_count": 1,
+      "experiment": "performance",
+      "maximum_reuse_stage": "test",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "primary": true,
+      "registration_id": "site_tldr_gptj_6b_rcm_zero_reft_all_final",
+      "remaining_work": "none_for_clean320",
+      "reuse_scope": "frozen_K8_banks_alpha_clean320_generation_and_full_order_swap_evaluation",
+      "source_cell_id": "tldr__gptj_6b",
+      "source_experiment": "site",
+      "source_protocol_id": "tldr_site_reft_direct_k8_disjoint_alpha_dev_20260725_v6",
+      "target_job_ids": [
+        "performance__tldr__gptj_6b__sft_cast_reft_all"
+      ]
+    },
+    {
+      "computational_reuse": false,
+      "eligibility": "comparable_external",
+      "expected_target_count": 16,
+      "experiment": "performance",
+      "package_id": "performance_current_result_freeze_20260826_v1",
+      "primary": false,
+      "reason": "the freeze authority validates metadata and formal admission under its original protocol, but does not prove equality to the new Performance data-role protocol",
+      "registration_id": "performance_admitted_20260826",
+      "source_row_ids": [
+        "confiqa_qwen_base_strongrag_contextdpo",
+        "confiqa_qwen_cast_sft_all_joint",
+        "imdb_sft_dpo_references",
+        "imdb_cast_sft_all",
+        "imdb_dpo_cast_all",
+        "imdb_sft_to_dpo_transfer_all",
+        "tldr_lion_sft_dpo_references",
+        "tldr_lion_cast_sft_all",
+        "tldr_lion_cast_sft_prefill",
+        "tldr_lion_dpo_cast_all",
+        "tldr_lion_dpo_cast_prefill",
+        "tldr_lion_sft_to_dpo_transfer_all",
+        "tldr_lion_sft_to_dpo_transfer_prefill"
+      ],
+      "target_job_ids": [
+        "performance__confiqa__qwen2_7b__sft",
+        "performance__confiqa__qwen2_7b__dpo",
+        "performance__confiqa__qwen2_7b__sft_cast_sv_all",
+        "performance__imdb__gpt2_large__sft",
+        "performance__imdb__gpt2_large__dpo",
+        "performance__imdb__gpt2_large__sft_cast_sv_all",
+        "performance__imdb__gpt2_large__dpo_cast_nontransfer_sv_all",
+        "performance__imdb__gpt2_large__dpo_cast_transfer_sv_all",
+        "performance__tldr__lion_llama3_8b__sft",
+        "performance__tldr__lion_llama3_8b__dpo",
+        "performance__tldr__lion_llama3_8b__sft_cast_reft_all",
+        "performance__tldr__lion_llama3_8b__sft_cast_reft_prefill",
+        "performance__tldr__lion_llama3_8b__dpo_cast_nontransfer_reft_all",
+        "performance__tldr__lion_llama3_8b__dpo_cast_nontransfer_reft_prefill",
+        "performance__tldr__lion_llama3_8b__dpo_cast_transfer_reft_all",
+        "performance__tldr__lion_llama3_8b__dpo_cast_transfer_reft_prefill"
+      ]
+    }
+  ],
+  "packages": {
+    "imdb_gpt2_non_dpo_cast_source_freeze_20260912_v1": {
+      "cost_record": "results/imdb_gpt2_non_dpo_cast_source_freeze_20260912_v1/cost_record.json",
+      "experiment": "performance",
+      "freeze_manifest": "results/imdb_gpt2_non_dpo_cast_source_freeze_20260912_v1/freeze_manifest.json",
+      "primary": false,
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "IMDb_GPT2-large",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "575447f9f375cd970b56e2b1d9ea00434e01d1ca"
+      },
+      "status": "source_packages_frozen_costs_recorded",
+      "verification_scope": "validated_metadata_only"
+    },
+    "performance_current_result_freeze_20260826_v1": {
+      "experiment": "performance",
+      "freeze_manifest": "results/legacy/performance/performance_current_result_freeze_20260826_v1/freeze_manifest.json",
+      "payload_bindings": {
+        "frozen_results": "registry://evidence_packages/performance_current_result_freeze_20260826_v1"
+      },
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/performance_current_result_freeze_20260826_v1",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "4fc4328119b37380e512903b41ea99b8ff3e49d5"
+      },
+      "verification_scope": "validated_metadata_only"
+    },
+    "site_current_complete_result_freeze_20260825_v1": {
+      "experiment": "site",
+      "freeze_manifest": "results/legacy/site_freeze_20260825/site_current_complete_result_freeze_20260825_v1/freeze_manifest.json",
+      "payload_bindings": {
+        "final_results": "registry://evidence_packages/site_current_complete_result_freeze_20260825_v1",
+        "qwen_confiqa_mc": "registry://evidence_packages/site_position_qwen25_14b_mc_completed_20260804_v1",
+        "qwen_confiqa_qa_mr": "registry://evidence_packages/site_position_qwen25_14b_qa_mr_completed_20260802_v1",
+        "site_v12_position_and_controller": "registry://evidence_packages/site_position_full_20260719_v12_current_20260723"
+      },
+      "source": {
+        "contributor": "REDACTED",
+        "repository_path": "results/site_current_complete_result_freeze_20260825_v1",
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "4fc4328119b37380e512903b41ea99b8ff3e49d5"
+      }
+    }
+  },
+  "schema_version": 1,
+  "shared_rcm_sources": [
+    {
+      "consumer_job_ids": [
+        "performance__imdb__gpt2_large__sft_cast_sv_all",
+        "performance__imdb__gpt2_large__sft_cast_sv_prefill",
+        "performance__imdb__gpt2_large__sft_cast_reft_all",
+        "performance__imdb__gpt2_large__sft_cast_reft_prefill",
+        "performance__imdb__gpt2_large__dpo_cast_transfer_sv_all",
+        "performance__imdb__gpt2_large__dpo_cast_transfer_sv_prefill",
+        "performance__imdb__gpt2_large__dpo_cast_transfer_reft_all",
+        "performance__imdb__gpt2_large__dpo_cast_transfer_reft_prefill",
+        "performance__imdb__gpt2_large__casthead_pos",
+        "performance__imdb__gpt2_large__casthead_neg"
+      ],
+      "dataset": "imdb",
+      "method": "rcm_zero",
+      "model_registry_id": "ma921_gpt2_large_sft_imdb",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "payload_binding": "site_v12_position_and_controller",
+      "rcm_source_id": "site_imdb_ma921_gpt2_large_sft_rcm_zero_k8",
+      "reuse_mode": "exact_selector_scan_and_fixed_k8"
+    },
+    {
+      "consumer_job_ids": [
+        "performance__tldr__gptj_6b__sft_cast_reft_all",
+        "performance__tldr__gptj_6b__sft_cast_reft_prefill",
+        "performance__tldr__gptj_6b__dpo_cast_transfer_reft_all",
+        "performance__tldr__gptj_6b__dpo_cast_transfer_reft_prefill"
+      ],
+      "dataset": "tldr",
+      "method": "rcm_zero",
+      "model_registry_id": "gptj_6b_tldr_sft",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "payload_binding": "final_results",
+      "rcm_source_id": "site_tldr_gptj_6b_audited_k8",
+      "reuse_mode": "audited_fixed_k8"
+    }
+  ]
+}

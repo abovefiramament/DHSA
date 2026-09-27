@@ -1,0 +1,13 @@
+{
+  "protocol_id": "performance_tldr_test512_20260915_v1",
+  "scope": "GPT-J and LION: SFT, DPO, SFT+CAST all, SFT+CAST prefill, BiPO, LoReFT; DPO+CAST deferred",
+  "source": "original_final_guard_then_reserve",
+  "target_count": 512,
+  "preserved_prefix_count": 320,
+  "additional_count": 192,
+  "order": "Preserve registered source revision, admission and clean-pool shuffle seed 20260619. Use the original final guard of 320 rows followed by the first 192 clean test-reserve rows. Do not move the original start or reorder examples.",
+  "selection": "Reuse the completed clean320 run's upstream RCM, trained banks, audit decisions and frozen validation-selected alpha. No new training, audit or test-based selection.",
+  "generation": "Reuse the unchanged first320 generation checkpoints and judge calls. Generate and judge only missing rows with the same prompts, decoding, cache setting, judge and full order-swap procedure.",
+  "evidence": "Keep clean320 frozen and unchanged in its original evidence root. Save test512 in a separate root and report all512, including empty model outputs. This is a post-clean320 evaluation extension, not a never-inspected independent test.",
+  "cost": "Record incremental generation and judge cost separately from the unchanged selection/training budget. Cache hits are not new billed judge calls."
+}

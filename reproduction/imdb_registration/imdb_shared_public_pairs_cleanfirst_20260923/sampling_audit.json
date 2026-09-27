@@ -1,0 +1,17 @@
+{
+  "status": "clean_full_source_then_sample_1024",
+  "clean_pool_pairs": 9979,
+  "training_pairs": 1024,
+  "seed": 42,
+  "sampler": "CPython random.Random(42).shuffle on clean pool in original public row order; first 1024",
+  "source_cleaning_audit": "LOCAL_HOME/rpec_runs/imdb_shared_public_pairs_20260922/cleaning_audit.json",
+  "original_token_source": "LOCAL_HOME/rpec_runs/imdb_shared_public_pairs_20260922/cleaned_public_train.jsonl",
+  "training_original_token_ids": "training_original_token_ids.jsonl",
+  "training_text_view": "training_text_view.jsonl",
+  "unique_prompt_token_sequences": 707,
+  "overlap_with_superseded_1019": 142,
+  "no_regeneration": true,
+  "no_reward_filter": true,
+  "no_retokenization_for_CAST": true,
+  "external_text_view_exact_roundtrip": true
+}

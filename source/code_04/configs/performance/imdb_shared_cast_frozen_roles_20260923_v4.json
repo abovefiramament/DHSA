@@ -1,0 +1,205 @@
+{
+  "construction": {
+    "allowed_role_overlap": [],
+    "frozen_role_sources": {
+      "selector": "frozen_selector",
+      "test": "frozen_test",
+      "training": "frozen_training",
+      "validation": "frozen_validation"
+    },
+    "pair_preparation": {
+      "batch_seed_stride": 1009,
+      "completion_seed_stride": 9176,
+      "completions_per_prompt": 4,
+      "do_sample": true,
+      "generation_batch_size": 16,
+      "max_new_tokens": 48,
+      "seed": 42,
+      "source_kind": "ma921_cleaned_token_pairs",
+      "temperature": 1.0,
+      "top_k": 50,
+      "top_p": 1.0,
+      "training_artifact_role": "public_training",
+      "training_selection": "clean_full_public_10000_to_9979_then_CPython_random42_first1024",
+      "validation_generation": "unchanged_model_native_four_candidates_top_bottom_first256_positive_margin"
+    },
+    "prefix": {
+      "max_tokens": 8,
+      "min_tokens": 2,
+      "mode": "tokenizer"
+    },
+    "role_reuse_policy": "Reuse the completed clean-first SFT CAST selector/validation/test rows; training uses the exact existing lossless ma921 token-pair text view. No resampling, regeneration or length changes.",
+    "roles": {
+      "selector": {
+        "target_count": 300,
+        "unit": "paired_model_native_state_group"
+      },
+      "test": {
+        "target_count": 2048,
+        "unit": "prompt"
+      },
+      "training": {
+        "target_count": 1024,
+        "unit": "preference_pair"
+      },
+      "validation": {
+        "target_count": 256,
+        "unit": "preference_pair"
+      }
+    },
+    "selector_state_generation": {
+      "base_template": "{prefix}",
+      "batch_seed_stride": 1009,
+      "common_random_numbers_across_conditions": true,
+      "conditions": [
+        "good",
+        "base"
+      ],
+      "do_sample": true,
+      "generate_once_per_model_and_reuse_exact_token_ids": true,
+      "generation_batch_size": 64,
+      "good_template": "{prefix}\n\nContinue the review with a positive sentiment:",
+      "max_new_tokens": 64,
+      "min_new_tokens": 1,
+      "prompt_rows": 300,
+      "seed": 42,
+      "temperature": 1.0,
+      "top_k": 50,
+      "top_p": 1.0
+    },
+    "source_order": {
+      "algorithm": "CPython_random_Random_shuffle",
+      "max_rows": 25000,
+      "permutation_scope": "prefix_projection_for_preselected_disjoint_original_comments",
+      "rng_stream": "one_CPython_Random_stream_for_prefix_lengths_then_shuffle",
+      "seed": 42,
+      "shuffle": true
+    },
+    "test": {
+      "selection_artifact": "registry://datasets/imdb/public_test_comments",
+      "source_split": "test",
+      "target_prompts": 2048
+    }
+  },
+  "dataset": "imdb",
+  "execution_settings": {
+    "eos": "model native enabled",
+    "epochs": 1,
+    "generation_seed": 42,
+    "rcm_generation_batch_size": 64,
+    "test_generation_batch_size": 256,
+    "training_batch_size": 32
+  },
+  "formal_scaled_gpu_counts": {
+    "selector": 10,
+    "test": 3,
+    "training": 8,
+    "validation": 2
+  },
+  "protocol_id": "performance_imdb_shared_cast_frozen_roles_20260923_v4",
+  "provenance": {
+    "adapter_id": "site_data_imdb",
+    "frozen_role_origin": {
+      "selector": "completed SFT CAST shared selector_300",
+      "source_code_revision": "source/code_01",
+      "test": "completed SFT CAST shared test_2048",
+      "training": "cleanfirst1024 original public token pairs, lossless external text view",
+      "validation": "completed SFT CAST shared validation_256"
+    },
+    "ordering": {
+      "selector_validation_test": "registered disjoint original-comment lists, original order preserved",
+      "training": "clean complete public 10000-pair source by fixed boundary/token rules; preserve accepted public row order; CPython random.Random(42).shuffle on 9979 clean pairs; take first1024"
+    },
+    "pipeline": [
+      {
+        "id": "imdb_original_prefix_projection_v1",
+        "range": "2..8 GPT2 tokenizer tokens",
+        "seed": 42
+      },
+      {
+        "id": "ma921_original_token_pair_loading_v1",
+        "retokenization": false,
+        "truncation": false
+      }
+    ],
+    "role_mapping": {
+      "selector": "300 official train comments, disjoint from complete ma921 pool",
+      "test": "2048 disjoint official test comments",
+      "training": "1024 original published token pairs from clean source pool",
+      "validation": "384 disjoint official train comment candidates yielding256 reward-ranked pairs"
+    },
+    "sources": [
+      {
+        "id": "stanfordnlp_imdb_hf",
+        "revision": "e6281661ce1c48d982bc483cf8a173c1bbeb5d31",
+        "uri": "https://huggingface.co/datasets/stanfordnlp/imdb"
+      },
+      {
+        "id": "ma921_imdb_generated",
+        "revision": "048081e22d432b30c647d675d65ca8138c20c9a6",
+        "uri": "https://huggingface.co/datasets/ma921/imdb-generated"
+      },
+      {
+        "id": "ma921_imdb_tokenized_noise0",
+        "revision": "5ad0e4fbb89a87404918f5f510c9192afb3d350a",
+        "uri": "https://huggingface.co/datasets/ma921/imdb-tokenized_noise0"
+      }
+    ]
+  },
+  "public_pair_sources": {
+    "text": {
+      "revision": "048081e22d432b30c647d675d65ca8138c20c9a6",
+      "split": "train",
+      "url": "https://huggingface.co/datasets/ma921/imdb-generated"
+    },
+    "tokens": {
+      "revision": "5ad0e4fbb89a87404918f5f510c9192afb3d350a",
+      "split": "train",
+      "url": "https://huggingface.co/datasets/ma921/imdb-tokenized_noise0"
+    }
+  },
+  "public_source": {
+    "dataset": "stanfordnlp/imdb",
+    "repository": "https://huggingface.co/datasets/stanfordnlp/imdb",
+    "revision": "e6281661ce1c48d982bc483cf8a173c1bbeb5d31",
+    "test_file": "plain_text/test-00000-of-00001.parquet",
+    "train_file": "plain_text/train-00000-of-00001.parquet"
+  },
+  "randomness": {
+    "generation_seed": 42,
+    "source_shuffle_seed": 42
+  },
+  "schema_version": 1,
+  "scope": "performance_only",
+  "shared_functionality": [
+    "IMDb parquet decoding",
+    "tokenizer prefix projection",
+    "model-native four-candidate validation construction",
+    "registered Siebert sentiment scoring"
+  ],
+  "site_split_reused": false,
+  "source_mode": "ma921_cleaned_token_pairs",
+  "sources": {
+    "frozen_selector": {
+      "format": "jsonl",
+      "location": "registry://datasets/imdb/shared_frozen_selector",
+      "source_id": "imdb_cleanfirst1024_frozen_selector"
+    },
+    "frozen_test": {
+      "format": "jsonl",
+      "location": "registry://datasets/imdb/shared_frozen_test",
+      "source_id": "imdb_cleanfirst1024_frozen_test"
+    },
+    "frozen_training": {
+      "format": "jsonl",
+      "location": "registry://datasets/imdb/shared_frozen_training",
+      "source_id": "imdb_cleanfirst1024_frozen_training"
+    },
+    "frozen_validation": {
+      "format": "jsonl",
+      "location": "registry://datasets/imdb/shared_frozen_validation",
+      "source_id": "imdb_cleanfirst1024_frozen_validation"
+    }
+  },
+  "status": "canonical_formal_data_protocol"
+}

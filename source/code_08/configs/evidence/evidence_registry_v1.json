@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "packages": {
+    "site_current_complete_result_freeze_20260825_v1": {
+      "experiment": "site",
+      "source": {
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "ac9e863e36086e934eaf148be80ad2819128d6c0",
+        "repository_path": "results/site_current_complete_result_freeze_20260825_v1",
+        "contributor": "REDACTED"
+      },
+      "freeze_manifest": "results/site_current_complete_result_freeze_20260825_v1/freeze_manifest.json",
+      "payload_bindings": {
+        "final_results": "registry://evidence_packages/site_current_complete_result_freeze_20260825_v1",
+        "site_v12_position_and_controller": "registry://evidence_packages/site_position_full_20260719_v12_current_20260723",
+        "qwen_confiqa_qa_mr": "registry://evidence_packages/site_position_qwen25_14b_qa_mr_completed_20260802_v1",
+        "qwen_confiqa_mc": "registry://evidence_packages/site_position_qwen25_14b_mc_completed_20260804_v1"
+      }
+    },
+    "performance_current_result_freeze_20260826_v1": {
+      "experiment": "performance",
+      "source": {
+        "repository_url": "PROJECT_SOURCE",
+        "revision": "e4f31167229d9c286e51fc74e2d9d5e5d6f6c65e",
+        "repository_path": "results/performance_current_result_freeze_20260826_v1",
+        "contributor": "REDACTED"
+      },
+      "freeze_manifest": "results/performance_current_result_freeze_20260826_v1/freeze_manifest.json",
+      "payload_bindings": {
+        "frozen_results": "registry://evidence_packages/performance_current_result_freeze_20260826_v1"
+      },
+      "verification_scope": "validated_metadata_only"
+    }
+  },
+  "frozen_registrations": [
+    {
+      "registration_id": "site_confiqa_llama3_8b_final",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "experiment": "site",
+      "source_cell_id": "confiqa__llama3_8b",
+      "target_selector": {
+        "dataset": "confiqa",
+        "model_family": "llama3_8b"
+      },
+      "expected_target_count": 18,
+      "eligibility": "exact_cell",
+      "primary": true,
+      "maximum_reuse_stage": "test"
+    },
+    {
+      "registration_id": "site_confiqa_qwen25_14b_pending_test_expansion",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "experiment": "site",
+      "source_cell_id": "confiqa__qwen25_14b",
+      "target_selector": {
+        "dataset": "confiqa",
+        "model_family": "qwen25_14b"
+      },
+      "expected_target_count": 18,
+      "eligibility": "exact_stage",
+      "primary": false,
+      "maximum_reuse_stage": "alpha",
+      "remaining_work": "expand_test_to_registered_2048_contract"
+    },
+    {
+      "registration_id": "site_imdb_ma921_gpt2_large_final",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "experiment": "site",
+      "source_cell_id": "imdb__ma921_gpt2_large_sft",
+      "target_selector": {
+        "dataset": "imdb",
+        "model_family": "ma921_gpt2_large_sft"
+      },
+      "expected_target_count": 6,
+      "eligibility": "exact_cell",
+      "primary": true,
+      "maximum_reuse_stage": "test"
+    },
+    {
+      "registration_id": "site_imdb_qwen25_14b_final",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "experiment": "site",
+      "source_cell_id": "imdb__qwen25_14b",
+      "target_selector": {
+        "dataset": "imdb",
+        "model_family": "qwen25_14b"
+      },
+      "expected_target_count": 6,
+      "eligibility": "exact_cell",
+      "primary": true,
+      "maximum_reuse_stage": "test",
+      "payload_availability": "frozen_reference_only"
+    },
+    {
+      "registration_id": "site_tldr_gptj_6b_final",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "experiment": "site",
+      "source_cell_id": "tldr__gptj_6b",
+      "target_selector": {
+        "dataset": "tldr",
+        "model_family": "gptj_6b"
+      },
+      "expected_target_count": 6,
+      "eligibility": "exact_cell",
+      "primary": true,
+      "maximum_reuse_stage": "test"
+    },
+    {
+      "registration_id": "performance_admitted_20260826",
+      "package_id": "performance_current_result_freeze_20260826_v1",
+      "experiment": "performance",
+      "source_row_ids": [
+        "confiqa_qwen_base_strongrag_contextdpo",
+        "confiqa_qwen_cast_sft_all_joint",
+        "imdb_sft_dpo_references",
+        "imdb_cast_sft_all",
+        "imdb_dpo_cast_all",
+        "imdb_sft_to_dpo_transfer_all",
+        "tldr_lion_sft_dpo_references",
+        "tldr_lion_cast_sft_all",
+        "tldr_lion_cast_sft_prefill",
+        "tldr_lion_dpo_cast_all",
+        "tldr_lion_dpo_cast_prefill",
+        "tldr_lion_sft_to_dpo_transfer_all",
+        "tldr_lion_sft_to_dpo_transfer_prefill"
+      ],
+      "target_job_ids": [
+        "performance__confiqa__qwen2_7b__sft",
+        "performance__confiqa__qwen2_7b__dpo",
+        "performance__confiqa__qwen2_7b__sft_cast_sv_all",
+        "performance__imdb__gpt2_large__sft",
+        "performance__imdb__gpt2_large__dpo",
+        "performance__imdb__gpt2_large__sft_cast_sv_all",
+        "performance__imdb__gpt2_large__dpo_cast_nontransfer_sv_all",
+        "performance__imdb__gpt2_large__dpo_cast_transfer_sv_all",
+        "performance__tldr__lion_llama3_8b__sft",
+        "performance__tldr__lion_llama3_8b__dpo",
+        "performance__tldr__lion_llama3_8b__sft_cast_reft_all",
+        "performance__tldr__lion_llama3_8b__sft_cast_reft_prefill",
+        "performance__tldr__lion_llama3_8b__dpo_cast_nontransfer_reft_all",
+        "performance__tldr__lion_llama3_8b__dpo_cast_nontransfer_reft_prefill",
+        "performance__tldr__lion_llama3_8b__dpo_cast_transfer_reft_all",
+        "performance__tldr__lion_llama3_8b__dpo_cast_transfer_reft_prefill"
+      ],
+      "expected_target_count": 16,
+      "eligibility": "comparable_external",
+      "primary": false,
+      "computational_reuse": false,
+      "reason": "the freeze authority validates metadata and formal admission under its original protocol, but does not prove equality to the new Performance data-role protocol"
+    }
+  ],
+  "shared_rcm_sources": [
+    {
+      "rcm_source_id": "site_imdb_ma921_gpt2_large_sft_rcm_zero_k8",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "payload_binding": "site_v12_position_and_controller",
+      "dataset": "imdb",
+      "model_registry_id": "ma921_gpt2_large_sft_imdb",
+      "method": "rcm_zero",
+      "reuse_mode": "exact_selector_scan_and_fixed_k8",
+      "consumer_job_ids": [
+        "performance__imdb__gpt2_large__sft_cast_sv_all",
+        "performance__imdb__gpt2_large__sft_cast_sv_prefill",
+        "performance__imdb__gpt2_large__sft_cast_reft_all",
+        "performance__imdb__gpt2_large__sft_cast_reft_prefill",
+        "performance__imdb__gpt2_large__dpo_cast_transfer_sv_all",
+        "performance__imdb__gpt2_large__dpo_cast_transfer_sv_prefill",
+        "performance__imdb__gpt2_large__dpo_cast_transfer_reft_all",
+        "performance__imdb__gpt2_large__dpo_cast_transfer_reft_prefill",
+        "performance__imdb__gpt2_large__casthead_pos",
+        "performance__imdb__gpt2_large__casthead_neg"
+      ]
+    },
+    {
+      "rcm_source_id": "site_tldr_gptj_6b_audited_k8",
+      "package_id": "site_current_complete_result_freeze_20260825_v1",
+      "payload_binding": "final_results",
+      "dataset": "tldr",
+      "model_registry_id": "gptj_6b_tldr_sft",
+      "method": "rcm_zero",
+      "reuse_mode": "audited_fixed_k8",
+      "consumer_job_ids": [
+        "performance__tldr__gptj_6b__sft_cast_reft_all",
+        "performance__tldr__gptj_6b__sft_cast_reft_prefill",
+        "performance__tldr__gptj_6b__dpo_cast_transfer_reft_all",
+        "performance__tldr__gptj_6b__dpo_cast_transfer_reft_prefill"
+      ]
+    }
+  ],
+  "entries": {}
+}

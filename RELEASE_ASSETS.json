@@ -1,0 +1,69 @@
+{
+  "format": "ZIP archives with paths relative to the repository root",
+  "extract_all_assets_into": "repository root",
+  "assets": [
+    {
+      "file": "evidence-001.zip",
+      "files": 3181,
+      "uncompressed_bytes": 1498461142,
+      "compressed_bytes": 521195421,
+      "sha256": "9b7a5dd7654aec98bc796ba713a2dc89ddd702646e40d0094567db792b96f639"
+    },
+    {
+      "file": "evidence-002.zip",
+      "files": 12236,
+      "uncompressed_bytes": 1499619266,
+      "compressed_bytes": 241169957,
+      "sha256": "b477d8813d5ba7a7080ab941782bec5449023c98a65dbbf8c39e91a9bbad1e4f"
+    },
+    {
+      "file": "evidence-003.zip",
+      "files": 1254,
+      "uncompressed_bytes": 1499700772,
+      "compressed_bytes": 417027232,
+      "sha256": "1445a7fc6430896b18b3803f522f7b9c054b72328620735e6408b432a396da06"
+    },
+    {
+      "file": "evidence-004.zip",
+      "files": 675,
+      "uncompressed_bytes": 1475940622,
+      "compressed_bytes": 381980846,
+      "sha256": "69149732c26791f5f9ce2eda944fbd8f7ee616deae72aa5693e54c6727fecc4a"
+    },
+    {
+      "file": "evidence-005.zip",
+      "files": 796,
+      "uncompressed_bytes": 1462990576,
+      "compressed_bytes": 393767033,
+      "sha256": "c8bed16edeb5d587426f26ed6ec96ac340aebffd3a31a78db1b89442bdd99a8e"
+    },
+    {
+      "file": "evidence-006.zip",
+      "files": 3248,
+      "uncompressed_bytes": 1498713000,
+      "compressed_bytes": 284639188,
+      "sha256": "fbcb439050e44ed1e93b77262c23d4daa7635dfaf724b2df7f8820b5e36db8cc"
+    },
+    {
+      "file": "evidence-007.zip",
+      "files": 1448,
+      "uncompressed_bytes": 1443375181,
+      "compressed_bytes": 194126314,
+      "sha256": "814086ce5d5fe2e0d841add8b5bd98744998024285c9c6db6c883ba7031b27ea"
+    },
+    {
+      "file": "evidence-008.zip",
+      "files": 3765,
+      "uncompressed_bytes": 1491329995,
+      "compressed_bytes": 273200161,
+      "sha256": "5eef0b6c244ea88153b0673fe83d3fb143362ea0df91430b6232c98aacb8f7b5"
+    },
+    {
+      "file": "evidence-009.zip",
+      "files": 56413,
+      "uncompressed_bytes": 1199898328,
+      "compressed_bytes": 233689916,
+      "sha256": "986e82b3970da017a993326c99aa627c15baf24e9682539819c59165c5022219"
+    }
+  ]
+}

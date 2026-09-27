@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "round": {
+    "index": 0,
+    "auto_previous_control": false,
+    "prev_scale": 1.0
+  },
+  "model": {
+    "path": "LOCAL_HOME/.cache/huggingface/hub/models--deepseek-ai--deepseek-math-7b-instruct",
+    "device": "auto",
+    "torch_dtype": "auto",
+    "use_chat_template": false
+  },
+  "output": {
+    "root": "data_gsm8k/rounds/deepseek_family_repair_shuffle_multiround"
+  },
+  "task": {
+    "adapter": "gsm8k_sampled_answer_arbitration",
+    "name": "gsm8k_deepseek_family_repair_shuffle_multiround",
+    "event": "gsm8k_sampled_answer_arbitration",
+    "source_jsonl": "data_gsm8k/raw/train.jsonl",
+    "prompt_key": "deepseek_math",
+    "prompt_semantics": "DeepSeek Math prompt (no CoT): question + boxed answer format",
+    "val_mod": 5,
+    "continuation_prefix": " ",
+    "require_parse_certified": true,
+    "dedupe_answers_per_question": false,
+    "max_pairs_per_question": 0
+  },
+  "pairs": {
+    "max_rows": null,
+    "continuation_policy": "sampled_answer_correctness_arbitration"
+  },
+  "discovery": {
+    "component_source": "reselect",
+    "reselect_components": true,
+    "reuse_components": "",
+    "component_types": [
+      "attn",
+      "mlp"
+    ],
+    "component_type_apply_modes": {
+      "attn": "all",
+      "mlp": "prompt_last"
+    },
+    "rows": 1000,
+    "mlp_topk": 4,
+    "mlp_negative_topk": 2,
+    "attn_layer_topk": 4,
+    "exclude_attn_layers": "0,1",
+    "scan_min_sign_consistency": 0.55,
+    "allow_ci_cross_zero": false,
+    "require_directional_ci": false,
+    "mlp_min_sign_consistency": 0.4,
+    "attn_min_sign_consistency": 0.55,
+    "mlp_require_directional_ci": false,
+    "attn_require_directional_ci": true,
+    "min_sign_consistency": 0.55,
+    "min_mlp_abs_mean_delta": 0.02,
+    "min_attn_abs_mean_delta": 0.3,
+    "head_scan_rows": 1000,
+    "head_scan_factors": [
+      0.0,
+      1.5
+    ],
+    "head_topk": 4,
+    "head_require_directional_ci": true
+  },
+  "training": {
+    "score_mode": "answer_rest_margin",
+    "option_selection_mode": "model_max",
+    "max_aliases_per_side": 3,
+    "train_split": "train",
+    "val_split": "val",
+    "max_train_rows": 2000,
+    "max_val_rows": 1000,
+    "epochs": 1,
+    "lr": 0.05,
+    "lambda_norm": 0.0001,
+    "alpha_train": 1.0,
+    "state_margin_weight": 1.0,
+    "gain_weight": 0.0,
+    "target_margin": 0.0,
+    "target_gain": 0.0,
+    "empty_cache_every": 25,
+    "mlp": {
+      "enabled": true,
+      "train_apply_mode": "prompt_last",
+      "generation_apply_mode": "prefill",
+      "timing_grid": [
+        {
+          "name": "prefill",
+          "train_apply_mode": "prompt_last",
+          "generation_apply_mode": "prefill"
+        },
+        {
+          "name": "first_decode",
+          "train_apply_mode": "decision_tokens",
+          "generation_apply_mode": "first_decode"
+        }
+      ]
+    },
+    "attention": {
+      "enabled": true,
+      "train_apply_mode": "all",
+      "generation_apply_mode": "all"
+    },
+    "full": {
+      "enabled": true,
+      "select_after_small_tune": true
+    }
+  },
+  "alpha": {
+    "scan": true,
+    "mlp": [
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "att": [
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "full": {
+      "grid_mode": "paired_centerline",
+      "pairs": [
+        {
+          "mlp": 0.1,
+          "att": 0.1
+        },
+        {
+          "mlp": 0.2,
+          "att": 0.2
+        },
+        {
+          "mlp": 0.3,
+          "att": 0.3
+        },
+        {
+          "mlp": 0.4,
+          "att": 0.4
+        },
+        {
+          "mlp": 0.5,
+          "att": 0.5
+        },
+        {
+          "mlp": 0.6,
+          "att": 0.6
+        },
+        {
+          "mlp": 0.7,
+          "att": 0.7
+        },
+        {
+          "mlp": 0.8,
+          "att": 0.8
+        },
+        {
+          "mlp": 0.9,
+          "att": 0.9
+        },
+        {
+          "mlp": 1.0,
+          "att": 1.0
+        }
+      ]
+    },
+    "train_sweep": [
+      0.0,
+      1.0
+    ]
+  },
+  "selection": {
+    "metric": "strict_final_exact",
+    "minimum_material_gain": 0.0,
+    "residual_min_gain_over_prev": 0.004,
+    "tie_breakers": [
+      "numeric_valid",
+      "parse_certified",
+      "smaller_alpha"
+    ],
+    "write_best_config": "selection/best_small_tune_config.json"
+  },
+  "evaluation": {
+    "enabled": true,
+    "name": "gsm8k_select_1000",
+    "eval_open_rows": "data_gsm8k/raw/train.jsonl",
+    "generation_prompt_key": "deepseek_math",
+    "scoring_kind": "gsm8k",
+    "split": "all",
+    "start": 5000,
+    "max_rows": 1000,
+    "generation_apply_mode": "prefill",
+    "max_new_tokens": 512,
+    "stop_strings": "\\nUser:",
+    "flush_every": 1,
+    "summary_every": 50,
+    "empty_cache_every": 25
+  },
+  "baselines": {
+    "base": {
+      "enabled": true,
+      "model": "LOCAL_HOME/.cache/huggingface/hub/models--deepseek-ai--deepseek-math-7b-instruct",
+      "control": ""
+    },
+    "rl": {
+      "enabled": false,
+      "model": "LOCAL_HOME/.cache/huggingface/hub/models--deepseek-ai--deepseek-math-7b-rl",
+      "control": ""
+    }
+  }
+}

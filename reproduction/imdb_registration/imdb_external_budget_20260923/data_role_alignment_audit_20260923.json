@@ -1,0 +1,223 @@
+{
+  "all_core_roles_match": true,
+  "all_source_roles_disjoint": true,
+  "cells": [
+    {
+      "cell": "performance__imdb__gpt2_large__casthead_neg",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__casthead_pos",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__dpo",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__dpo_cast_nontransfer_reft_all",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__dpo_cast_nontransfer_reft_prefill",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__dpo_cast_nontransfer_sv_all",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__dpo_cast_nontransfer_sv_prefill",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__dpo_cast_transfer_reft_all",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__dpo_cast_transfer_reft_prefill",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__dpo_cast_transfer_sv_all",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__dpo_cast_transfer_sv_prefill",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__sft",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__sft_cast_reft_all",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__sft_cast_reft_prefill",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__sft_cast_sv_all",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__sft_cast_sv_prefill",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__bipo_native",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    },
+    {
+      "cell": "performance__imdb__gpt2_large__loreft_native",
+      "selector_count": 300,
+      "selector_source_and_prompt_equal": true,
+      "test_count": 2048,
+      "test_source_and_prompt_equal": true,
+      "training_core_equal": true,
+      "training_count": 1024,
+      "validation_count": 256,
+      "validation_source_and_prompt_equal": true
+    }
+  ],
+  "model_native_validation_note": "Validation generated chosen/rejected can differ; neither BiPO nor LoReFT trainer reads validation rows. Both select candidates on selector_300.",
+  "reference_cell": "performance__imdb__gpt2_large__sft_cast_sv_all",
+  "roles": {
+    "selector": 300,
+    "test": 2048,
+    "training": 1024,
+    "validation": 256
+  },
+  "root_count": 18,
+  "schema_version": 1,
+  "scope": "IMDb clean-first formal 18 cells",
+  "source_role_intersection_counts": {
+    "selector__test": 0,
+    "selector__training": 0,
+    "selector__validation": 0,
+    "test__training": 0,
+    "validation__test": 0,
+    "validation__training": 0
+  }
+}

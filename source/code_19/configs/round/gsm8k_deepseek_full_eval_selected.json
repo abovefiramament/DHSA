@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "round": {
+    "index": 0
+  },
+  "model": {
+    "path": "LOCAL_HOME/.cache/huggingface/hub/models--deepseek-ai--deepseek-math-7b-instruct",
+    "device": "auto",
+    "torch_dtype": "auto",
+    "use_chat_template": false
+  },
+  "output": {
+    "root": "data_gsm8k/rounds/deepseek_selected_full"
+  },
+  "task": {
+    "adapter": "gsm8k_full_trajectory",
+    "name": "gsm8k_deepseek_selected_full",
+    "event": "gsm8k_gold_answer_logic_advantage",
+    "source_jsonl": "data_gsm8k/cast_gsm8k_k4_answer_margin_480_120_v2/trajectory_pool/source/gsm8k_open_rows.jsonl",
+    "rollouts_jsonl": "data_gsm8k/cast_gsm8k_k4_answer_margin_480_120_v2/trajectory_pool/pairs/rollouts.jsonl",
+    "prompt_key": "deepseek_math_cot",
+    "prompt_semantics": "DeepSeek Math CoT prompt: Please reason step by step, and put your final answer within \\boxed{}.",
+    "val_mod": 5,
+    "max_correct_options": 4,
+    "max_wrong_options": 6
+  },
+  "pairs": {
+    "max_rows": null,
+    "continuation_policy": "full_trajectory"
+  },
+  "discovery": {
+    "component_source": "reuse",
+    "reselect_components": false,
+    "reuse_components": "data_gsm8k/rounds/deepseek_480_120_tune/round_00/selection/best_small_tune_config.json",
+    "component_types": [
+      "attn",
+      "mlp"
+    ]
+  },
+  "training": {
+    "score_mode": "answer_rest_margin",
+    "option_selection_mode": "external_max",
+    "max_aliases_per_side": 1,
+    "train_split": "train",
+    "val_split": "val",
+    "max_train_rows": 480,
+    "max_val_rows": 120,
+    "epochs": 2,
+    "lr": 0.05,
+    "lambda_norm": 0.0001,
+    "alpha_train": 1.0,
+    "state_margin_weight": 0.0,
+    "gain_weight": 1.0,
+    "target_margin": 0.0,
+    "target_gain": 0.0,
+    "empty_cache_every": 25,
+    "mlp": {
+      "enabled": true,
+      "train_apply_mode": "from_selected",
+      "generation_apply_mode": "from_selected"
+    },
+    "attention": {
+      "enabled": true,
+      "train_apply_mode": "all",
+      "generation_apply_mode": "all"
+    },
+    "full": {
+      "enabled": true,
+      "selected_config": "data_gsm8k/rounds/deepseek_480_120_tune/round_00/selection/best_small_tune_config.json"
+    }
+  },
+  "alpha": {
+    "scan": false,
+    "mlp": [
+      "from_selected"
+    ],
+    "att": [
+      "from_selected"
+    ],
+    "full": {
+      "grid_mode": "selected_only",
+      "source": "data_gsm8k/rounds/deepseek_480_120_tune/round_00/selection/best_small_tune_config.json"
+    },
+    "train_sweep": [
+      0.0,
+      1.0
+    ]
+  },
+  "selection": {
+    "metric": "strict_final_exact",
+    "minimum_material_gain": 0.01,
+    "source": "data_gsm8k/rounds/deepseek_480_120_tune/round_00/selection/best_small_tune_config.json"
+  },
+  "evaluation": {
+    "enabled": true,
+    "name": "gsm8k_test_full",
+    "eval_open_rows": "data_gsm8k/raw/test.jsonl",
+    "generation_prompt_key": "deepseek_math_cot",
+    "scoring_kind": "gsm8k",
+    "split": "all",
+    "start": 0,
+    "max_rows": 0,
+    "generation_apply_mode": "from_selected",
+    "max_new_tokens": 512,
+    "stop_strings": "\\nUser:",
+    "flush_every": 1,
+    "summary_every": 100,
+    "empty_cache_every": 25
+  },
+  "baselines": {
+    "base": {
+      "enabled": true,
+      "model": "LOCAL_HOME/.cache/huggingface/hub/models--deepseek-ai--deepseek-math-7b-instruct",
+      "control": "",
+      "eval_full": true
+    },
+    "rl": {
+      "enabled": true,
+      "model": "LOCAL_HOME/.cache/huggingface/hub/models--deepseek-ai--deepseek-math-7b-rl",
+      "control": "",
+      "eval_full": true
+    }
+  }
+}

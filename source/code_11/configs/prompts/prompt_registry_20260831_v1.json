@@ -1,0 +1,47 @@
+{
+  "registry_id": "prompt_registry_20260831_v1",
+  "scope": "project_shared",
+  "entries": {
+    "confiqa.official_rag.context_dpo_v1": {
+      "template": "{context}\nQ: {question}\nA: ",
+      "required_fields": [
+        "context",
+        "question"
+      ],
+      "rendering": "python_format_preserve_exact",
+      "preserve_exact": true
+    },
+    "imdb.good_state_v1": {
+      "template": "{prefix}\n\nContinue the review with a positive sentiment:",
+      "required_fields": [
+        "prefix"
+      ],
+      "rendering": "python_format_preserve_exact",
+      "preserve_exact": true
+    },
+    "imdb.base_state_v1": {
+      "template": "{prefix}",
+      "required_fields": [
+        "prefix"
+      ],
+      "rendering": "python_format_preserve_exact",
+      "preserve_exact": true
+    },
+    "imdb.preference_prefix_v1": {
+      "template": "{prefix}",
+      "required_fields": [
+        "prefix"
+      ],
+      "rendering": "python_format_preserve_exact",
+      "preserve_exact": true
+    },
+    "tldr.source_prompt_passthrough_v1": {
+      "template": "{source_prompt}",
+      "required_fields": [
+        "source_prompt"
+      ],
+      "rendering": "python_format_preserve_exact",
+      "preserve_exact": true
+    }
+  }
+}

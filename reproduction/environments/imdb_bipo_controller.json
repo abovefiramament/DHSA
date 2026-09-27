@@ -1,0 +1,23 @@
+{
+  "job_id": "REDACTED",
+  "method": "bipo",
+  "phase": "controller",
+  "python": "3.11.3 (main, Jan 24 2026, 04:27:47) [GCC 12.3.0]",
+  "executable": "LOCAL_HOME/venvs/rpec_bipo/bin/python",
+  "platform": "Linux-5.14.0-687.29.1.el9_8.x86_64-x86_64-with-glibc2.34",
+  "packages": {
+    "torch": "2.5.1+cu124",
+    "transformers": "4.42.4",
+    "trl": "0.8.6",
+    "datasets": "2.17.0",
+    "pyreft": null,
+    "peft": "0.8.2",
+    "accelerate": "0.27.0",
+    "numpy": "1.26.4"
+  },
+  "code_revision": "SOURCE_SNAPSHOT_NOT_YET_PACKAGED",
+  "registry": "LOCAL_HOME/rpec_runs/imdb_external_budget_20260923/runtime_registry_bipo_fix.json",
+  "cuda": "12.4",
+  "cudnn": 90100,
+  "gpu": "NVIDIA H100 80GB HBM3"
+}

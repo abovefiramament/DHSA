@@ -1,0 +1,530 @@
+{
+  "protocol_id": "tldr_site_reft_head_audit_fixed_protocol_20260724_v4",
+  "version": 4,
+  "last_updated": "2026-07-24",
+  "status": "locked_after_human_reference_judge_correction_before_valid_judging",
+  "protocol_correction": {
+    "id": "human_reference_judge_correction_20260724",
+    "applied_stage": "after_single_head_generation_before_valid_judging",
+    "pre_correction_config_sha256": "512a793ae77351789ba541b7490ff9f1f87a6276341905b8ffa1ffe421325e60",
+    "scientifically_unchanged_sections": [
+      "model",
+      "inputs",
+      "selector_import",
+      "candidate_pool_actuator_import",
+      "selection",
+      "actuator",
+      "generation"
+    ],
+    "eligible_pre_correction_artifacts": [
+      "selector_and_candidate_pool_metadata",
+      "candidate_pool_reft_payloads",
+      "single_head_payloads",
+      "shared_sft_audit_generation",
+      "all_single_head_alpha_generations"
+    ],
+    "forbidden_pre_correction_artifacts": [
+      "direct_head_vs_sft_judge_outputs",
+      "head_audit_summaries",
+      "head_decisions",
+      "final_K8_outputs"
+    ],
+    "correction_manifest": "protocol/human_reference_judge_correction_20260724.json"
+  },
+  "remote_source_of_truth": "LOCAL_HOME/RPEC/projects/screscomp",
+  "documentation": "docs/TLDR_SITE_REFT_HEAD_AUDIT_FIXED_PROTOCOL_20260724_V4.md",
+  "preflight": "scripts/paper/32_prepare_tldr_site_reft_head_audit_protocol.py",
+  "runner": "scripts/paper/33_run_tldr_site_reft_head_audit_serial.py",
+  "scope": {
+    "task": "tldr_summary_preference",
+    "table_family": "site_position_selector_with_common_single_head_audit_and_cast_reft_actuator",
+    "claim": "selector usefulness after equal per-head open-generation auditing and a shared sparse K=8 low-rank ReFT control interface",
+    "historical_expanded9_policy": "performance_table_provenance_only_not_site_selector_evidence",
+    "site_v12_policy": "independent_extension_do_not_modify_or_reuse_site_v12_outputs",
+    "supersedes": "tldr_site_reft_head_audit_fixed_protocol_20260723_v3",
+    "supersession_reason": "version_3_used_320_rows_per_candidate_head_for_tuning; version_4_preregisters_the_shared_calibration_prefix_40_and_preserves_320_only_for_final_K8_calibration_and_evaluation"
+  },
+  "model": {
+    "id": "CarperAI/openai_summarize_tldr_sft",
+    "path": "LOCAL_HOME/RPEC/hf_cache/hub/models--CarperAI--openai_summarize_tldr_sft/snapshots/5284f23cef13674869bdb95eea91cafd0fa6d124",
+    "revision": "5284f23cef13674869bdb95eea91cafd0fa6d124",
+    "tokenizer_path": "LOCAL_HOME/RPEC/hf_cache/hub/models--CarperAI--openai_summarize_tldr_sft/snapshots/5284f23cef13674869bdb95eea91cafd0fa6d124",
+    "use_chat_template": false,
+    "torch_dtype": "bfloat16",
+    "expected_architecture": {
+      "family": "gptj",
+      "attention_layers": 28,
+      "attention_heads_per_layer": 16,
+      "hidden_size": 4096,
+      "head_dim": 256,
+      "candidate_heads": 448
+    }
+  },
+  "inputs": {
+    "pairs_csv": "LOCAL_HOME/RPEC/projects/screscomp/data_tldr/tldr_gptj_prepared/pairs.csv",
+    "pairs_expected_bytes": 704239473,
+    "pair_build_manifest": "LOCAL_HOME/RPEC/projects/screscomp/data_tldr/tldr_gptj_prepared/pair_build_manifest.json",
+    "pair_build_manifest_sha256": "98febd6322a2519bc642ab34c21e9d79dad73720558dadf5b76d1c0ce3f386a4",
+    "event": "tldr_summary_preference",
+    "prompt_format": "openai_tldr_structured_v1",
+    "selector_groups": {
+      "source_split": "train",
+      "source_order": "pairs_csv_file_order",
+      "shuffle": false,
+      "unique_group_key": "prompt_id",
+      "pair_choice_within_group": "first_admitted_pair_in_file_order",
+      "duplicate_group_policy": "skip_and_continue_until_target_count",
+      "target_unique_groups": 300,
+      "shared_artifact": "input/selector_pairs_300.csv",
+      "admission_audit": "input/selector_pair_admission.jsonl"
+    },
+    "calibration": {
+      "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_sft_rm4_rollout_existing_rmselect_300_20260617/clean_splits_20260619/test_clean_calib_320_seed20260619.jsonl",
+      "sha256": "4bad4ffa2cbc905d724d4629b4bef5f7f46a1be95ab019ce293415c087d9e1b8",
+      "rows": 320,
+      "purpose": "configuration_and_alpha_selection_only"
+    },
+    "final": {
+      "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_sft_rm4_rollout_existing_rmselect_300_20260617/clean_splits_20260619/test_clean_final_320_seed20260619.jsonl",
+      "sha256": "f91f85b4421a1343031689860bc0686fb888adc2e87279dd36206e3e20ae6caa",
+      "rows": 320,
+      "purpose": "locked_single_final_evaluation_after_calibration_freeze"
+    }
+  },
+  "selector_import": {
+    "source_protocol_id": "tldr_site_reft_audit_fixed_protocol_20260721_v2",
+    "source_run_root": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_audit_20260721_v2",
+    "source_config": "LOCAL_HOME/RPEC/projects/screscomp/configs/tldr_site_reft_audit_fixed_protocol_20260721_v2.json",
+    "source_config_sha256": "d5e2e3aaab69ce626e6f54fc5d612c6ca334aeb093653e8bbaddf43457a6048c",
+    "source_stop_record": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_audit_20260721_v2/protocol/manual_stop_20260723.json",
+    "source_stop_record_sha256": "0c5bf2e18cb0a6db2b9384ebd9e2d937669571303c4a39c46de30349af29ccc9",
+    "source_selector_pairs_sha256": "96a27c363e501fb4869bf40984ff40e87e0b5d521ea3d9b28c9ac6df5735ce0a",
+    "source_candidate_manifest_sha256": {
+      "rcm_zero_signed": "720c77add4027cf0339290d440eecade21d1134e9724b4552dd76e3b4dfea6bb",
+      "rcm_patch_signed": "389014183b208b83c3dde0071920dea28058358d415b3a968cb25ddbbc10ea0b",
+      "iti": "faca70940b132407d4c23d1b112cb387ef9f2b7e1764f8874e02d2b9d91ffa76"
+    },
+    "allowed_artifacts": [
+      "input_selector_pair_artifacts",
+      "rcm_layer_and_head_effect_artifacts",
+      "iti_probe_score_artifacts",
+      "selector_reservoir_manifests"
+    ],
+    "forbidden_artifacts": [
+      "all_version_2_actuator_payloads",
+      "all_version_2_generation_outputs",
+      "all_version_2_candidate_configuration_results"
+    ],
+    "hash_every_imported_file": true,
+    "copy_into_version_4_run": false
+  },
+  "candidate_pool_actuator_import": {
+    "enabled": true,
+    "source_protocol_id": "tldr_site_reft_head_audit_fixed_protocol_20260723_v3",
+    "source_config": "LOCAL_HOME/RPEC/projects/screscomp/configs/tldr_site_reft_head_audit_fixed_protocol_20260723_v3.json",
+    "source_config_sha256": "b8657dfa84e189ed64bacb2f8ddbd94c79a52b5410d2d5c6b7966c37a55acb5f",
+    "source_run_root": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260723_v3",
+    "source_stop_record": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260723_v3/protocol/manual_stop_20260724.json",
+    "source_stop_record_sha256": "4630370aa810a31c0c273d105e0e4f2f5e47a61bcefcaa01c9d7fd67f19bdbad",
+    "copy_mode": "copytree_with_file_hash_inventory",
+    "scientific_training_config_must_match": true,
+    "allowed_artifacts": [
+      "candidate_pool_reft_payloads",
+      "candidate_pool_reft_run_configs",
+      "candidate_pool_reft_plans",
+      "candidate_pool_training_manifests"
+    ],
+    "forbidden_artifacts": [
+      "version_3_single_head_payloads",
+      "version_3_head_audit_sft_generation",
+      "version_3_head_audit_candidate_generations",
+      "version_3_head_judgments",
+      "version_3_head_decisions",
+      "version_3_final_actuators",
+      "version_3_calibration_outputs",
+      "version_3_final_outputs"
+    ]
+  },
+  "selection": {
+    "candidate_space": "pre_o_attention_head",
+    "component_id_pattern": "^L[0-9]+[.]attn[.]h[0-9]+$",
+    "selected_count": 8,
+    "candidate_pool": {
+      "heads_per_pool": 16,
+      "rcm_target_support_candidates": 8,
+      "rcm_competitor_support_candidates": 8,
+      "iti_unsigned_candidates": 16,
+      "random_unsigned_candidates": 16,
+      "final_heads": 8,
+      "final_rcm_role_quota": null,
+      "final_rule": "retain_exactly_eight_heads_after_equal_single_head_open_generation_audit"
+    },
+    "state_timing": "generation_decision_states",
+    "score": {
+      "endpoint": "mean_continuation_token_log_probability",
+      "competition": "avglogp_y_plus_minus_avglogp_y_minus",
+      "option_selection_mode": "model_max",
+      "max_aliases_per_side": 1
+    },
+    "bootstrap": {
+      "method": "paired_percentile_bootstrap",
+      "samples": 500,
+      "seed": 42,
+      "percentiles": [
+        2.5,
+        97.5
+      ]
+    },
+    "rcm_ranking": {
+      "role_source": "sign_of_candidate_own_mean_paired_effect",
+      "target_support_score": "ci95_low",
+      "competitor_support_score": "negative_ci95_high",
+      "order": "descending_within_role",
+      "ci_admission_gate": false,
+      "ci_crossing_policy": "retain_and_report",
+      "tie_break": "ascending_layer_then_head"
+    },
+    "coarse_to_fine": {
+      "coarse_unit": "complete_pre_o_attention_layer",
+      "coarse_beam_per_role": 4,
+      "head_refinement_pool": "every_head_in_union_of_eight_signed_parent_layers",
+      "coarse_groups": 300,
+      "head_groups": 300
+    },
+    "selectors": {
+      "rcm_zero_signed": {
+        "family": "causal_state_transition",
+        "delta": "C_native_minus_C_zero",
+        "operation": "zero_candidate_on_both_preference_endpoint_trajectories_at_every_generation_decision_state",
+        "direction": "signed_8_plus_8_candidate_pool_then_unconstrained_final_K8"
+      },
+      "rcm_patch_signed": {
+        "family": "causal_state_transition",
+        "delta": "C_clamp_minus_C_native",
+        "operation": "clamp_candidate_on_both_preference_endpoint_trajectories_to_target_prototype_at_every_generation_decision_state",
+        "prototype_source": "complete_y_plus_decision_trajectory_on_same_300_groups",
+        "prototype_aggregation": [
+          "mean_decision_states_within_y_plus_sequence",
+          "mean_sequences_across_groups"
+        ],
+        "prototype_dtype": "float32",
+        "patch_type": "constant_overwrite",
+        "patch_alpha": 1.0,
+        "direction": "signed_8_plus_8_candidate_pool_then_unconstrained_final_K8"
+      },
+      "iti": {
+        "family": "official_probe_localization",
+        "positive_state": "prompt_plus_complete_y_plus_sequence",
+        "negative_state": "prompt_plus_complete_y_minus_sequence",
+        "activation_position": "final_nonpadding_token_of_complete_labeled_sequence",
+        "folds": 2,
+        "fold_policy": "first_150_groups_to_second_150_then_reverse",
+        "ranking_score": "mean_grouped_twofold_heldout_accuracy",
+        "classifier": "sklearn.linear_model.LogisticRegression",
+        "penalty": "l2",
+        "C": 1.0,
+        "solver": "lbfgs",
+        "fit_intercept": true,
+        "class_weight": null,
+        "tol": 0.0001,
+        "max_iter": 1000,
+        "feature_standardization": "none",
+        "random_state": 42,
+        "official_repository": "LOCAL_HOME/RPEC/projects/baselines/honest_llama",
+        "official_commit": "2c6b2179be7b5aa8f0a171688cf9e01b812ca327"
+      },
+      "random": {
+        "family": "uniform_control",
+        "universe": "all_448_compatible_pre_o_attention_heads",
+        "replacement": false,
+        "stratification": "none",
+        "seeds": [
+          20260702,
+          20260703,
+          20260704
+        ]
+      }
+    }
+  },
+  "single_head_audit": {
+    "candidate_pool_heads": 16,
+    "audit_unit": "one_learned_ReFT_head_payload_applied_alone",
+    "not_leave_one_out": true,
+    "not_selector_zero_or_patch_at_generation": true,
+    "pool_training": "joint_before_single_head_payload_extraction",
+    "audit_split": "calibration_prefix_40",
+    "audit_rows": 40,
+    "alpha_grid": [
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7
+    ],
+    "shared_sft_generation_for_health_and_human_reference_baseline": true,
+    "primary_win_rate": {
+      "name": "balanced_head_vs_human_reference_pairwise_win_rate",
+      "formula": "mean(first_pass_head_win_rate,full_order_swap_head_win_rate)",
+      "judge_protocol": "tldr_dpo_appendix_c2_concise_pairwise_v1",
+      "full_order_swap": true
+    },
+    "secondary_evidence": [
+      "shared_sft_vs_human_reference_balanced_win_rate",
+      "avg_words",
+      "rouge_l_f1_vs_human",
+      "repeat_bigram_rate",
+      "repeat_trigram_rate",
+      "tldr_echo_rate",
+      "empty_output_rate",
+      "likely_unfinished_rate",
+      "unique_summary_ratio",
+      "distinct_1",
+      "distinct_2",
+      "distinct_3",
+      "top_skeleton_share",
+      "mean_nn_bigram_jaccard",
+      "blinded_sample_text"
+    ],
+    "side_effect_health_metrics": {
+      "lower_is_better": [
+        "repeat_bigram_rate",
+        "repeat_trigram_rate",
+        "tldr_echo_rate",
+        "empty_output_rate",
+        "likely_unfinished_rate",
+        "top_skeleton_share",
+        "mean_nn_bigram_jaccard"
+      ],
+      "higher_is_better": [
+        "unique_summary_ratio",
+        "distinct_1",
+        "distinct_2",
+        "distinct_3"
+      ]
+    },
+    "operating_point": "the_registered_alpha_with_highest_balanced_head_vs_human_reference_win_rate",
+    "overshoot_health_metrics": {
+      "lower_is_better": [
+        "likely_unfinished_rate",
+        "repeat_trigram_rate"
+      ],
+      "higher_is_better": [
+        "distinct_2"
+      ]
+    },
+    "overshoot_rule": "a_poor_larger_alpha_is_not_a_drop_reason_when_a_smaller_registered_alpha_recovers_win_rate_or_text_health",
+    "pure_side_effect_priority_rule": "drop_first_only_when_no_registered_alpha_improves_human_reference_win_rate_over_the_shared_sft_human_reference_baseline_and_the_registered_text_audit_shows_target_independent_degradation",
+    "selection_mode": "registered_blinded_win_rate_and_text_audit",
+    "blinding_seed": 20260723,
+    "decision_codes": [
+      "keep_clean",
+      "keep_overshoot_recovered",
+      "drop_pure_side_effect",
+      "drop_lower_priority"
+    ],
+    "final_heads_per_pool": 8,
+    "final_rcm_role_quota": null,
+    "final_tie_break": [
+      "higher_best_balanced_head_vs_human_reference_win_rate",
+      "higher_order_swap_agreement_at_best_alpha",
+      "healthier_registered_text_audit_at_best_alpha",
+      "lower_blinded_audit_id"
+    ],
+    "random_policy": "audit_each_registered_seed_pool_independently_and_report_all_three_without_best_seed_selection",
+    "audit_payload_reuse_in_final": false,
+    "final_policy": "retrain_each_frozen_K8_configuration_from_scratch",
+    "audit_start": 0,
+    "audit_subset": "first_40_rows_in_locked_calibration_file_order",
+    "audit_purpose": "candidate_head_tuning_and_side_effect_screen_only"
+  },
+  "actuator": {
+    "family": "cast_low_rank_reft",
+    "base_model_frozen": true,
+    "native_selected_writes": "kept_active",
+    "locator_operation_present_during_training_or_generation": false,
+    "reft_mode": "low_rank",
+    "rank": 4,
+    "expected_trainable_parameters_per_head": 2048,
+    "expected_total_trainable_parameters_per_candidate_pool": 32768,
+    "expected_total_trainable_parameters_per_K8_configuration": 16384,
+    "initialization": {
+      "init_std": 0.01,
+      "warm_start": false,
+      "seed": 42
+    },
+    "partition": {
+      "rcm_candidate_pool": "two_independently_trained_eight_head_role_banks",
+      "rcm_final": "role_banks_follow_retained_head_roles_with_no_role_count_quota",
+      "iti_candidate_pool": "one_jointly_trained_unsigned_sixteen_head_bank",
+      "iti_final": "one_jointly_trained_unsigned_eight_head_bank",
+      "random_candidate_pool": "one_jointly_trained_unsigned_sixteen_head_bank_per_registered_seed",
+      "random_final": "one_jointly_trained_unsigned_eight_head_bank_per_registered_seed",
+      "rcm_inference_composition": "target_support_bank_then_competitor_support_bank_on_disjoint_heads",
+      "shared_alpha_across_rcm_role_banks": true,
+      "independent_role_alpha_search": false,
+      "single_head_audit_payload": "exact_one_head_parameter_slice_extracted_from_its_jointly_trained_candidate_pool_bank",
+      "single_head_audit_retraining": false,
+      "final_retraining_from_scratch": true
+    },
+    "training": {
+      "pairs_csv": "LOCAL_HOME/RPEC/projects/screscomp/data_tldr/tldr_gptj_prepared/pairs.csv",
+      "event": "tldr_summary_preference",
+      "endpoint_objective": "pair_margin",
+      "train_split": "train",
+      "val_split": "val",
+      "shuffle_train": true,
+      "max_train_rows": 8192,
+      "max_val_rows": 512,
+      "epochs": 1,
+      "train_batch_size": 2,
+      "eval_batch_size": 2,
+      "optimizer": "torch.optim.AdamW",
+      "lr": 0.001,
+      "adam_beta1": 0.9,
+      "adam_beta2": 0.999,
+      "adam_eps": 1e-08,
+      "weight_decay": 0.01,
+      "amsgrad": false,
+      "scheduler": "none",
+      "gradient_clipping": "none",
+      "lambda_norm": 0.0001,
+      "alpha_train": 1.0,
+      "preference_loss_mode": "dpo",
+      "dpo_beta": 0.5,
+      "state_margin_weight": 0.0,
+      "gain_weight": 1.0,
+      "target_margin": 0.0,
+      "target_gain": 0.0,
+      "apply_mode": "all",
+      "score_mode": "avglogp",
+      "option_selection_mode": "model_max",
+      "max_aliases_per_side": 1,
+      "empty_cache_every": 25,
+      "seed": 42,
+      "skip_alpha_summary": true
+    },
+    "alpha_grid": [
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7
+    ]
+  },
+  "generation": {
+    "split": "test",
+    "start": 0,
+    "apply_mode": "all",
+    "samples_per_prompt": 1,
+    "batch_size": 1,
+    "max_new_tokens": 100,
+    "stop_strings": [],
+    "do_sample": false,
+    "temperature": 0.0,
+    "top_p": 0.9,
+    "top_k": 0,
+    "seed": 42,
+    "sign": 1.0,
+    "same_seed_across_alpha": true,
+    "alpha_zero_policy": "generate_once_per_split_and_reuse_exact_SFT_rows"
+  },
+  "evaluation": {
+    "judge": {
+      "implementation": "screscomp.cli.evaluate_tldr_dpo_ds4",
+      "protocol": "tldr_dpo_appendix_c2_concise_pairwise_v1",
+      "model": "deepseek-v4-pro",
+      "thinking_mode": "disabled",
+      "reasoning_effort": "high",
+      "random_seed": 20260613,
+      "review_fraction": 1.0,
+      "single_head_audit_comparisons": "every_single_head_alpha_and_shared_sft_independently_vs_human_reference_only_no_direct_head_vs_sft_judgments",
+      "calibration_comparisons": "every_final_K8_alpha_vs_human_only",
+      "final_comparisons": "all_frozen_unique_points_pairwise_and_vs_human",
+      "row_count_source": "stage_specific_single_head_audit.audit_rows_or_inputs_split.rows"
+    },
+    "health": {
+      "implementation": "scripts/audit_tldr_text_health.py",
+      "required_metrics": [
+        "avg_words",
+        "rouge_l_f1_vs_human",
+        "repeat_bigram_rate",
+        "repeat_trigram_rate",
+        "tldr_echo_rate",
+        "empty_output_rate",
+        "likely_unfinished_rate",
+        "unique_summary_ratio",
+        "distinct_1",
+        "distinct_2",
+        "distinct_3",
+        "top_skeleton_share",
+        "mean_nn_bigram_jaccard"
+      ],
+      "hard_posthoc_replacement": false
+    },
+    "reported_selector_audit": [
+      "all_layer_and_head_effects",
+      "mean_effect",
+      "ci95_low",
+      "ci95_high",
+      "ci_crosses_zero",
+      "candidate_pool_16",
+      "candidate_pool_roles",
+      "candidate_pool_joint_training",
+      "single_head_payload_hashes",
+      "every_single_head_alpha_generation",
+      "head_vs_human_reference_first_swap_balanced_and_agreement",
+      "shared_sft_vs_human_reference_first_swap_balanced_and_agreement",
+      "single_head_text_health",
+      "overshoot_and_pure_side_effect_decisions",
+      "final_selected_K8_heads_and_roles",
+      "final_selected_alpha",
+      "cross_selector_final_head_overlap",
+      "trainable_parameter_count",
+      "actual_n",
+      "final_generation_health"
+    ]
+  },
+  "execution": {
+    "run_root": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_head_audit_20260724_v4",
+    "curated_results": "results/tldr_site_reft_head_audit_20260724_v4",
+    "serial_only": true,
+    "one_long_job_at_a_time": true,
+    "single_gpu_per_job": true,
+    "preferred_physical_gpu_indices": [
+      2,
+      3
+    ],
+    "gpu_selection_policy": "lower_observed_memory_used_at_stage_launch",
+    "gpu_co_tenancy_allowed": true,
+    "empty_gpu_required": false,
+    "existing_artifact_policy": "reuse_only_hash_validated_version_3_candidate_pool_training; regenerate_all_version_4_single_head_and_later_outputs",
+    "failure_policy": "stop_without_fallback_or_protocol_mutation",
+    "head_freeze_requirement": "all_pool_head_decisions_complete_exactly_eight_retained_per_pool_and_hashed",
+    "final_unlock_requirement": "final_K8_calibration_alpha_selection_manifest_complete_and_hashed",
+    "required_run_records": [
+      "config_snapshot_and_sha256",
+      "code_commit_and_dirty_tree_manifest",
+      "model_and_tokenizer_revision",
+      "pairs_file_sha256_and_selector_subset_sha256",
+      "selector_group_admission_and_duplicate_refill_audit",
+      "all_selector_scores_and_CIs",
+      "version_2_selector_import_hash_manifest",
+      "all_candidate_pool_manifests",
+      "version_3_candidate_pool_training_import_hash_inventory",
+      "candidate_pool_ReFT_run_config_and_payload_hashes",
+      "all_single_head_payload_hashes",
+      "GPU_launch_snapshot",
+      "stage_wall_seconds",
+      "single_head_generation_judge_and_health_manifests",
+      "blinded_head_decision_artifacts",
+      "frozen_final_K8_head_manifests",
+      "final_K8_ReFT_run_config_and_payload_hashes",
+      "calibration_generation_judge_and_health_manifests",
+      "frozen_alpha_selection_manifest",
+      "final_generation_judge_and_health_manifests",
+      "actual_n"
+    ]
+  }
+}

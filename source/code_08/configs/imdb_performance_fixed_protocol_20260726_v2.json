@@ -1,0 +1,373 @@
+{
+  "protocol_id": "imdb_performance_fixed_protocol_20260726_v2",
+  "version": 2,
+  "lock_date": "2026-07-26",
+  "status": "fixed_reproduction_conditions_no_gpu_run_launched",
+  "remote_source_of_truth": "LOCAL_HOME/RPEC/projects/screscomp",
+  "documentation": "docs/IMDB_PERFORMANCE_FIXED_PROTOCOL_20260726_V2.md",
+  "validator": "scripts/paper/38_validate_imdb_performance_protocol_v2.py",
+  "scope": {
+    "included": [
+      "CAST reward-KL response curve on the pinned SFT base",
+      "released DPO checkpoint evaluation on the same validation and test prompt artifacts"
+    ],
+    "excluded": [
+      "DPO training reproduction",
+      "IMDb Head-Site",
+      "IMDb MLP-Site",
+      "replacement of missing historical result files by an older run"
+    ]
+  },
+  "models": {
+    "sft_reference_and_cast_base": {
+      "id": "ma921/gpt2-large-sft-imdb",
+      "revision": "f480190690d5abfc0e003ccb4f7e650626019bb9"
+    },
+    "released_dpo_policy": {
+      "id": "ma921/gpt2-large_dpo_imdb_noise0_epoch5",
+      "revision": "90f8bc822ce954f07b76afe7d8fc5a867e0fd2eb"
+    },
+    "sentiment_scorer": {
+      "id": "siebert/sentiment-roberta-large-english",
+      "revision": "74cea614e245b0832c770ec9aa51bd58df965b9c",
+      "positive_label": "POSITIVE",
+      "negative_label": "NEGATIVE",
+      "score_text": "completion",
+      "max_length": 512
+    }
+  },
+  "dataset": {
+    "id": "stanfordnlp/imdb",
+    "revision": "e6281661ce1c48d982bc483cf8a173c1bbeb5d31",
+    "text_field": "auto",
+    "label_field": "auto",
+    "normalize_imdb_breaks": false
+  },
+  "discovery": {
+    "prompt_artifact": {
+      "path": "runs/imdb_dpo_prompt_positive_rollout_scan_20260605_115624/env/prompts.jsonl",
+      "sha256": "f18a559a4348ca3d629f6fa2411e32c59c71a2c4685c66473740f826f61bf802",
+      "manifest": "runs/imdb_dpo_prompt_positive_rollout_scan_20260605_115624/env/environment_manifest.json",
+      "manifest_sha256": "9b7cb89d9b5d7735caa5babf041b72a14f5120bfef4a3676a4e0782f89d1816a",
+      "rows": 300,
+      "source_split": "train",
+      "source_start": 0,
+      "source_max_rows": 25000,
+      "shuffle": true,
+      "seed": 42,
+      "prefix_mode": "tokenizer",
+      "prefix_token_min": 2,
+      "prefix_token_max": 8,
+      "prompt_template": "{prefix}\n\nContinue the review with a positive sentiment:"
+    },
+    "component_scan": {
+      "scan_mode": "rollout",
+      "split": "train",
+      "rows": 300,
+      "samples_per_prompt": 1,
+      "component_types": [
+        "attn",
+        "mlp"
+      ],
+      "components_scanned": 72,
+      "apply_mode": "all",
+      "generation_batch_size": 8,
+      "max_new_tokens": 64,
+      "temperature": 1.0,
+      "top_p": 1.0,
+      "top_k": 50,
+      "seed": 42,
+      "min_abs_delta": 0.0,
+      "min_sign_consistency": 0.5,
+      "allow_ci_cross_zero": true,
+      "ci_is_exclusion_rule": false,
+      "max_components_per_direction": 16
+    },
+    "directionality_summary": {
+      "target_threshold": 0.5,
+      "strong_delta_threshold": 0.2,
+      "min_ablated_format_ok": 0.9,
+      "max_format_collapse_rate": 0.1,
+      "top_k_summary": 8
+    },
+    "registered_component_selection": {
+      "rule": "directional rollout gross-mass top 4 within each registered role",
+      "selection_output_must_match_registered_ids": true,
+      "mismatch_policy": "stop_before_pair_generation_and_report",
+      "mlp_positive": [
+        "L19.mlp",
+        "L18.mlp",
+        "L20.mlp",
+        "L1.mlp"
+      ],
+      "mlp_negative": [
+        "L12.mlp",
+        "L14.mlp",
+        "L32.mlp",
+        "L15.mlp"
+      ],
+      "attn_positive": [
+        "L16.attn",
+        "L15.attn",
+        "L0.attn",
+        "L6.attn"
+      ],
+      "attn_negative": [
+        "L7.attn",
+        "L9.attn",
+        "L14.attn",
+        "L8.attn"
+      ]
+    },
+    "head_scan": {
+      "parent_layers_in_order": [
+        16,
+        15,
+        0,
+        6,
+        7,
+        9,
+        14,
+        8
+      ],
+      "rows": 300,
+      "samples_per_prompt": 1,
+      "apply_mode": "all",
+      "generation_batch_size": 16,
+      "max_new_tokens": 64,
+      "temperature": 1.0,
+      "top_p": 1.0,
+      "top_k": 50,
+      "seed": 42,
+      "reuse_component_full_baseline": true,
+      "ci_is_exclusion_rule": false
+    },
+    "registered_head_selection": {
+      "rule": "directional rollout gross-mass top 4 within each registered role",
+      "selection_output_must_match_registered_ids": true,
+      "mismatch_policy": "stop_before_pair_generation_and_report",
+      "positive": [
+        "L16.attn.h13",
+        "L15.attn.h14",
+        "L0.attn.h5",
+        "L9.attn.h6"
+      ],
+      "negative": [
+        "L14.attn.h5",
+        "L16.attn.h17",
+        "L16.attn.h4",
+        "L7.attn.h14"
+      ]
+    }
+  },
+  "preference_pair_construction": {
+    "source_dataset_split": "train",
+    "source_start": 0,
+    "source_max_rows": 25000,
+    "shuffle": true,
+    "seed": 42,
+    "prefix_mode": "whitespace",
+    "prefix_token_min": 2,
+    "prefix_token_max": 8,
+    "prompt_template": "{prefix}",
+    "source_train_prompts": 768,
+    "source_validation_prompts": 192,
+    "completions_per_prompt": 4,
+    "generation_batch_size": 16,
+    "max_new_tokens": 128,
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "top_k": 50,
+    "reward_scorer": "models.sentiment_scorer",
+    "pair_selection_mode": "top_bottom",
+    "minimum_reward_margin": 0.0,
+    "exact_train_pairs": 512,
+    "exact_validation_pairs": 128,
+    "train_validation_prompt_disjointness_required": true
+  },
+  "cast_training": {
+    "trained_groups": [
+      "mlp_positive",
+      "mlp_negative",
+      "att_positive",
+      "att_negative"
+    ],
+    "composed_not_separately_trained_groups": [
+      "full_positive",
+      "full_negative"
+    ],
+    "train_pairs": 512,
+    "validation_pairs": 128,
+    "epochs": 2,
+    "train_batch_size": 16,
+    "learning_rate": 0.05,
+    "lambda_norm": 0.0001,
+    "alpha_train": 1.0,
+    "preference_loss_mode": "dpo",
+    "dpo_beta": 1.0,
+    "state_margin_weight": 0.0,
+    "gain_weight": 1.0,
+    "target_margin": 0.0,
+    "target_gain": 0.0,
+    "score_mode": "avglogp",
+    "max_aliases_per_side": 1,
+    "causal_train_mask": true,
+    "mlp_apply_mode": "prefill",
+    "head_apply_mode": "all",
+    "base_model_frozen": true,
+    "seed": 42,
+    "torch_dtype": "bfloat16"
+  },
+  "evaluation_prompts": {
+    "validation": {
+      "source_split": "train",
+      "source_start": 15000,
+      "source_max_rows": 10000,
+      "shuffle": true,
+      "seed": 42,
+      "prefix_mode": "tokenizer",
+      "tokenizer": "models.sft_reference_and_cast_base",
+      "prefix_token_min": 2,
+      "prefix_token_max": 8,
+      "prompt_template": "{prefix}",
+      "exact_rows": 1024
+    },
+    "test": {
+      "source_split": "test",
+      "source_start": 0,
+      "source_max_rows": 25000,
+      "shuffle": true,
+      "seed": 42,
+      "prefix_mode": "tokenizer",
+      "tokenizer": "models.sft_reference_and_cast_base",
+      "prefix_token_min": 2,
+      "prefix_token_max": 8,
+      "prompt_template": "{prefix}",
+      "exact_rows": 2048
+    },
+    "cast_and_dpo_must_consume_byte_identical_files": true,
+    "run_local_prompt_sha256_required": true
+  },
+  "generation": {
+    "samples_per_prompt": 1,
+    "do_sample": true,
+    "generation_batch_size": 16,
+    "max_new_tokens": 256,
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "top_k": 50,
+    "seed": 42,
+    "same_seed_across_alpha": true,
+    "cast_generation_apply_mode": "all",
+    "cast_component_apply_mode": "prefill",
+    "cast_head_apply_mode": "all",
+    "dpo_tokenizer": "models.sft_reference_and_cast_base"
+  },
+  "operating_points": {
+    "cast_validation_alpha_grid": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "cast_test_alpha": 0.3,
+    "cast_test_alpha_policy": "fixed before this rerun; validation curve is descriptive and test is not used for selection",
+    "dpo_alpha": null
+  },
+  "metrics": {
+    "primary_reward": "mean_positive_sentiment_score",
+    "positive_rate": "positive_rate_ge_0p5",
+    "log_odds_reward": "mean(log p(POSITIVE) - log p(NEGATIVE)) over generated completions",
+    "primary_kl": "paper_mean_sampled_sequence_kl",
+    "primary_kl_definition": "mean over policy-generated continuations of log pi_policy(y|x) - log pi_sft_reference(y|x)",
+    "cast_policy": "the SFT base with the registered actuator active at the row alpha",
+    "dpo_policy": "the released DPO checkpoint",
+    "reference_policy": "the pinned SFT base",
+    "diagnostic_only": [
+      "full-vocabulary mean_sequence_kl",
+      "mean sampled-token log-ratio",
+      "training loss",
+      "teacher-forced margin"
+    ],
+    "health": [
+      "mean completion characters",
+      "mean completion tokens",
+      "empty output rate",
+      "nonprintable output rate",
+      "local repetition rate",
+      "format-ok rate"
+    ]
+  },
+  "dpo_checkpoint_evaluation": {
+    "training_performed": false,
+    "classification": "released_public_checkpoint_evaluation",
+    "validation_rows": 1024,
+    "test_rows": 2048,
+    "prompt_source": "evaluation_prompts",
+    "generation_source": "models.released_dpo_policy",
+    "kl_policy": "models.released_dpo_policy",
+    "kl_reference": "models.sft_reference_and_cast_base",
+    "reward_scorer": "models.sentiment_scorer"
+  },
+  "artifact_eligibility": {
+    "durable_result_root": "results/imdb_performance_fixed_20260726_v2",
+    "temporary_run_roots_allowed": true,
+    "temporary_only_results_are_eligible": false,
+    "required": [
+      "run-local copy of this scientific config",
+      "model, dataset, and scorer revision manifest",
+      "code manifest with file SHA-256 values",
+      "discovery prompt hashes and selected component/head files",
+      "pair artifact and pair-build manifest with exact 512/128 counts",
+      "validation and test prompt files with hashes",
+      "CAST raw generations, reward rows, sampled-KL rows, and summaries",
+      "DPO raw generations, reward rows, sampled-KL rows, and summaries",
+      "status.tsv ending in all/done",
+      "artifact manifest with sizes and SHA-256 values"
+    ],
+    "historical_metric_values_are_acceptance_thresholds": false,
+    "older_imdb_run_substitution_allowed": false
+  },
+  "implementation_inventory": [
+    {
+      "path": "runs/imdb_ma921_directional_rescan_20260624_112245/run_rescan.sh",
+      "sha256": "7c939b20e506f70b3b4d70251a6904134bd7711aff18404dab07041f791e68cc",
+      "role": "audited discovery implementation component, not protocol authority"
+    },
+    {
+      "path": "scripts/run_imdb_directional_main_table_locked.sh",
+      "sha256": "f1050d7eab56432dd6cbf631b035f8f0870af780751a2e6e09fe6d49b40fa9f0",
+      "role": "CAST pair construction, actuator training, and evaluation implementation component"
+    },
+    {
+      "path": "scripts/run_imdb_directional_val_select_then_test.sh",
+      "sha256": "ece39f0a2ff248d40000ecec6212857f7e269b45aebc01bd8a52733a47136b6f",
+      "role": "shared-base CAST validation curve and fixed-alpha test implementation component"
+    },
+    {
+      "path": "src/screscomp/cli/score_imdb_sentiment_generations.py",
+      "sha256": "63e130ee8ff0b67b06764abb7a866371eb98341f542ab70c31021eede293cd41",
+      "role": "completion reward and paper log-odds scoring"
+    },
+    {
+      "path": "src/screscomp/cli/compute_imdb_generation_kl.py",
+      "sha256": "ecbbca175d315f78f0e4aa43beca5dddd80a787290e94016e7602c4075f4d53f",
+      "role": "CAST sampled sequence log-ratio scoring"
+    }
+  ],
+  "launch_control": {
+    "gpu_run_launched_by_this_lock": false,
+    "gpu_launch_requires_explicit_instruction": true,
+    "gpu_id_is_machine_state_not_scientific_config": true,
+    "single_gpu_serial_execution": true,
+    "environment": "screscomp",
+    "unexpected_condition_policy": "stop and report before changing any scientific setting"
+  }
+}

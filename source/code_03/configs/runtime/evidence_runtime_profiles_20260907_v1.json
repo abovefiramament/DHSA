@@ -1,0 +1,339 @@
+{
+  "schema_version": 1,
+  "registry_id": "evidence_runtime_profiles_20260907_v1",
+  "policy": "Every admitted evidence cell has one explicit runtime profile. Missing historical versions are recorded as missing and are never inferred.",
+  "profiles": {
+    "tldr_gptj_site_verified": {
+      "status": "verified_against_frozen_rcm_trajectory",
+      "enforce": true,
+      "python_registry_key": "runtime/python/tldr_gptj_site",
+      "expected": {
+        "python": "3.11.15",
+        "torch": "2.11.0+cu130",
+        "transformers": "4.57.6",
+        "cuda_runtime": "13.0",
+        "cudnn": 91900
+      },
+      "evidence_note": "The new-framework RCM implementation reproduced the frozen GPT-J selector trajectory in this environment."
+    },
+    "site_freeze_time_screscomp_20260723": {
+      "status": "freeze_time_environment_not_job_launch_snapshot",
+      "enforce": true,
+      "python_registry_key": "runtime/python/screscomp_evidence",
+      "expected": {
+        "python": "3.11.15",
+        "torch": "2.11.0+cu130",
+        "transformers": "4.57.6",
+        "cuda_runtime": "13.0",
+        "cudnn": 91900
+      },
+      "observed_packages": {
+        "accelerate": "1.13.0",
+        "cuda_toolkit": "13.0.2",
+        "datasets": "3.6.0",
+        "numpy": "1.26.4",
+        "nvidia_cuda_runtime": "13.0.96",
+        "peft": "0.19.1",
+        "tokenizers": "0.22.2"
+      },
+      "recorded_driver": "595.58.03",
+      "driver_policy": "recorded_for_compatibility_not_required_to_match_exactly",
+      "evidence_note": "The V12 package says versions were captured at freeze time from the same screscomp environment because launch manifests did not record them. Qwen QA/MR and MC record the same core versions; Site IMDb Qwen is registered as using that same Qwen environment."
+    },
+    "wzx_performance_runtime_not_recorded": {
+      "status": "runtime_not_recorded",
+      "enforce": false,
+      "missing": [
+        "python",
+        "torch",
+        "transformers",
+        "cuda_runtime",
+        "cudnn"
+      ],
+      "evidence_note": "Each result cell has runtime_config, runtime_flow, and runtime_registry path metadata, but the branch has no runtime_environment version snapshot."
+    },
+    "legacy_performance_runtime_not_recorded": {
+      "status": "runtime_not_recorded",
+      "enforce": false,
+      "missing": [
+        "python",
+        "torch",
+        "transformers",
+        "cuda_runtime",
+        "cudnn"
+      ],
+      "evidence_note": "The metadata-admitted legacy Performance freeze does not record resolved software versions."
+    },
+    "tldr_lion_runtime_not_recorded": {
+      "status": "runtime_not_recorded",
+      "enforce": false,
+      "missing": [
+        "python",
+        "torch",
+        "transformers",
+        "cuda_runtime",
+        "cudnn"
+      ],
+      "evidence_note": "The reproduction script specifies Python 3.11 and dependency ranges, not the resolved versions used by completed internal cells."
+    },
+    "tldr_lion_external_partial_environment": {
+      "status": "partial_runtime_record",
+      "enforce": false,
+      "observed": {
+        "transformers": "4.48.2"
+      },
+      "missing": [
+        "python",
+        "torch",
+        "cuda_runtime",
+        "cudnn"
+      ],
+      "evidence_note": "Only saved LoReFT/BiPO intervention configs expose Transformers 4.48.2."
+    },
+    "official_external_environment": {
+      "status": "method_owned_environment_recorded_per_run",
+      "enforce": false
+    }
+  },
+  "cell_bindings": [
+    {
+      "pattern": "performance__tldr__gptj_6b__loreft_native",
+      "profile_id": "official_external_environment"
+    },
+    {
+      "pattern": "performance__tldr__gptj_6b__bipo_native",
+      "profile_id": "official_external_environment"
+    },
+    {
+      "pattern": "*__tldr__gptj_6b__*",
+      "profile_id": "tldr_gptj_site_verified"
+    },
+    {
+      "pattern": "site__confiqa__llama3_8b__*",
+      "profile_id": "site_freeze_time_screscomp_20260723"
+    },
+    {
+      "pattern": "site__confiqa__qwen25_14b__*",
+      "profile_id": "site_freeze_time_screscomp_20260723"
+    },
+    {
+      "pattern": "site__imdb__ma921_gpt2_large_sft__*",
+      "profile_id": "site_freeze_time_screscomp_20260723"
+    },
+    {
+      "pattern": "site__imdb__qwen25_14b__*",
+      "profile_id": "site_freeze_time_screscomp_20260723"
+    },
+    {
+      "pattern": "performance__confiqa__qwen2_7b__*",
+      "profile_id": "wzx_performance_runtime_not_recorded"
+    },
+    {
+      "pattern": "performance__imdb__gpt2_large__*",
+      "profile_id": "wzx_performance_runtime_not_recorded"
+    },
+    {
+      "pattern": "performance__tldr__lion_llama3_8b__*",
+      "profile_id": "tldr_lion_runtime_not_recorded"
+    }
+  ],
+  "evidence_cell_bindings": [
+    {
+      "evidence_cell_id": "site::confiqa__llama3_8b",
+      "runtime_cell_pattern": "site__confiqa__llama3_8b__*",
+      "profile_id": "site_freeze_time_screscomp_20260723",
+      "source": "site_current_complete_result_freeze_20260825_v1"
+    },
+    {
+      "evidence_cell_id": "site::confiqa__qwen25_14b",
+      "runtime_cell_pattern": "site__confiqa__qwen25_14b__*",
+      "profile_id": "site_freeze_time_screscomp_20260723",
+      "source": "site_current_complete_result_freeze_20260825_v1",
+      "evidence_status": "pending_test_expansion"
+    },
+    {
+      "evidence_cell_id": "site::imdb__ma921_gpt2_large_sft",
+      "runtime_cell_pattern": "site__imdb__ma921_gpt2_large_sft__*",
+      "profile_id": "site_freeze_time_screscomp_20260723",
+      "source": "site_current_complete_result_freeze_20260825_v1"
+    },
+    {
+      "evidence_cell_id": "site::imdb__qwen25_14b",
+      "runtime_cell_pattern": "site__imdb__qwen25_14b__*",
+      "profile_id": "site_freeze_time_screscomp_20260723",
+      "source": "site_current_complete_result_freeze_20260825_v1",
+      "environment_basis": "registered_same_qwen_environment"
+    },
+    {
+      "evidence_cell_id": "site::tldr__gptj_6b",
+      "runtime_cell_pattern": "site__tldr__gptj_6b__*",
+      "profile_id": "tldr_gptj_site_verified",
+      "source": "site_current_complete_result_freeze_20260825_v1"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__sft",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__dpo",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__sft_cast_sv_all",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__sft_cast_sv_prefill",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__sft_cast_reft_all",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__sft_cast_reft_prefill",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__dpo_cast_transfer_sv_all",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__dpo_cast_transfer_sv_prefill",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__dpo_cast_nontransfer_sv_all",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__dpo_cast_nontransfer_sv_prefill",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__dpo_cast_transfer_reft_all",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__dpo_cast_transfer_reft_prefill",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__dpo_cast_nontransfer_reft_all",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__dpo_cast_nontransfer_reft_prefill",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__casthead_pos",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__confiqa__qwen2_7b__casthead_neg",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__imdb__gpt2_large__sft",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__imdb__gpt2_large__dpo",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__imdb__gpt2_large__sft_cast_sv_all",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__imdb__gpt2_large__sft_cast_sv_prefill",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__imdb__gpt2_large__dpo_cast_transfer_sv_all",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__imdb__gpt2_large__dpo_cast_transfer_sv_prefill",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__imdb__gpt2_large__dpo_cast_nontransfer_sv_all",
+      "profile_id": "legacy_performance_runtime_not_recorded",
+      "source": "performance_current_result_freeze_20260826_v1"
+    },
+    {
+      "evidence_cell_id": "performance__imdb__gpt2_large__casthead_pos",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__imdb__gpt2_large__casthead_neg",
+      "profile_id": "wzx_performance_runtime_not_recorded",
+      "source": "ANON"
+    },
+    {
+      "evidence_cell_id": "performance__tldr__lion_llama3_8b__sft",
+      "profile_id": "tldr_lion_runtime_not_recorded",
+      "source": "tldr"
+    },
+    {
+      "evidence_cell_id": "performance__tldr__lion_llama3_8b__dpo",
+      "profile_id": "tldr_lion_runtime_not_recorded",
+      "source": "tldr"
+    },
+    {
+      "evidence_cell_id": "performance__tldr__lion_llama3_8b__sft_cast_reft_all",
+      "profile_id": "tldr_lion_runtime_not_recorded",
+      "source": "tldr"
+    },
+    {
+      "evidence_cell_id": "performance__tldr__lion_llama3_8b__sft_cast_reft_prefill",
+      "profile_id": "tldr_lion_runtime_not_recorded",
+      "source": "tldr"
+    },
+    {
+      "evidence_cell_id": "performance__tldr__lion_llama3_8b__dpo_cast_nontransfer_reft_all",
+      "profile_id": "tldr_lion_runtime_not_recorded",
+      "source": "tldr"
+    },
+    {
+      "evidence_cell_id": "performance__tldr__lion_llama3_8b__dpo_cast_nontransfer_reft_prefill",
+      "profile_id": "tldr_lion_runtime_not_recorded",
+      "source": "tldr"
+    },
+    {
+      "evidence_cell_id": "performance__tldr__lion_llama3_8b__dpo_cast_transfer_reft_all",
+      "profile_id": "tldr_lion_runtime_not_recorded",
+      "source": "tldr"
+    },
+    {
+      "evidence_cell_id": "performance__tldr__lion_llama3_8b__dpo_cast_transfer_reft_prefill",
+      "profile_id": "tldr_lion_runtime_not_recorded",
+      "source": "tldr"
+    }
+  ]
+}

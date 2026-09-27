@@ -1,0 +1,47 @@
+{
+  "amendment_id": "site_position_v13_two_model_primary_scope_20260805_v1",
+  "date": "2026-08-05",
+  "base_protocol_id": "site_position_full_fixed_protocol_20260804_v13",
+  "base_protocol": "docs/SITE_POSITION_FULL_FIXED_PROTOCOL_20260804_V13.md",
+  "base_config": "configs/site_position_full_fixed_protocol_20260804_v13.json",
+  "base_config_sha256": "04969d068f80d7500611612ec79259a3046344a616171fc5c1a88bb8a6aa4bc4",
+  "scope_change_only": true,
+  "scientific_setting_changes": false,
+  "primary_imdb_model_keys": [
+    "ma921_gpt2_large_sft",
+    "qwen25_14b"
+  ],
+  "excluded_model_keys": [
+    "mistral7b_v03"
+  ],
+  "selectors_per_model": [
+    "rcm_zero_signed",
+    "rcm_patch_signed",
+    "iti",
+    "random_seed_20260702",
+    "random_seed_20260703",
+    "random_seed_20260704"
+  ],
+  "qwen_job_ids": [
+    "imdb__sentiment__qwen25_14b__rcm_zero_signed__primary",
+    "imdb__sentiment__qwen25_14b__rcm_patch_signed__primary",
+    "imdb__sentiment__qwen25_14b__iti__primary",
+    "imdb__sentiment__qwen25_14b__random__seed_20260702",
+    "imdb__sentiment__qwen25_14b__random__seed_20260703",
+    "imdb__sentiment__qwen25_14b__random__seed_20260704"
+  ],
+  "artifact_policy": {
+    "ma921_gpt2_large_sft": "retain_all_complete_version_13_artifacts",
+    "mistral7b_v03": "retain_partial_files_as_non_evidence_failure_provenance_only",
+    "qwen25_14b": "run_from_version_13_inputs_with_no_selector_actuator_or_generation_reuse"
+  },
+  "unchanged_contract": [
+    "pair_source_and_row_windows",
+    "selector_samples_and_ranking",
+    "K_and_random_seeds",
+    "actuator_objective_and_optimizer",
+    "alpha_grid",
+    "test_prompts_and_generation",
+    "reward_and_KL_evaluation"
+  ]
+}

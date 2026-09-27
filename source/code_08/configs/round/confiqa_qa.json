@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "round": {
+    "index": 1
+  },
+  "model": {
+    "path": "LOCAL_HOME/.cache/huggingface/hub/models--meta-llama--Meta-Llama-3-8B-Instruct",
+    "device": "auto",
+    "torch_dtype": "auto",
+    "use_chat_template": false
+  },
+  "output": {
+    "root": "data_ckplug/rounds/confiqa_qa"
+  },
+  "task": {
+    "adapter": "source_pair",
+    "name": "confiqa_qa",
+    "event": "source_context_over_prior",
+    "input_jsonl": "data_ckplug/cast_confiqa_all3_smalltrain_heldout5000_v0/qa/source/open_rows_train.jsonl",
+    "objective_spec": "configs/cecm/source_context_over_prior.json",
+    "prompt_key": "base_rag",
+    "prior_source": "dataset_orig",
+    "val_mod": 5,
+    "continuation_prefix": " "
+  },
+  "pairs": {
+    "max_rows": null
+  },
+  "discovery": {
+    "reselect_components": true,
+    "reuse_components": "",
+    "component_types": [
+      "attn",
+      "mlp"
+    ],
+    "rows": 60,
+    "mlp_topk": 4,
+    "attn_layer_topk": 4,
+    "head_scan_rows": 24,
+    "head_scan_factors": [
+      0.0,
+      1.5
+    ],
+    "head_topk": 4
+  },
+  "training": {
+    "score_mode": "avglogp",
+    "option_selection_mode": "model_max",
+    "state_margin_weight": 1.0,
+    "gain_weight": 0.0,
+    "mlp": {
+      "enabled": true,
+      "train_apply_mode": "prompt_last",
+      "generation_apply_mode": "prefill"
+    },
+    "attention": {
+      "enabled": true,
+      "train_apply_mode": "all",
+      "generation_apply_mode": "all"
+    }
+  },
+  "alpha": {
+    "scan": false,
+    "mlp": [
+      0.05
+    ],
+    "head": [
+      0.5
+    ],
+    "train_sweep": [
+      0.0,
+      1.0
+    ]
+  }
+}

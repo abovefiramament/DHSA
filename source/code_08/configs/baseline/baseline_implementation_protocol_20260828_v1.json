@@ -1,0 +1,20 @@
+{
+  "protocol_id": "baseline_implementation_protocol_20260828_v1",
+  "status": "canonical_new_framework",
+  "scope": "Shared typed method contract for Site and Performance",
+  "method_entries": {
+    "cast": {"entrypoint": "baseline/implementations/cast.py", "families": ["sv", "reft"], "operations": ["resolve_plan", "train", "extract", "audit", "finalize", "dev", "test"]},
+    "rcm_zero": {"entrypoint": "baseline/implementations/rcm_zero.py", "operations": ["resolve_plan", "select_positions"]},
+    "rcm_patch": {"entrypoint": "baseline/implementations/rcm_patch.py", "operations": ["resolve_plan", "select_positions"]},
+    "iti": {"entrypoint": "baseline/implementations/iti.py", "operations": ["resolve_plan", "select_positions"]},
+    "random": {"entrypoint": "baseline/implementations/random.py", "operations": ["resolve_plan", "select_positions"]}
+  },
+  "external_parameters": ["dataset_roles", "model_train", "model_inference", "transfer", "timing", "position_set", "rank_or_vector_dim", "training", "decoding", "alpha_grid"],
+  "shared_owners": {
+    "split_and_roles": "data/*/controller.py",
+    "position_and_freeze": "baseline/controllers/",
+    "generation_evaluation_audit": "experiments/shared/"
+  },
+  "registration": {"single_point": "baseline/implementations/component_bindings.py", "missing_backend_status": "pending_external_registration", "legacy_fallback": false, "fake_backend": false},
+  "scaled_validation": {"profile": "formal_scaled_gpu", "same_flow": true, "only_override": "explicit_registered_sample_counts", "gpu_required": true}
+}

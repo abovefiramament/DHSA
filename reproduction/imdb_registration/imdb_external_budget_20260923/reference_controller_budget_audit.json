@@ -1,0 +1,36 @@
+{
+  "scope": "Previously completed IMDb H100 formal controller stages; not new timing probes",
+  "cost_boundary": "Slurm start through pretest gate for CAST; controller-only Slurm jobs for external baselines; final test excluded",
+  "records": [
+    {
+      "method": "SFT CAST SV all",
+      "job_id": "REDACTED",
+      "h100_pretest_seconds_approx": 2448,
+      "gpu_trace_samples_pretest": 2444,
+      "mean_gpu_util_percent": 54.3
+    },
+    {
+      "method": "DPO CAST nontransfer SV all",
+      "job_id": "REDACTED",
+      "h100_pretest_seconds_approx": 2415,
+      "gpu_trace_samples_pretest": 2411,
+      "mean_gpu_util_percent": 54.8
+    },
+    {
+      "method": "BiPO prior top3",
+      "job_id": "REDACTED",
+      "slurm_seconds": 982,
+      "gpu_trace_samples": 977,
+      "mean_gpu_util_percent": 80.3
+    },
+    {
+      "method": "LoReFT prior four tuples",
+      "job_id": "REDACTED",
+      "slurm_seconds": 1687,
+      "gpu_trace_samples": 1682,
+      "mean_gpu_util_percent": 86.0
+    }
+  ],
+  "interpretation": "Different utilization is reported separately from elapsed occupancy. These percentages are not FLOPs or a linear compute conversion. New 10/6 candidate occupancy is pending; do not claim strict equal compute in advance.",
+  "shared_stage_accounting": "Report full RCM once for standalone CAST controller preparation; do not charge a reused RCM scan repeatedly across rows."
+}

@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "protocol_id": "performance_confiqa_joint_20260831_v1",
+  "status": "canonical_formal_data_protocol",
+  "dataset": "confiqa",
+  "scope": "performance_only",
+  "site_split_reused": false,
+  "shared_functionality": [
+    "ConFiQA JSON decoding",
+    "official Context-DPO prompt rendering",
+    "competition-row validity checks",
+    "deterministic admission and refill implementation"
+  ],
+  "public_source": {
+    "repository": "https://github.com/byronBBL/Context-DPO",
+    "revision": "557dadeeb9f47407890a5626128ca99907770b22",
+    "files": {
+      "qa": "ConFiQA/ConFiQA-QA.json",
+      "mr": "ConFiQA/ConFiQA-MR.json",
+      "mc": "ConFiQA/ConFiQA-MC.json"
+    },
+    "source_order": "official_file_order",
+    "source_shuffle": false
+  },
+  "prompt": {
+    "registry_selection": "confiqa.official_rag.context_dpo_v1",
+    "template": "{context}\nQ: {question}\nA: ",
+    "normalization": "preserve_exact"
+  },
+  "joint_construction": {
+    "mode": "one_mixed_controller_over_three_subsets",
+    "subset_order": ["qa", "mr", "mc"],
+    "merge_order": ["qa", "mr", "mc"],
+    "allocation_rule": "split each registered total as evenly as possible and assign the remainder in subset order",
+    "selector": {
+      "source_start": 0,
+      "initial_window": [0, 300],
+      "admission": "scan official order until the registered valid count is reached",
+      "refill_rejected": true,
+      "rejection_reasons": [
+        "missing_required_question_context_or_endpoint",
+        "identical_normalized_competition_endpoints",
+        "empty_endpoint_after_alias_cleanup"
+      ],
+      "train_validation_rule": "prepared_row_index_mod_5_equals_0_is_validation_else_training"
+    },
+    "reserved_unused_after_selector": {
+      "window_by_subset": {"qa": [301, 315], "mr": [312, 325], "mc": [314, 327]},
+      "purpose": "preserve the preregistered disjoint alpha-dev boundary; no formal method reads these rows",
+      "refill_rejected": false
+    },
+    "alpha_dev": {
+      "window_by_subset": {"qa": [315, 355], "mr": [325, 365], "mc": [327, 367]},
+      "refill_rejected": false
+    },
+    "test": {
+      "source_start": 1500,
+      "admission": "scan official order from source_start until the registered valid count is reached",
+      "refill_rejected": true,
+      "original_500_test_in_scope": false
+    },
+    "training_epoch_shuffle": {
+      "enabled": true,
+      "scope": "merged_qa_mr_mc_training_rows",
+      "algorithm": "CPython_random_Random_shuffle",
+      "seed": 42
+    },
+    "allowed_role_overlap": [["selector", "training"], ["selector", "validation"]],
+    "profiles": {
+      "formal": {
+        "total_role_counts": {"selector": 300, "training": 240, "validation": 60, "alpha_dev": 120, "test": 2048},
+        "role_counts_by_subset": {
+          "qa": {"selector": 100, "training": 80, "validation": 20, "alpha_dev": 40, "test": 683},
+          "mr": {"selector": 100, "training": 80, "validation": 20, "alpha_dev": 40, "test": 683},
+          "mc": {"selector": 100, "training": 80, "validation": 20, "alpha_dev": 40, "test": 682}
+        }
+      },
+      "formal_scaled_gpu": {
+        "total_role_counts": {"selector": 15, "training": 12, "validation": 3, "alpha_dev": 6, "test": 3},
+        "role_counts_by_subset": {
+          "qa": {"selector": 5, "training": 4, "validation": 1, "alpha_dev": 2, "test": 1},
+          "mr": {"selector": 5, "training": 4, "validation": 1, "alpha_dev": 2, "test": 1},
+          "mc": {"selector": 5, "training": 4, "validation": 1, "alpha_dev": 2, "test": 1}
+        }
+      }
+    }
+  },
+  "mixture_contract": {
+    "position_scan": "one RCM-zero scan over the merged selector role",
+    "controller_training": "one controller per signed bank over the merged training role",
+    "signed_bank_training": "target-support and competitor-support banks train independently on the same merged rows",
+    "post_training_head_audit": "disabled; SV and ReFT share the same RCM-zero K4+K4 frozen before training",
+    "alpha_selection": "one shared alpha selected on the merged alpha-dev role",
+    "test_evaluation": "one joint test plus QA, MR, and MC stratified metrics"
+  },
+  "randomness": {"source_shuffle": null, "training_epoch_shuffle_seed": 42, "generation_seed": 42}
+}

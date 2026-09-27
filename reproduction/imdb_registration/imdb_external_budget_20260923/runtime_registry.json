@@ -1,0 +1,86 @@
+{
+  "entries": {
+    "code/bipo_official": {
+      "kind": "directory",
+      "must_exist": true,
+      "path": "LOCAL_HOME/BiPO-official-cef1d00"
+    },
+    "code/pyreft_official": {
+      "kind": "directory",
+      "must_exist": true,
+      "path": "LOCAL_HOME/external/pyreft-dafd0995"
+    },
+    "datasets/imdb/public_selector_comments": {
+      "kind": "file",
+      "must_exist": true,
+      "path": "LOCAL_HOME/rpec_runs/imdb_shared_public_pairs_20260922/rcm_source_comments.jsonl"
+    },
+    "datasets/imdb/public_test_comments": {
+      "kind": "file",
+      "must_exist": true,
+      "path": "LOCAL_HOME/rpec_runs/imdb_shared_public_pairs_20260922/test_source_comments.jsonl"
+    },
+    "datasets/imdb/public_training_cleanfirst": {
+      "kind": "file",
+      "must_exist": true,
+      "path": "LOCAL_HOME/rpec_runs/imdb_shared_public_pairs_cleanfirst_20260923/training_text_view.jsonl"
+    },
+    "datasets/imdb/public_validation_comments": {
+      "kind": "file",
+      "must_exist": true,
+      "path": "LOCAL_HOME/rpec_runs/imdb_shared_public_pairs_20260922/validation_candidate_comments.jsonl"
+    },
+    "datasets/imdb/shared_frozen_selector": {
+      "kind": "file",
+      "must_exist": true,
+      "path": "LOCAL_HOME/rpec_outputs/imdb_cleanfirst1024_main_v6/performance/formal/_site_shared_data/performance_data__performance_imdb_ma921_cleanfirst1024_20260923_v3__imdb__sentiment__gpt2_large__formal/performance__imdb__gpt2_large__sft_cast_sv_all/roles/selector.jsonl"
+    },
+    "datasets/imdb/shared_frozen_test": {
+      "kind": "file",
+      "must_exist": true,
+      "path": "LOCAL_HOME/rpec_outputs/imdb_cleanfirst1024_main_v6/performance/formal/_site_shared_data/performance_data__performance_imdb_ma921_cleanfirst1024_20260923_v3__imdb__sentiment__gpt2_large__formal/performance__imdb__gpt2_large__sft_cast_sv_all/roles/test.jsonl"
+    },
+    "datasets/imdb/shared_frozen_training": {
+      "kind": "file",
+      "must_exist": true,
+      "path": "LOCAL_HOME/rpec_outputs/imdb_cleanfirst1024_external_batch64_v6/performance/formal/_site_shared_data/performance_data__performance_imdb_ma921_cleanfirst1024_batch64_20260923_v3__imdb__sentiment__gpt2_large__formal/performance__imdb__gpt2_large__loreft_native/roles/training.jsonl"
+    },
+    "datasets/imdb/shared_frozen_validation": {
+      "kind": "file",
+      "must_exist": true,
+      "path": "LOCAL_HOME/rpec_outputs/imdb_cleanfirst1024_main_v6/performance/formal/_site_shared_data/performance_data__performance_imdb_ma921_cleanfirst1024_20260923_v3__imdb__sentiment__gpt2_large__formal/performance__imdb__gpt2_large__sft_cast_sv_all/roles/validation.jsonl"
+    },
+    "datasets/imdb/test_source": {
+      "kind": "file",
+      "must_exist": true,
+      "path": "LOCAL_HOME/datasets/stanfordnlp-imdb-e6281661/plain_text/test.jsonl"
+    },
+    "datasets/imdb/train_source": {
+      "kind": "file",
+      "must_exist": true,
+      "path": "LOCAL_HOME/datasets/stanfordnlp-imdb-e6281661/plain_text/train.jsonl"
+    },
+    "models/ma921_gpt2_large_dpo_imdb": {
+      "kind": "directory",
+      "must_exist": true,
+      "path": "LOCAL_HOME/models/gpt2-large-dpo-imdb-90f8bc82"
+    },
+    "models/ma921_gpt2_large_sft_imdb": {
+      "kind": "directory",
+      "must_exist": true,
+      "path": "LOCAL_HOME/models/gpt2-large-sft-imdb-f4801906"
+    },
+    "models/siebert_sentiment": {
+      "kind": "directory",
+      "must_exist": true,
+      "path": "LOCAL_HOME/models/siebert-sentiment-roberta-large-english-74cea614"
+    },
+    "outputs/experiments": {
+      "kind": "output_directory",
+      "must_exist": false,
+      "path": "LOCAL_HOME/rpec_outputs/imdb_external_budget_v7"
+    }
+  },
+  "machine_id": "ANON",
+  "schema_version": 1
+}

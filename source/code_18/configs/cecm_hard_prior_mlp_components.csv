@@ -1,0 +1,5 @@
+component_id,layer_idx,component_type
+L6.mlp,6,mlp
+L20.mlp,20,mlp
+L1.mlp,1,mlp
+L22.mlp,22,mlp

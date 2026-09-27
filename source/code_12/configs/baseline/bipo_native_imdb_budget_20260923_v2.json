@@ -1,0 +1,162 @@
+{
+  "author_side_training": {
+    "batch_size": 4,
+    "beta": 0.1,
+    "candidate_training": "each_CAA_top10_layer_is_trained_independently_to_the_unchanged_registered_epoch_budget",
+    "eval_batch_size": 1,
+    "gradient_accumulation_steps": 1,
+    "learning_rate": 0.0005,
+    "loss_type": "sigmoid",
+    "lr_scheduler": "cosine",
+    "max_length": 2048,
+    "max_prompt_length": 2048,
+    "optimizer": "adamw_torch",
+    "seed": 11,
+    "warmup_steps": 100,
+    "weight_decay": 0.05,
+    "weight_decay_note": "The official script exposes 0.05 but omits forwarding it to DPOConfig; explicitly applying 0.05 is a preregistered project adaptation, not a claim of reproducing the script's effective default."
+  },
+  "caa_site_search": {
+    "adaptation_note": "IMDb-only budget extension from the same all-layer CAA ranking: train ranks 1 through 10 once, retain native geometry and all author-side training settings.",
+    "candidate_count": 10,
+    "human_audit": false,
+    "layers": "all_transformer_blocks",
+    "normalization": "none",
+    "selection_multipliers": [
+      -1.0,
+      1.0
+    ],
+    "selection_role": "selector",
+    "selection_score": "half_positive_minus_negative_behavior_advantage",
+    "test_access": false,
+    "tie_break": "lower_layer_index",
+    "vector_definition": "mean_final_response_state_positive_minus_negative_per_layer",
+    "vector_role": "training"
+  },
+  "datasets": {
+    "confiqa": {
+      "candidate_primary_metric": "logic_score",
+      "epochs": 20,
+      "factor_grid": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0,
+        1.2,
+        1.4,
+        1.6,
+        1.8,
+        2.0
+      ],
+      "factor_primary_metric": "logic_score",
+      "factor_selection_role": "alpha_dev_120",
+      "factor_tie_break": "smallest_factor",
+      "scope": "joint_qa_mr_mc",
+      "selector_role": "selector_300",
+      "test_role": "test_2048",
+      "training_role": "training_240"
+    },
+    "imdb": {
+      "candidate_primary_metric": "mean_positive_sentiment_score",
+      "epochs": 5,
+      "factor_grid": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0,
+        1.2,
+        1.4,
+        1.6,
+        1.8,
+        2.0
+      ],
+      "factor_policy": "report_full_reward_kl_curve_on_test",
+      "factor_selection_role": null,
+      "scope": "sentiment",
+      "selector_role": "selector_300",
+      "test_role": "test_2048",
+      "training_role": "training_1024"
+    },
+    "tldr": {
+      "candidate_primary_metric": "balanced_win_rate_against_human_summary",
+      "epochs": 1,
+      "factor_grid": [
+        0.5,
+        1.0,
+        1.5,
+        2.0,
+        2.5,
+        3.0
+      ],
+      "factor_primary_metric": "balanced_win_rate_against_human_summary",
+      "factor_selection_role": "alpha_dev_40",
+      "factor_tie_break": "smallest_factor_within_0.003_of_best",
+      "scope": "summary_preference",
+      "selector_role": "selector_300",
+      "test_role": "test_2048",
+      "training_role": "training_8192"
+    }
+  },
+  "execution_dataset": "imdb",
+  "fairness_statement": "IMDb H100 controller-budget extension: full-depth CAA then ten independent native BiPO candidates; select once on the same frozen selector_300 as CAST. Unchanged 1024 training pairs, optimizer, seed, epochs, factor grid and final test. This is a project search-budget extension, not an author-recommended top10 search.",
+  "implementation": "baseline/implementations/bipo.py",
+  "method": "bipo",
+  "native_operator": {
+    "application_positions": "all_token_positions",
+    "bidirectional_shared_vector": true,
+    "component": "block_output",
+    "initialization": "zeros",
+    "layers_per_candidate": 1,
+    "negative_multiplier": -1.0,
+    "positive_multiplier": 1.0,
+    "trainable_vectors_per_candidate": 1
+  },
+  "official_sources": {
+    "bipo": {
+      "repository": "https://github.com/CaoYuanpu/BiPO",
+      "revision": "cef1d00ab108d0e265578589e6b344b200ea3db8",
+      "trainer": "trl/trainer/bipo_trainer.py"
+    },
+    "caa": {
+      "repository": "https://github.com/nrimsky/CAA",
+      "revision": "5dabbbd9a0bca5f25e174501e959de378806aa48",
+      "vector_construction": "generate_vectors.py"
+    }
+  },
+  "position_implementation": "baseline/implementations/caa.py",
+  "protocol_id": "bipo_native_caa_top10_imdb_budget_20260923_v2",
+  "schema_version": 1,
+  "search": {
+    "budget_extension_id": "imdb_h100_candidate_only_20260923",
+    "candidate_order": [
+      "caa_rank_1",
+      "caa_rank_2",
+      "caa_rank_3",
+      "caa_rank_4",
+      "caa_rank_5",
+      "caa_rank_6",
+      "caa_rank_7",
+      "caa_rank_8",
+      "caa_rank_9",
+      "caa_rank_10"
+    ],
+    "candidate_selection_multiplier": 1.0,
+    "componentwise_human_audit": false,
+    "layer_multiplier_cartesian_search": false,
+    "seed_search": false,
+    "sequence": [
+      "construct_all_layer_CAA_vectors_on_training_role",
+      "evaluate_all_layers_at_fixed_plus_minus_one_on_selector_role",
+      "freeze_CAA_top10_layers",
+      "train_one_native_BiPO_vector_at_each_frozen_layer",
+      "select_the_ten_trained_candidates_at_multiplier_one_on_selector_role",
+      "calibrate_multiplier_only_for_the_selected_candidate",
+      "freeze_without_test_access",
+      "evaluate_final_test_once"
+    ],
+    "test_based_selection": false
+  },
+  "status": "canonical_formal_baseline_protocol"
+}

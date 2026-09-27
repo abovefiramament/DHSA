@@ -1,0 +1,238 @@
+{
+  "protocol_id": "tulu_1b_joint_reft_rcm_promotion_20260824_v5",
+  "status": "locked_before_gpu_execution",
+  "scope": {
+    "tasks": [
+      "gsm8k",
+      "ifeval"
+    ],
+    "controller": "one_joint_cast_reft_controller",
+    "purpose": "replace the failed task-agnostic signal screen with task-separated signed RCM-zero localization while preserving every downstream pilot condition"
+  },
+  "model": {
+    "sft_repo": "allenai/OLMo-2-0425-1B-SFT",
+    "sft_revision": "0d85a3d037876ce6ac7d4311d994400fc66ac27f",
+    "dpo_repo": "allenai/OLMo-2-0425-1B-DPO",
+    "dpo_revision": "4f10f459de7fd2958cb57def815696003370bb60",
+    "use_chat_template": true,
+    "torch_dtype": "bfloat16"
+  },
+  "sources": {
+    "rlvr": {
+      "repo": "allenai/RLVR-GSM-MATH-IF-Mixed-Constraints",
+      "revision": "702484e",
+      "split": "train",
+      "url": "https://huggingface.co/datasets/allenai/RLVR-GSM-MATH-IF-Mixed-Constraints"
+    },
+    "ifeval_pairs": {
+      "repo": "allenai/tulu-3-pref-personas-instruction-following",
+      "revision": "f7dd5caeb41b4f70a45297fe4858c9babb92072b",
+      "split": "train",
+      "url": "https://huggingface.co/datasets/allenai/tulu-3-pref-personas-instruction-following"
+    },
+    "open_instruct": {
+      "repo": "https://github.com/allenai/open-instruct",
+      "revision": "65fc1b99",
+      "ifeval_verifier": "open_instruct.ground_truth_utils.IFEvalVerifierOld"
+    },
+    "final_evaluation": {
+      "repo": "https://github.com/allenai/olmes",
+      "gsm8k_task": "gsm8k::tulu",
+      "ifeval_task": "ifeval::tulu",
+      "ifeval_official_prompt_count": 541,
+      "enabled_only_after_rcm_development_gate": true
+    }
+  },
+  "split": {
+    "seed": 42,
+    "algorithm": "construct source-row index lists separately by task, then call random.Random(42).shuffle(indices) once per list",
+    "rlvr_admission_before_shuffle": "keep task rows with a non-empty user prompt and non-empty ground_truth; record every rejected source row",
+    "rlvr_per_task_roles_in_shuffled_order": {
+      "selector": 100,
+      "head_audit": 40,
+      "alpha_dev": 100
+    },
+    "gsm_pair_candidates": "all remaining shuffled GSM8K rows after selector, head_audit, and alpha_dev",
+    "ifeval_pair_rows": {
+      "train": 4772,
+      "validation": 256
+    },
+    "gsm8k_admitted_pair_rows": {
+      "train": 3420,
+      "validation": 256
+    },
+    "joint_pair_order": "within train and validation separately, concatenate admitted gsm8k and ifeval rows then apply random.Random(42).shuffle once"
+  },
+  "data_cleaning": {
+    "tokenizer": "the pinned SFT tokenizer with its embedded chat template",
+    "max_sequence_tokens": 4096,
+    "max_generation_prompt_tokens": 3584,
+    "pair_length_definition": "len(tokenizer(chat_template(prompt), add_special_tokens=true)) + len(tokenizer(continuation), add_special_tokens=false)",
+    "admission": "both chosen and rejected endpoints must fit; every rejection is recorded and the frozen source order is refilled"
+  },
+  "gsm_pair_construction": {
+    "samples_per_prompt": 4,
+    "generation_batch_size": 8,
+    "seed": 42,
+    "do_sample": true,
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "top_k": 0,
+    "max_new_tokens": 512,
+    "chosen": "lowest sample_index with official-compatible numeric exact score 1",
+    "rejected": "lowest sample_index with official-compatible numeric exact score 0",
+    "reject": [
+      "missing_or_duplicate_sample_index",
+      "fewer_than_four_candidates",
+      "all_candidates_pass",
+      "all_candidates_fail",
+      "empty_or_identical_endpoints"
+    ],
+    "refill": "continue in frozen shuffled prompt order until the fixed admitted count is reached"
+  },
+  "frozen_inputs": {
+    "source_protocol_id": "tulu_1b_joint_reft_signal_pilot_20260823_v2",
+    "source_result_root": "results/tulu_1b_joint_reft_signal_pilot_20260822_v1",
+    "reuse_scope": "models, deterministic data roles, and joint train-validation pairs only; no selector, actuator, audit, or alpha output is reused",
+    "sha256": {
+      "models/sft.json": "9e96cf2fb53d06477e88ad12b6bacc442a0e1d38830a9670dcb91d4b4c5c5692",
+      "models/dpo.json": "22fdcf0f9eb1b3094122dfd32bcf27aca9fd9f1bc07c45a5d5e5cd8662f431be",
+      "data/data_manifest.json": "e96d9be2f883c1fc63c1b89ddfad401e680a394e20332a766c7c4a443ee971f9",
+      "data/selector_gsm8k.jsonl": "64d9e9754bc4c1f19747100f1004014f52964d4c892482985893670db840c2a0",
+      "data/selector_ifeval.jsonl": "44fc2d674405ceeb824f03b5362a7f9be3d7925dd3e90f0b5e47e41d6d979cc3",
+      "data/head_audit_gsm8k.jsonl": "0522031c79f2726a0ad98b261d3307c4b2517d0a5cfcd07e7b12fa5b68a691b4",
+      "data/head_audit_ifeval.jsonl": "8b0adc213478e89a63cc128beda9cb01e07266a021d3a5fb2f56e6c0fd945801",
+      "data/alpha_dev_gsm8k.jsonl": "cc0df4c3c9e9b7aa84dc69ae42e95b6d415d22a6fc983c42ae77cd0e23dda6c0",
+      "data/alpha_dev_ifeval.jsonl": "c3d3aaa2eccf862d3efd209c0fe38254c89a4f4c1b352e25e5ba27c4be587bed",
+      "pairs/joint_pairs.csv": "474b5ef70b54686f705dfdd3af170d631c0d3299a5ea6d219a9730b628bd3f99",
+      "pairs/pair_manifest.json": "a88aea0f8c9c4bfafa7cdb25d9e4c0e29a54138709616e870cc26a22eaccb9e6"
+    }
+  },
+  "rcm_selector": {
+    "method": "rcm_zero_signed_open_generation",
+    "component_unit": "pre_o_attention_head",
+    "coarse_unit": "pre_o_attention_layer",
+    "state_constructor": "zero one candidate at every generation decision state",
+    "behavior_edge": "registered task success over task failure under the native task prompt",
+    "delta": "C(native_open_generation)-C(zero_component_open_generation)",
+    "positive_role": "strictly positive mean delta is target_support",
+    "negative_role": "strictly negative mean delta is competitor_support",
+    "ranking": "target parent beam by descending ci95_low; competitor-search parent beam by ascending ci95_high; final head roles and ranks use each head's own signed effect",
+    "ci_admission_gate": false,
+    "samples_per_task": 100,
+    "tasks_scanned_separately": true,
+    "coarse_layers_per_role": 4,
+    "parent_beam_policy": "strict_sign_then_oriented_ci_fill_both_roles",
+    "completed_layer_scan_reuse": {
+      "gsm8k": {
+        "source_config": "configs/tulu_1b_joint_reft_rcm_promotion_20260823_v3.json",
+        "source_config_sha256": "01fb18dbd10efaee6f5b9ed7df28af63b43cd01807bf9db89d96a99a62eca5c1",
+        "source_task_dir": "results/tulu_1b_joint_reft_rcm_promotion_20260823_v3/selection/gsm8k",
+        "scope": "native and all 16 completed layer-zero trajectories only"
+      },
+      "ifeval": {
+        "source_config": "configs/tulu_1b_joint_reft_rcm_promotion_20260823_v4.json",
+        "source_config_sha256": "f73345ed26e091c250907bf5f70427509cb599bfa2c3ef072ce9a434448c8eb7",
+        "source_task_dir": "results/tulu_1b_joint_reft_rcm_promotion_20260823_v4/selection/ifeval",
+        "scope": "native and all 16 completed layer-zero trajectories only"
+      }
+    },
+    "completed_head_scan_reuse": {
+      "gsm8k": {
+        "source_config": "configs/tulu_1b_joint_reft_rcm_promotion_20260823_v4.json",
+        "source_config_sha256": "f73345ed26e091c250907bf5f70427509cb599bfa2c3ef072ce9a434448c8eb7",
+        "source_task_dir": "results/tulu_1b_joint_reft_rcm_promotion_20260823_v4/selection/gsm8k",
+        "scope": "all 128 completed head-zero trajectories over the unchanged GSM8K parent-layer union"
+      }
+    },
+    "head_refinement": "scan every head in the union of each task's four positive and four negative parent layers; head role comes from its own mean effect",
+    "per_task_role_pool": 4,
+    "candidate_k": 16,
+    "cross_task_dedupe_refill": "fixed round-robin order gsm8k-target, gsm8k-competitor, ifeval-target, ifeval-competitor; duplicate heads are skipped and refilled only from the same task-role ranking",
+    "bootstrap_samples": 500,
+    "bootstrap_seed": 42,
+    "bootstrap_percentiles": [
+      2.5,
+      97.5
+    ],
+    "generation": {
+      "batch_size": 4,
+      "do_sample": false,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "top_k": 0,
+      "max_new_tokens": 512
+    },
+    "score": {
+      "gsm8k": "official-compatible numeric exact accuracy",
+      "ifeval": "pinned IFEvalVerifierOld mean constraint reward"
+    },
+    "trajectory_storage": "save native and every layer/head zeroed open generation with per-sample task score and paired delta"
+  },
+  "actuator": {
+    "method": "CAST-ReFT",
+    "sites": "the shared distinct signed RCM K16 head file",
+    "reft_mode": "low_rank",
+    "rank": 16,
+    "apply_mode_train": "all",
+    "apply_mode_generation": "all",
+    "preference_loss_mode": "dpo",
+    "dpo_beta": 0.5,
+    "epochs": 1,
+    "train_batch_size": 2,
+    "eval_batch_size": 2,
+    "learning_rate": 0.001,
+    "weight_decay": 0.01,
+    "lambda_norm": 0.0001,
+    "alpha_train": 1.0,
+    "seed": 42,
+    "base_model_frozen": true,
+    "training_count": "one joint K16 mixer training only"
+  },
+  "head_audit": {
+    "samples_per_task": 40,
+    "candidate_alpha": 1.0,
+    "generation": {
+      "do_sample": false,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "top_k": 0,
+      "max_new_tokens": 512
+    },
+    "score": {
+      "gsm8k": "numeric exact accuracy",
+      "ifeval": "IFEvalVerifierOld mean constraint reward"
+    },
+    "selection_mode": "task_role_quota",
+    "final_k": 8,
+    "per_task_role_quota": 2,
+    "selection": "within each preregistered RCM task-role pool, rank the extracted one-head learned payload by task-specific open-generation gain and keep two",
+    "composition": "exact tensor subset of the jointly trained K16 payload; no single-head training and no K8 retraining"
+  },
+  "alpha_dev": {
+    "samples_per_task": 100,
+    "grid": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "selection": "within each task, maximize that task's registered open-generation score; exact ties choose the smaller alpha",
+    "shared_across_tasks": false,
+    "shared_grid_and_windows": true,
+    "operating_point_scope": "one separately frozen alpha per task for the same directly recomposed K8 controller"
+  },
+  "execution": {
+    "single_gpu": true,
+    "serial": true,
+    "resume_unit": "one complete RCM candidate",
+    "candidate_cuda_cache_cleanup": true
+  }
+}

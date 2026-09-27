@@ -1,0 +1,852 @@
+{
+  "protocol_id": "site_position_full_fixed_protocol_20260804_v13",
+  "version": 13,
+  "last_updated": "2026-08-04",
+  "status": "locked_before_gpu_execution",
+  "remote_source_of_truth": "LOCAL_HOME/RPEC/projects/screscomp",
+  "documentation": "docs/SITE_POSITION_FULL_FIXED_PROTOCOL_20260804_V13.md",
+  "preflight": "scripts/paper/45_prepare_site_position_full_protocol_v13.py",
+  "supersedes": {
+    "protocol_id": "site_position_full_fixed_protocol_20260719_v12",
+    "version": 12,
+    "config_sha256": "87c3b77316304b87f0aa0ade73be15a6da691c94625296214e9032aae406b45e",
+    "scope": "imdb_downstream_pair_source_actuator_training_and_open_generation_only",
+    "retained_authority": "version_12_remains_authoritative_for_confiqa_and_all_imdb_selector_state_and_ranking_semantics",
+    "reason": "version_12_constructed_model_native_reward_ranked_pairs_instead_of_consuming_the_registered_public_DPO_reproduction_pair_data"
+  },
+  "site": {
+    "claim": "position-selector usefulness under one sparse K=8 downstream preference interface with preregistered signed RCM role banks",
+    "selection_contract": {
+      "candidate_space": "pre_o_attention_head",
+      "component_id_pattern": "^L[0-9]+[.]attn[.]h[0-9]+$",
+      "selected_count": 8,
+      "ranking": "selector_specific_as_registered_in_site.selectors",
+      "tie_break": "ascending_layer_then_head",
+      "direction_by_selector": {
+        "rcm_zero_signed": "signed_target_support_and_competitor_support",
+        "rcm_patch_signed": "signed_target_support_and_competitor_support",
+        "iti": "unsigned_heldout_probe_accuracy",
+        "random": "unsigned_uniform_control"
+      },
+      "signed_partition": {
+        "target_support_count": 4,
+        "competitor_support_count": 4
+      },
+      "nonpositive_fallback": false,
+      "ci_policy": "role_oriented_ci95_lower_bound_ranking",
+      "selector_output": "selected_heads.csv",
+      "ci_ranking_definition": {
+        "role_source": "sign_of_candidate_own_mean_paired_effect",
+        "target_support_score": "ci95_low",
+        "competitor_support_score": "negative_ci95_high",
+        "order": "descending_within_role",
+        "confidence_interval": "paired_percentile_bootstrap",
+        "confidence_level": 0.95,
+        "admission_gate": false,
+        "k_preserved": "four_per_role"
+      }
+    },
+    "decision_trajectory": {
+      "name": "generation_decision_states",
+      "first_state": "final_prompt_token_predicting_first_output_token",
+      "later_states": "each_generated_prefix_final_token_predicting_the_next_output_token",
+      "states_per_target_sequence": "number_of_scored_or_generated_output_tokens",
+      "include_padding": false,
+      "include_post_final_output_state": false,
+      "include_post_eos_state": false
+    },
+    "rcm_common": {
+      "coarse_unit": "pre_o_attention_layer",
+      "coarse_beam_width": 4,
+      "final_unit": "pre_o_attention_head",
+      "state_timing": "generation_decision_states",
+      "patch_constructor": "trajectory_mean_state_clamp",
+      "prototype_aggregation_order": [
+        "decision_state_mean_within_sequence",
+        "target_alias_mean_within_sample_when_present",
+        "sample_mean"
+      ],
+      "prototype_accumulation_dtype": "float32",
+      "prototype_storage_dtype": "float32",
+      "prototype_runtime_cast": "selected_component_output_dtype",
+      "prototype_reward_filter": false,
+      "prototype_health_filter": false,
+      "prototype_length_weighting": "equal_sequence_and_equal_sample",
+      "patch_operation": "overwrite",
+      "patch_selector_alpha": 1.0,
+      "patch_normalization": "none",
+      "patch_centering": "none",
+      "patch_runtime_target_stream": false,
+      "bootstrap_samples": 500,
+      "bootstrap_seed": 42,
+      "bootstrap_interval_percentiles": [
+        2.5,
+        97.5
+      ],
+      "share_candidate_scoring_rows_between_zero_and_patch": true,
+      "reuse_native_baseline": true,
+      "head_refinement_candidate_pool": "union_of_positive_and_negative_layer_beams",
+      "head_effect_role_source": "candidate_head_own_mean_paired_effect",
+      "parent_layer_sign_inheritance": false,
+      "head_result_artifact_semantics": "positive_and_negative_head_results_name_the_parent_layer_beam_only",
+      "zero_positive_layer_ranking": "descending_ci95_low_among_strictly_positive_mean_paired_effect",
+      "zero_negative_layer_ranking": "ascending_ci95_high_among_strictly_negative_mean_paired_effect",
+      "zero_positive_head_ranking": "descending_ci95_low_among_strictly_positive_own_mean_paired_effect_across_union_of_signed_layer_beams",
+      "zero_negative_head_ranking": "ascending_ci95_high_among_strictly_negative_own_mean_paired_effect_across_union_of_signed_layer_beams",
+      "shared_zero_scan_artifacts": [
+        "layer_results.jsonl",
+        "positive_layer_beam.jsonl",
+        "negative_layer_beam.jsonl",
+        "positive_head_results.jsonl",
+        "negative_head_results.jsonl",
+        "scan_manifest.json"
+      ],
+      "patch_positive_layer_ranking": "descending_ci95_low_among_strictly_positive_mean_paired_effect",
+      "patch_negative_layer_ranking": "ascending_ci95_high_among_strictly_negative_mean_paired_effect",
+      "patch_positive_head_ranking": "descending_ci95_low_among_strictly_positive_own_mean_paired_effect_across_union_of_signed_layer_beams",
+      "patch_negative_head_ranking": "ascending_ci95_high_among_strictly_negative_own_mean_paired_effect_across_union_of_signed_layer_beams",
+      "ranking_statistic": "role_oriented_ci95_lower_bound"
+    },
+    "downstream_contract": {
+      "native_selected_writes": "kept_active",
+      "intervention": "add_one_learned_head_dim_vector_per_selected_pre_o_head",
+      "selected_count_source": "site.selection_contract.selected_count",
+      "locator_operations_present_during_training_or_evaluation": false,
+      "selector_specific_downstream_variable": "component_id_and_for_signed_rcm_preregistered_selection_role_partition",
+      "actuator_partition_by_selector": {
+        "rcm_zero_signed": "two_independently_trained_four_head_role_banks",
+        "rcm_patch_signed": "two_independently_trained_four_head_role_banks",
+        "iti": "one_jointly_trained_eight_head_unsigned_bank",
+        "random": "one_jointly_trained_eight_head_unsigned_bank"
+      },
+      "signed_rcm_bank_contract": {
+        "bank_order": [
+          "target_support",
+          "competitor_support"
+        ],
+        "heads_per_bank": 4,
+        "training": "each_bank_joint_within_role_and_independent_across_roles",
+        "shared_pairs_between_banks": true,
+        "shared_optimizer_hyperparameters_between_banks": true,
+        "shared_seed_between_banks": true,
+        "inference_composition": "sum_both_role_banks",
+        "alpha_policy": "one_shared_alpha_for_both_role_banks",
+        "independent_role_alpha_search": false,
+        "combined_payload_role": "inference_only_union_of_two_separately_trained_role_payloads"
+      },
+      "warm_start": false,
+      "background_actuator": false,
+      "learned_gate": false,
+      "normalization": "none"
+    },
+    "downstream_common": {
+      "base_model_frozen": true,
+      "vector_initialization": "float32_zeros",
+      "optimizer": "torch.optim.AdamW",
+      "lr": 0.05,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0.01,
+      "amsgrad": false,
+      "scheduler": "none",
+      "gradient_clipping": "none",
+      "epochs": 2,
+      "seed": 42,
+      "epoch_shuffle_seed": 42,
+      "alpha_train": 1.0,
+      "lambda_norm": 0.0001,
+      "empty_cache_every": 25,
+      "model_torch_dtype": "auto_resolve_once_and_record",
+      "vector_parameter_dtype": "float32"
+    },
+    "selectors": {
+      "rcm_zero_signed": {
+        "family": "causal_state_transition",
+        "operation": "zero_candidate_at_every_generation_decision_state",
+        "ranking_score": "role_oriented_ci95_lower_bound",
+        "delta": "C(native_target)-C(zero_i(native_target))",
+        "seed": 42,
+        "direction": "signed",
+        "selection": "site.selection_contract.signed_partition",
+        "shared_scan_key": "rcm_zero"
+      },
+      "rcm_patch_signed": {
+        "family": "causal_state_transition",
+        "operation": "overwrite_candidate_with_transferable_trajectory_mean_target_state_at_every_generation_decision_state",
+        "ranking_score": "role_oriented_ci95_lower_bound",
+        "delta": "C(clamp_i(recipient,mu_i_target))-C(recipient)",
+        "prototype_artifacts": [
+          "trajectory_mean_states.safetensors",
+          "trajectory_mean_manifest.json"
+        ],
+        "seed": 42,
+        "direction": "signed",
+        "selection": "site.selection_contract.signed_partition"
+      },
+      "iti": {
+        "family": "task_adapted_official_probe_selector",
+        "operation": "one_logistic_probe_per_attention_head",
+        "activation_position": "final_nonpadding_token_of_complete_labeled_continuation",
+        "ranking_score": "mean_grouped_twofold_heldout_accuracy",
+        "folds": 2,
+        "fold_policy": "train_A_eval_B_then_train_B_eval_A",
+        "classifier": "sklearn.linear_model.LogisticRegression",
+        "penalty": "l2",
+        "C": 1.0,
+        "solver": "lbfgs",
+        "fit_intercept": true,
+        "class_weight": null,
+        "tol": 0.0001,
+        "max_iter": 1000,
+        "feature_standardization": "none",
+        "random_state": 42,
+        "source_repository": "honest_llama",
+        "direction": "unsigned"
+      },
+      "random": {
+        "family": "uniform_control",
+        "operation": "uniform_without_replacement",
+        "ranking_score": "none",
+        "universe": "all_compatible_pre_o_attention_heads",
+        "stratification": "none",
+        "layer_quota": "none",
+        "primary_seed": 20260702,
+        "replicate_seeds": [
+          20260702,
+          20260703,
+          20260704
+        ],
+        "direction": "unsigned"
+      }
+    },
+    "tasks": {
+      "imdb": {
+        "dataset": "stanfordnlp/imdb",
+        "dataset_revision": "e6281661ce1c48d982bc483cf8a173c1bbeb5d31",
+        "subsets": [
+          "sentiment"
+        ],
+        "states": {
+          "base_template": "{prefix}",
+          "good_template": "{prefix}\n\nContinue the review with a positive sentiment:",
+          "shared_behavior_edge": "good_template_complete_generation_vs_base_template_complete_generation",
+          "rcm_zero_native": "good_template",
+          "rcm_patch_recipient": "base_template",
+          "rcm_patch_target_prototype": "trajectory_mean_over_shared_good_template_generations",
+          "iti_positive_state": "shared_good_template_complete_generation",
+          "iti_negative_state": "shared_base_template_complete_generation"
+        },
+        "score": {
+          "name": "generated_sentiment_competition",
+          "formula": "P(POSITIVE|completion)-P(NEGATIVE|completion)",
+          "scorer_model": "siebert/sentiment-roberta-large-english",
+          "scorer_revision": "74cea614e245b0832c770ec9aa51bd58df965b9c",
+          "positive_label": "POSITIVE",
+          "score_text": "completion",
+          "reward_batch_size": 16
+        },
+        "selector_state_generation": {
+          "source_split": "train",
+          "source_start": 0,
+          "max_source_rows_before_shuffle": 25000,
+          "shuffle": true,
+          "shuffle_seed": 42,
+          "prompt_rows": 300,
+          "prefix_mode": "tokenizer",
+          "prefix_token_min": 2,
+          "prefix_token_max": 8,
+          "normalize_imdb_breaks": false,
+          "conditions": [
+            "good",
+            "base"
+          ],
+          "samples_per_prompt_per_condition": 1,
+          "max_new_tokens": 64,
+          "do_sample": true,
+          "temperature": 1.0,
+          "top_p": 1.0,
+          "generation_top_k": 50,
+          "generation_seed": 42,
+          "generation_batch_size": 16,
+          "state_filter": "none",
+          "common_random_numbers_across_conditions": true,
+          "shared_artifact_policy": "generate_once_per_model_and_reuse_exact_token_ids"
+        },
+        "selector_preprocessing": {
+          "rcm": {
+            "coarse_score_rows": 300,
+            "head_refine_score_rows": 300,
+            "common_random_numbers_across_candidate_conditions": true
+          },
+          "iti": {
+            "pair_source": "same_shared_good_base_generation_artifact_as_rcm",
+            "pair_groups": 300,
+            "positive_state": "good_template_plus_its_shared_generated_token_sequence",
+            "negative_state": "base_template_plus_its_shared_generated_token_sequence",
+            "terminal_eos_policy": "exclude_terminal_eos_if_content_tokens_remain_to_match_official_prompt_last_token",
+            "raw_imdb_labels_used": false,
+            "reward_ranking_used": false,
+            "pair_states_stay_in_same_fold": true,
+            "grouped_twofold": true
+          },
+          "random": {
+            "data_rows": 0
+          }
+        },
+        "pair_preparation": {
+          "source_kind": "pinned_public_dpo_reproduction_pairs",
+          "dataset_id": "insub/imdb_prefix20_forDPO_gpt2-large-imdb-FT_siebert_sentiment-roberta-large-english",
+          "revision": "89a34c1cc6bcbc8accd3e57bac88ccd86ae4680d",
+          "source_split": "train",
+          "data_file": "data/train-00000-of-00001-719213d68e9bb42e.parquet",
+          "data_file_sha256": "be1c595e544ee0208125d843a6bc366c050b2f7ad32d6f95651fd725ef31f1d9",
+          "source_rows": 25000,
+          "source_claim": "pinned_public_DPO_reproduction_pair_source_not_proven_byte_identical_released_checkpoint_training_data",
+          "prompt_field": "text",
+          "chosen_field": "chosen",
+          "rejected_field": "rejected",
+          "endpoint_fields_include_prompt": true,
+          "source_order": "preserve_exact",
+          "shuffle": false,
+          "train_row_start": 0,
+          "train_row_stop": 1024,
+          "val_row_start": 1024,
+          "val_row_stop": 1280,
+          "target_train_pairs": 1024,
+          "target_val_pairs": 256,
+          "endpoint_serialization": "remove_the_exact_common_prompt_prefix_once_and_preserve_every_remaining_byte",
+          "prompt_normalization": "preserve_exact",
+          "continuation_normalization": "preserve_exact",
+          "filtering": "none",
+          "refill": false,
+          "require_nonempty_endpoints": true,
+          "require_distinct_endpoints": true,
+          "require_train_val_prompt_disjoint": true,
+          "shared_across_models_and_selectors": true,
+          "shared_artifact_relpath": "imdb/shared_dpo_pairs",
+          "model_generation_for_pair_construction": false,
+          "reward_rescoring_for_pair_construction": false
+        },
+        "downstream": {
+          "event": "imdb_positive_sentiment",
+          "pair_preparation_ref": "site.tasks.imdb.pair_preparation",
+          "train_rows": 1024,
+          "val_rows": 256,
+          "train_batch_size": 32,
+          "preference_loss_mode": "dpo",
+          "dpo_beta": 1.0,
+          "state_margin_weight": 0.0,
+          "gain_weight": 1.0,
+          "endpoint_objective": "pair_margin",
+          "score_mode": "avglogp",
+          "option_selection_mode": "model_max",
+          "max_aliases_per_side": 1,
+          "causal_train_mask": true,
+          "apply_mode": "all",
+          "alpha_zero": "evaluate_once_and_reuse_per_dataset_model",
+          "alpha_nonzero_grid": [
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6,
+            0.7,
+            0.8,
+            0.9,
+            1.0
+          ],
+          "test_source_split": "test",
+          "test_source_start": 0,
+          "test_max_source_rows_before_shuffle": 25000,
+          "test_shuffle": true,
+          "test_shuffle_seed": 42,
+          "test_prompts": 2048,
+          "samples_per_prompt": 1,
+          "max_new_tokens": 256,
+          "do_sample": true,
+          "temperature": 1.0,
+          "top_p": 1.0,
+          "generation_top_k": 50,
+          "generation_seed": 42,
+          "same_seed_across_alpha": true,
+          "generation_batch_size": 16,
+          "reward_batch_size": 16,
+          "kl_batch_size": 16,
+          "test_alpha_policy": "report_full_curve",
+          "primary_metrics": [
+            "mean_positive_sentiment_score",
+            "positive_rate",
+            "sampled_sequence_logprob_ratio",
+            "token_kl_audit",
+            "mean_completion_tokens",
+            "health",
+            "actual_n"
+          ],
+          "test_prompt_preparation": {
+            "prefix_mode": "tokenizer",
+            "prefix_token_min": 2,
+            "prefix_token_max": 8,
+            "prompt_template": "{prefix}"
+          }
+        },
+        "selector_reuse": {
+          "source_protocol_id": "site_position_full_fixed_protocol_20260719_v12",
+          "source_config_sha256": "87c3b77316304b87f0aa0ade73be15a6da691c94625296214e9032aae406b45e",
+          "source_freeze_root": "LOCAL_HOME/RPEC/projects/screscomp/results/site_position_full_20260719_v12_current_20260723/artifacts",
+          "scope": "selected_heads_csv_only",
+          "scientific_basis": "selector inputs, state transitions, scores, ranking, and K are unchanged; downstream preference pairs are not selector inputs",
+          "allowed_model_keys": [
+            "ma921_gpt2_large_sft"
+          ],
+          "artifact_hashes": {
+            "imdb__sentiment__ma921_gpt2_large_sft__rcm_zero_signed__primary": "87c7b8adddd8b140f7d0d376a8042143ce2a2b780062445dd6e83ef06181c0ca",
+            "imdb__sentiment__ma921_gpt2_large_sft__rcm_patch_signed__primary": "53e7f0f9638507fdfa60de11627efeae3d9b4c9e15e39a2bf0b329b510c9cc90",
+            "imdb__sentiment__ma921_gpt2_large_sft__iti__primary": "f4f3b8c47a47149e70fda426fd43bf4f7b54f301367ee2bac4114cdb24121ae4",
+            "imdb__sentiment__ma921_gpt2_large_sft__random__seed_20260702": "92afc01ea867371f32c5b7962affa23ce9c2d73cb8f09409ae129e6d387fb769",
+            "imdb__sentiment__ma921_gpt2_large_sft__random__seed_20260703": "a4d01d677ee59d3e93ea5be1032625fe43a21d163e5fcaa4460e64cf649350b6",
+            "imdb__sentiment__ma921_gpt2_large_sft__random__seed_20260704": "6f66750c544150fcebe1751ff858fbfca09987346e7e8af9131a3f25c2fb2df5"
+          },
+          "forbidden_reuse": [
+            "model-native pair environments and pair CSV files",
+            "all actuator payloads and training diagnostics",
+            "all alpha-zero and nonzero generations, scores, KL rows, and summaries"
+          ],
+          "hash_inventory_required": true
+        }
+      },
+      "confiqa": {
+        "dataset": "context_dpo_confiqa_official",
+        "source_repository_commit": "557dadeeb9f47407890a5626128ca99907770b22",
+        "source_file_sha256": {
+          "qa": "9b201a7e2f2bbf8ad8ae3364eb87c194cf5d6007789c8b5302c091fa8fae74e4",
+          "mr": "dbb76f361831b754b87219344d80a386eaf83078ffe5888272dbe9d8e6c0eede",
+          "mc": "a058e0ca631b90bc799ddedc3bb92aea56d249c604f8a12d309cbcd4ec627994"
+        },
+        "subsets": [
+          "qa",
+          "mr",
+          "mc"
+        ],
+        "states": {
+          "rcm_zero_native": "official_rag",
+          "rcm_patch_recipient": "official_rag",
+          "rcm_patch_target_prototype": "trajectory_mean_over_official_rag_plus_all_context_answer_aliases",
+          "target_endpoint": "context_supported_counterfactual_answer",
+          "competing_endpoint": "original_parametric_prior_answer",
+          "prompt_builder": "src/screscomp/cli/prepare_ckplug_open.py",
+          "rcm_patch_target_prompt_key": "official_rag"
+        },
+        "score": {
+          "name": "closed_context_over_prior_competition_margin",
+          "endpoint_formula": "mean_answer_tokens[logit(correct_token)-max_logit(other_vocab_token)]",
+          "endpoint_alias_aggregation": "model_max",
+          "formula": "max_alias_S(context_answer|prompt)-max_alias_S(prior_answer|prompt)",
+          "endpoint_objective": "pair_margin",
+          "score_mode": "answer_rest_margin",
+          "option_selection_mode": "model_max",
+          "max_aliases_per_side": 0,
+          "open_generation_used_for_selector": false
+        },
+        "selector_preprocessing": {
+          "rcm": {
+            "source_start": 0,
+            "source_stop": 300,
+            "source_order": "official_file_order",
+            "shuffle": false,
+            "schema": "base",
+            "alias_policy": "raw",
+            "val_mod": 5,
+            "prototype_rows_source": "head_refine_pair_groups",
+            "prototype_target_aliases": "all_admitted_cf_answers",
+            "candidate_group_source": "shared_admitted_pair_artifact",
+            "candidate_split_filter": "none",
+            "coarse_pair_groups": 300,
+            "head_refine_pair_groups": 300,
+            "state_timing": "generation_decision_states",
+            "seed": 42,
+            "source_window_role": "initial_candidate_window_before_valid_group_refill",
+            "target_admitted_groups": 300,
+            "fill_rejected_groups": true,
+            "fill_order": "continue_official_file_order_after_source_stop",
+            "rejection_reasons": [
+              "missing_required_question_context_or_endpoint",
+              "identical_normalized_competition_endpoints",
+              "empty_endpoint_after_alias_cleanup"
+            ],
+            "admission_audit_required": true,
+            "admission_audit_artifacts": [
+              "sample_admission_manifest.json",
+              "admitted_source_rows.csv",
+              "rejected_source_rows.jsonl",
+              "replacement_source_rows.jsonl"
+            ]
+          },
+          "iti": {
+            "pair_source": "same_shared_admitted_pair_artifact_as_rcm",
+            "pair_groups": 300,
+            "positive_state": "official_rag_plus_canonical_context_answer",
+            "negative_state": "official_rag_plus_canonical_prior_answer",
+            "pair_states_stay_in_same_fold": true,
+            "grouped_twofold": true
+          },
+          "random": {
+            "data_rows": 0
+          }
+        },
+        "downstream": {
+          "event": "source_context_over_prior",
+          "train_source_start": 0,
+          "train_source_stop": 300,
+          "source_order": "official_file_order",
+          "shuffle": false,
+          "schema": "base",
+          "alias_policy": "raw",
+          "val_mod": 5,
+          "train_rows": 240,
+          "val_rows": 60,
+          "train_batch_size": 4,
+          "preference_loss_mode": "margin_gain",
+          "dpo_beta": 1.0,
+          "state_margin_weight": 0.0,
+          "gain_weight": 1.0,
+          "target_margin": 0.0,
+          "target_gain": 0.0,
+          "endpoint_objective": "pair_margin",
+          "score_mode": "answer_rest_margin",
+          "option_selection_mode": "model_max",
+          "max_aliases_per_side": 1,
+          "causal_train_mask": false,
+          "apply_mode": "decision_tokens",
+          "alpha_zero": "evaluate_once_and_reuse_per_dataset_model_subset",
+          "alpha_nonzero_grid": [
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6,
+            0.7,
+            0.8,
+            0.9,
+            1.0
+          ],
+          "alpha_dev": {
+            "source_start": 301,
+            "source_stop": 421,
+            "eval_cap": 120,
+            "selection_metric": "logic_score",
+            "tie_break": "smallest_alpha",
+            "source_start_policy": "max_registered_start_and_selector_scan_stop_plus_one",
+            "raw_window_rows": 120,
+            "fill_rejected_rows": false
+          },
+          "heldout_test": {
+            "source_start": 1000,
+            "source_stop": 1500,
+            "eval_cap": 500,
+            "fixed_window_no_fill": true
+          },
+          "generation": {
+            "do_sample": false,
+            "max_new_tokens": 64,
+            "stop_strings": [
+              "Q:"
+            ]
+          },
+          "logic_score_formula": "context_only_rate+short_exact_context_rate-prior_hit_rate-neither_rate-mean_chars/400",
+          "primary_metrics": [
+            "logic_score",
+            "pc",
+            "po",
+            "mr",
+            "em",
+            "context_only",
+            "prior_only",
+            "both",
+            "neither",
+            "short_exact_context",
+            "mean_chars",
+            "health",
+            "actual_n"
+          ]
+        },
+        "prompt_contract": {
+          "id": "context_dpo_official_v1",
+          "prepared_prompt_key": "official_rag",
+          "template": "{context}\nQ: {question}\nA: ",
+          "source_repository": "https://github.com/byronBBL/Context-DPO",
+          "source_commit": "557dadeeb9f47407890a5626128ca99907770b22",
+          "source_locations": [
+            "train_dpo.py:42",
+            "evaluation.py:114"
+          ],
+          "byte_exact_assertion": true,
+          "legacy_v9_contract": "ckplug_nested_v1",
+          "legacy_v9_template": "{context}\nQ:Q: {question}\nA: \nA:",
+          "pair_prompt_normalization": "preserve_exact"
+        }
+      }
+    },
+    "matrix": [
+      {
+        "dataset": "confiqa",
+        "model_key": "llama3_8b",
+        "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+        "revision": "8afb486c1db24fe5011ec46dfbe5b5dccdb575c2",
+        "use_chat_template": true,
+        "role": "context_dpo_aligned_anchor"
+      },
+      {
+        "dataset": "confiqa",
+        "model_key": "mistral7b_v03",
+        "model": "mistralai/Mistral-7B-Instruct-v0.3",
+        "revision": "c170c708c41dac9275d15a8fff4eca08d52bab71",
+        "use_chat_template": true,
+        "role": "shared_cross_task"
+      },
+      {
+        "dataset": "confiqa",
+        "model_key": "qwen25_14b",
+        "model": "Qwen/Qwen2.5-14B-Instruct",
+        "revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+        "use_chat_template": true,
+        "role": "larger_shared_cross_task"
+      },
+      {
+        "dataset": "imdb",
+        "model_key": "ma921_gpt2_large_sft",
+        "model": "LOCAL_HOME/.cache/huggingface/hub/models--ma921--gpt2-large-sft-imdb/snapshots/f480190690d5abfc0e003ccb4f7e650626019bb9",
+        "model_id": "ma921/gpt2-large-sft-imdb",
+        "revision": "f480190690d5abfc0e003ccb4f7e650626019bb9",
+        "use_chat_template": false,
+        "role": "released_imdb_anchor"
+      },
+      {
+        "dataset": "imdb",
+        "model_key": "mistral7b_v03",
+        "model": "mistralai/Mistral-7B-Instruct-v0.3",
+        "revision": "c170c708c41dac9275d15a8fff4eca08d52bab71",
+        "use_chat_template": true,
+        "role": "shared_cross_task"
+      },
+      {
+        "dataset": "imdb",
+        "model_key": "qwen25_14b",
+        "model": "Qwen/Qwen2.5-14B-Instruct",
+        "revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+        "use_chat_template": true,
+        "role": "larger_shared_cross_task"
+      }
+    ],
+    "execution": {
+      "run_root": "/dev/shm/screscomp_runs/site_position_full_20260804_v13",
+      "serial_only": true,
+      "empty_gpu_required": false,
+      "gpu_co_tenancy_allowed": true,
+      "preferred_physical_gpu_indices": [
+        2,
+        3
+      ],
+      "gpu_selection_policy": "lowest_observed_memory_used_at_matrix_launch",
+      "gpu_launch_snapshot_fields": [
+        "requested_device",
+        "physical_index",
+        "uuid",
+        "name",
+        "memory_used_mib",
+        "memory_total_mib",
+        "utilization_percent",
+        "visible_compute_processes",
+        "co_tenancy_observed"
+      ],
+      "single_gpu_per_job": true,
+      "copy_curated_results_to": "results/site_position_full_20260804_v13",
+      "required_record_fields": [
+        "config_sha256",
+        "code_commit",
+        "dirty_tree_manifest",
+        "model_revision",
+        "tokenizer_revision",
+        "dataset_revision_or_hash",
+        "rendered_prompt_templates",
+        "dataset_window",
+        "split_rule",
+        "seed",
+        "selector",
+        "state_constructor",
+        "prototype_provenance",
+        "selected_heads",
+        "actual_n",
+        "pair_artifact_sha256",
+        "train_rows",
+        "val_rows",
+        "optimizer",
+        "resolved_dtype",
+        "alpha_grid",
+        "alpha_zero_reuse_source",
+        "generation_window",
+        "actual_generated_tokens",
+        "evaluator",
+        "gpu",
+        "peak_gpu_memory",
+        "wall_seconds",
+        "selection_role",
+        "shared_scan_artifact",
+        "shared_scan_sha256",
+        "head_effect_role_source",
+        "actuator_training_partition",
+        "role_bank_payloads",
+        "superseded_result_boundary",
+        "selector_source_admission_audit",
+        "rejected_source_rows",
+        "replacement_source_rows",
+        "actual_selector_source_scan_stop",
+        "imdb_shared_state_pair_manifest",
+        "imdb_good_state_artifact",
+        "imdb_base_state_artifact",
+        "prompt_contract_id",
+        "prompt_template",
+        "prompt_template_sha256",
+        "canonical_prompt_assertion",
+        "pair_prompt_chain",
+        "pair_source_kind",
+        "pair_source_dataset",
+        "pair_source_revision",
+        "pair_source_data_file",
+        "pair_source_data_file_sha256",
+        "pair_source_row_windows",
+        "pair_prompt_prefix_audit",
+        "pair_shared_across_models_and_selectors",
+        "selector_reuse_source",
+        "selector_reuse_sha256",
+        "mean_score_delta",
+        "ci95_low",
+        "ci95_high",
+        "ci_crosses_zero",
+        "ranking_score",
+        "ranking_score_name",
+        "role_oriented_ci95_lower_bound"
+      ],
+      "superseded_run_root": "/dev/shm/screscomp_runs/site_position_full_20260719_v12",
+      "superseded_run_policy": "version_12_remains_authoritative_for_confiqa_and_imdb_selector_outputs_but_its_imdb_pair_actuator_and_generation_outputs_are_ineligible_for_version_13",
+      "historical_alpha_zero_reuse": {
+        "allowed": false,
+        "eligible_artifacts": "none",
+        "forbidden_artifacts": "all_version_12_and_earlier_imdb_pair_actuator_alpha_zero_and_nonzero_outputs"
+      }
+    }
+  },
+  "native_plus_rlhf": {
+    "table_claim": "complete_method_performance_under_method_faithful_native_settings",
+    "site_count_policy": "official_native_setting_not_forced_to_eight",
+    "methods": [
+      {
+        "id": "base_or_strong_prompt",
+        "kind": "nonparametric_reference",
+        "repository": "main_repo"
+      },
+      {
+        "id": "caa",
+        "kind": "native_intervention",
+        "repository": "CAA",
+        "configuration_policy": "official_recommended_task_setting"
+      },
+      {
+        "id": "bipo",
+        "kind": "native_intervention",
+        "repository": "BiPO",
+        "configuration_policy": "official_recommended_task_setting"
+      },
+      {
+        "id": "reps",
+        "kind": "native_intervention",
+        "repository": "axbench",
+        "configuration_policy": "official_recommended_task_setting"
+      },
+      {
+        "id": "loreft",
+        "kind": "native_intervention",
+        "repository": "pyreft",
+        "configuration_policy": "official_recommended_task_setting"
+      },
+      {
+        "id": "cast",
+        "kind": "proposed_method",
+        "repository": "main_repo"
+      },
+      {
+        "id": "context_dpo",
+        "kind": "released_rlhf_checkpoint",
+        "tasks": [
+          "confiqa"
+        ],
+        "model": "Bibaolong/Context-Faithful-LLaMA-3-8b-instruct",
+        "revision": "d6b570c51a8c579e6105da558c0f6e9fb1235962",
+        "retrain": false
+      },
+      {
+        "id": "imdb_dpo",
+        "kind": "released_rlhf_checkpoint",
+        "tasks": [
+          "imdb"
+        ],
+        "model": "ma921/gpt2-large_dpo_imdb_noise0_epoch5",
+        "revision": "90f8bc822ce954f07b76afe7d8fc5a867e0fd2eb",
+        "retrain": false
+      }
+    ],
+    "gcm_reference": {
+      "paper": "https://arxiv.org/abs/2602.16080",
+      "fidelity": "trajectory_mean_state_clamp_is_an_rcm_constructor_inspired_by_mean_steering_not_native_gcm_localization"
+    },
+    "gcm_policy": "not_a_native_external_row",
+    "missing_official_implementation_policy": "skip_and_report"
+  },
+  "external_repositories": {
+    "honest_llama": {
+      "path": "LOCAL_HOME/RPEC/projects/baselines/honest_llama",
+      "url": "https://github.com/likenneth/honest_llama.git",
+      "commit": "2c6b2179be7b5aa8f0a171688cf9e01b812ca327"
+    },
+    "CAA": {
+      "path": "LOCAL_HOME/RPEC/projects/baselines/CAA",
+      "url": "https://github.com/nrimsky/CAA.git",
+      "commit": "5dabbbd9a0bca5f25e174501e959de378806aa48"
+    },
+    "BiPO": {
+      "path": "LOCAL_HOME/RPEC/projects/baselines/BiPO",
+      "url": "https://github.com/CaoYuanpu/BiPO.git",
+      "commit": "cef1d00ab108d0e265578589e6b344b200ea3db8"
+    },
+    "axbench": {
+      "path": "LOCAL_HOME/RPEC/projects/baselines/axbench",
+      "url": "https://github.com/stanfordnlp/axbench.git",
+      "commit": "41c8332543e5a631f9a8c0a9df38799893ace758"
+    },
+    "pyreft": {
+      "path": "LOCAL_HOME/RPEC/projects/baselines/pyreft",
+      "url": "https://github.com/stanfordnlp/pyreft.git",
+      "commit": "dafd0995a366d7b47160a337dcc388eda7431821"
+    }
+  },
+  "correction_scope": {
+    "changed": [
+      "IMDb downstream pair source",
+      "IMDb pair serialization and audit",
+      "IMDb actuator training artifacts",
+      "IMDb open-generation artifacts"
+    ],
+    "unchanged": [
+      "IMDb selector prompts and good/base state construction",
+      "RCM-zero, RCM-patch, ITI, and Random ranking",
+      "K=8 and signed role partition",
+      "optimizer, objective, epochs, batch size, alpha grid, evaluator, and test prompts",
+      "all ConFiQA protocol fields and evidence"
+    ],
+    "provenance_claim": "The pair source is a pinned public dataset created to reproduce the DPO IMDb experiment. The released ma921 checkpoint model card does not identify its training dataset, so byte-identical checkpoint-training-data equivalence is not claimed."
+  }
+}

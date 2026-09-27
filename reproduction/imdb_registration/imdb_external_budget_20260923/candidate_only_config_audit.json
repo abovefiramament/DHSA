@@ -1,0 +1,56 @@
+{
+  "bipo": {
+    "checks": {
+      "operator": true,
+      "model": true,
+      "training_hyperparameters_unchanged": true,
+      "candidate_generation_unchanged": true
+    },
+    "training_description_difference": {
+      "candidate_training": [
+        "each_of_the_three_CAA_layers_is_trained_independently_to_the_registered_epoch_budget",
+        "each_CAA_top10_layer_is_trained_independently_to_the_unchanged_registered_epoch_budget"
+      ]
+    },
+    "old_candidates": [
+      "caa_rank_1",
+      "caa_rank_2",
+      "caa_rank_3"
+    ],
+    "new_candidates": [
+      "caa_rank_1",
+      "caa_rank_2",
+      "caa_rank_3",
+      "caa_rank_4",
+      "caa_rank_5",
+      "caa_rank_6",
+      "caa_rank_7",
+      "caa_rank_8",
+      "caa_rank_9",
+      "caa_rank_10"
+    ]
+  },
+  "loreft": {
+    "checks": {
+      "operator": true,
+      "model": true,
+      "training_hyperparameters_unchanged": true,
+      "candidate_generation_unchanged": true
+    },
+    "training_description_difference": {},
+    "old_candidates": [
+      "author",
+      "shallow",
+      "deep",
+      "stratified"
+    ],
+    "new_candidates": [
+      "author",
+      "shallow",
+      "deep",
+      "stratified",
+      "edge_shallow",
+      "edge_deep"
+    ]
+  }
+}

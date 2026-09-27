@@ -1,0 +1,17 @@
+{
+  "scope": "IMDb GPT2-large all ten internal cells",
+  "authorization": "REDACTED",
+  "generation_batch_size": 256,
+  "generation_seed": 42,
+  "generation_seed_initialization": "once at final generation start; continuous RNG across batches and alpha",
+  "generation_order": "consecutive prompt batches, then existing alpha order; output records retain prompt then alpha order",
+  "training_micro_batch_size": 32,
+  "training_effective_batch_size": 32,
+  "optimizer_updates": "unchanged",
+  "rcm_generation_batch_size": 16,
+  "rcm_samples_and_checkpoints": "unchanged",
+  "eos": "original model EOS remains enabled; no new min_new_tokens rule",
+  "sampling_note": "Batched sampling changes the random draws assigned to individual outputs relative to old single-row generation.",
+  "validation": "batch_validation.json; batch_capacity.json; backend output-order and RNG checkpoint-resume test passed",
+  "original_code_revision": "87d7c53c837649eb4ca54562150ef5794abc1078"
+}

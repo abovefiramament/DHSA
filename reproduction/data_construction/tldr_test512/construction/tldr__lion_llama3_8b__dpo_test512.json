@@ -1,0 +1,119 @@
+{
+  "dataset": "tldr",
+  "role_mode": "named_roles",
+  "sources": {
+    "tldr_pairs": {
+      "source": {
+        "format": "csv",
+        "source_id": "tldr_openai_preference_pairs",
+        "upstream_source_id": "openai_summarize_from_feedback_upstream"
+      },
+      "validated_rows": 176632
+    },
+    "tldr_test_prompts": {
+      "source": {
+        "format": "jsonl",
+        "source_id": "tldr_openai_test_prompt_projection",
+        "upstream_source_id": "openai_summarize_from_feedback_upstream"
+      },
+      "validated_rows": 6553
+    }
+  },
+  "prompt_registration": {
+    "registry_path": "configs/prompts/prompt_registry_20260831_v1.json",
+    "selection": {
+      "source_prompt": "tldr.source_prompt_passthrough_v1"
+    }
+  },
+  "construction_trace": {
+    "selector": "first_unique_prompt_id_groups_from_train_pair_order",
+    "training": {
+      "order": "python_random_shuffle_before_take",
+      "seed": 42,
+      "target_count": 8192
+    },
+    "validation": "first_512_validation_pairs",
+    "clean_calibration_rows": 320,
+    "original_final_guard_rows": 320,
+    "test_reserve_rows": 5593,
+    "head_audit_range": [
+      0,
+      40
+    ],
+    "alpha_dev_range": [
+      40,
+      80
+    ],
+    "reserve_range": [
+      80,
+      320
+    ],
+    "test_first_rows": 512,
+    "test_source": "original_final_guard_then_reserve"
+  },
+  "role_counts": {
+    "selector": 300,
+    "training": 8192,
+    "validation": 512,
+    "head_audit": 40,
+    "alpha_dev": 40,
+    "reserve": 240,
+    "test": 512
+  },
+  "overlap_policy": {
+    "allow": [
+      [
+        "selector",
+        "training"
+      ]
+    ]
+  },
+  "manifest_type": "data_freeze",
+  "status": "frozen",
+  "role_artifacts": {
+    "selector": {
+      "relative_path": "roles/selector.jsonl",
+      "size_bytes": 2008141,
+      "rows": 300
+    },
+    "training": {
+      "relative_path": "roles/training.jsonl",
+      "size_bytes": 53478421,
+      "rows": 8192
+    },
+    "validation": {
+      "relative_path": "roles/validation.jsonl",
+      "size_bytes": 3240396,
+      "rows": 512
+    },
+    "head_audit": {
+      "relative_path": "roles/head_audit.jsonl",
+      "size_bytes": 185316,
+      "rows": 40
+    },
+    "alpha_dev": {
+      "relative_path": "roles/alpha_dev.jsonl",
+      "size_bytes": 197976,
+      "rows": 40
+    },
+    "reserve": {
+      "relative_path": "roles/reserve.jsonl",
+      "size_bytes": 1174002,
+      "rows": 240
+    },
+    "test": {
+      "relative_path": "roles/test.jsonl",
+      "size_bytes": 2443286,
+      "rows": 512
+    }
+  },
+  "role_purposes": {
+    "alpha_dev": "calibration",
+    "head_audit": "calibration",
+    "reserve": "reserve",
+    "selector": "selection",
+    "test": "final_test",
+    "training": "training",
+    "validation": "training_validation"
+  }
+}

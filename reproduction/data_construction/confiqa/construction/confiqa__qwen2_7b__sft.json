@@ -1,0 +1,506 @@
+{
+  "dataset": "confiqa",
+  "role_mode": "named_roles",
+  "composition": {
+    "mode": "joint_after_independent_site_materialization",
+    "subset_order": [
+      "qa",
+      "mr",
+      "mc"
+    ]
+  },
+  "sources": {
+    "confiqa_qa": {
+      "source": {
+        "format": "json",
+        "source_id": "confiqa_context_dpo_repo"
+      },
+      "validated_rows": 6000
+    },
+    "confiqa_mr": {
+      "source": {
+        "format": "json",
+        "source_id": "confiqa_context_dpo_repo"
+      },
+      "validated_rows": 6000
+    },
+    "confiqa_mc": {
+      "source": {
+        "format": "json",
+        "source_id": "confiqa_context_dpo_repo"
+      },
+      "validated_rows": 6000
+    }
+  },
+  "prompt_registration": {
+    "registry_path": "configs/prompts/prompt_registry_20260831_v1.json",
+    "prompt_id": "confiqa.official_rag.context_dpo_v1",
+    "exact_template": "{context}\\nQ: {question}\\nA: "
+  },
+  "construction_trace": {
+    "by_subset": {
+      "qa": {
+        "selector": {
+          "source_start": 0,
+          "target_admitted": 100,
+          "source_stop_exclusive": 100,
+          "rejections": [],
+          "train_rule": "prepared_admission_index_mod_5_nonzero",
+          "validation_rule": "prepared_admission_index_mod_5_zero"
+        },
+        "alpha_dev": {
+          "source_start": 315,
+          "target_admitted": 40,
+          "source_stop_exclusive": 355,
+          "rejections": [],
+          "refill": true
+        },
+        "test": {
+          "source_start": 1500,
+          "target_admitted": 683,
+          "source_stop_exclusive": 2183,
+          "rejections": []
+        }
+      },
+      "mr": {
+        "selector": {
+          "source_start": 0,
+          "target_admitted": 100,
+          "source_stop_exclusive": 104,
+          "rejections": [
+            {
+              "source_index": 4,
+              "sample_id": "confiqa_context_dpo_repo-000004",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 59,
+              "sample_id": "confiqa_context_dpo_repo-000059",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 72,
+              "sample_id": "confiqa_context_dpo_repo-000072",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 101,
+              "sample_id": "confiqa_context_dpo_repo-000101",
+              "reason": "identical_normalized_competition_endpoints"
+            }
+          ],
+          "train_rule": "prepared_admission_index_mod_5_nonzero",
+          "validation_rule": "prepared_admission_index_mod_5_zero"
+        },
+        "alpha_dev": {
+          "source_start": 325,
+          "target_admitted": 40,
+          "source_stop_exclusive": 366,
+          "rejections": [
+            {
+              "source_index": 344,
+              "sample_id": "confiqa_context_dpo_repo-000344",
+              "reason": "identical_normalized_competition_endpoints"
+            }
+          ],
+          "refill": true
+        },
+        "test": {
+          "source_start": 1500,
+          "target_admitted": 683,
+          "source_stop_exclusive": 2206,
+          "rejections": [
+            {
+              "source_index": 1524,
+              "sample_id": "confiqa_context_dpo_repo-001524",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1580,
+              "sample_id": "confiqa_context_dpo_repo-001580",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1637,
+              "sample_id": "confiqa_context_dpo_repo-001637",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1659,
+              "sample_id": "confiqa_context_dpo_repo-001659",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1692,
+              "sample_id": "confiqa_context_dpo_repo-001692",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1738,
+              "sample_id": "confiqa_context_dpo_repo-001738",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1741,
+              "sample_id": "confiqa_context_dpo_repo-001741",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1743,
+              "sample_id": "confiqa_context_dpo_repo-001743",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1760,
+              "sample_id": "confiqa_context_dpo_repo-001760",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1772,
+              "sample_id": "confiqa_context_dpo_repo-001772",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1780,
+              "sample_id": "confiqa_context_dpo_repo-001780",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1786,
+              "sample_id": "confiqa_context_dpo_repo-001786",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1858,
+              "sample_id": "confiqa_context_dpo_repo-001858",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1868,
+              "sample_id": "confiqa_context_dpo_repo-001868",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1888,
+              "sample_id": "confiqa_context_dpo_repo-001888",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1918,
+              "sample_id": "confiqa_context_dpo_repo-001918",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1963,
+              "sample_id": "confiqa_context_dpo_repo-001963",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2014,
+              "sample_id": "confiqa_context_dpo_repo-002014",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2025,
+              "sample_id": "confiqa_context_dpo_repo-002025",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2066,
+              "sample_id": "confiqa_context_dpo_repo-002066",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2074,
+              "sample_id": "confiqa_context_dpo_repo-002074",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2091,
+              "sample_id": "confiqa_context_dpo_repo-002091",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2131,
+              "sample_id": "confiqa_context_dpo_repo-002131",
+              "reason": "identical_normalized_competition_endpoints"
+            }
+          ]
+        }
+      },
+      "mc": {
+        "selector": {
+          "source_start": 0,
+          "target_admitted": 100,
+          "source_stop_exclusive": 108,
+          "rejections": [
+            {
+              "source_index": 3,
+              "sample_id": "confiqa_context_dpo_repo-000003",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 19,
+              "sample_id": "confiqa_context_dpo_repo-000019",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 20,
+              "sample_id": "confiqa_context_dpo_repo-000020",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 43,
+              "sample_id": "confiqa_context_dpo_repo-000043",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 56,
+              "sample_id": "confiqa_context_dpo_repo-000056",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 59,
+              "sample_id": "confiqa_context_dpo_repo-000059",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 70,
+              "sample_id": "confiqa_context_dpo_repo-000070",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 74,
+              "sample_id": "confiqa_context_dpo_repo-000074",
+              "reason": "identical_normalized_competition_endpoints"
+            }
+          ],
+          "train_rule": "prepared_admission_index_mod_5_nonzero",
+          "validation_rule": "prepared_admission_index_mod_5_zero"
+        },
+        "alpha_dev": {
+          "source_start": 327,
+          "target_admitted": 40,
+          "source_stop_exclusive": 367,
+          "rejections": [],
+          "refill": true
+        },
+        "test": {
+          "source_start": 1500,
+          "target_admitted": 682,
+          "source_stop_exclusive": 2208,
+          "rejections": [
+            {
+              "source_index": 1530,
+              "sample_id": "confiqa_context_dpo_repo-001530",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1532,
+              "sample_id": "confiqa_context_dpo_repo-001532",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1538,
+              "sample_id": "confiqa_context_dpo_repo-001538",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1594,
+              "sample_id": "confiqa_context_dpo_repo-001594",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1637,
+              "sample_id": "confiqa_context_dpo_repo-001637",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1649,
+              "sample_id": "confiqa_context_dpo_repo-001649",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1759,
+              "sample_id": "confiqa_context_dpo_repo-001759",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1798,
+              "sample_id": "confiqa_context_dpo_repo-001798",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1837,
+              "sample_id": "confiqa_context_dpo_repo-001837",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1852,
+              "sample_id": "confiqa_context_dpo_repo-001852",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1857,
+              "sample_id": "confiqa_context_dpo_repo-001857",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1867,
+              "sample_id": "confiqa_context_dpo_repo-001867",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1896,
+              "sample_id": "confiqa_context_dpo_repo-001896",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1959,
+              "sample_id": "confiqa_context_dpo_repo-001959",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1989,
+              "sample_id": "confiqa_context_dpo_repo-001989",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1998,
+              "sample_id": "confiqa_context_dpo_repo-001998",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 1999,
+              "sample_id": "confiqa_context_dpo_repo-001999",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2020,
+              "sample_id": "confiqa_context_dpo_repo-002020",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2030,
+              "sample_id": "confiqa_context_dpo_repo-002030",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2056,
+              "sample_id": "confiqa_context_dpo_repo-002056",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2100,
+              "sample_id": "confiqa_context_dpo_repo-002100",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2103,
+              "sample_id": "confiqa_context_dpo_repo-002103",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2104,
+              "sample_id": "confiqa_context_dpo_repo-002104",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2166,
+              "sample_id": "confiqa_context_dpo_repo-002166",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2195,
+              "sample_id": "confiqa_context_dpo_repo-002195",
+              "reason": "identical_normalized_competition_endpoints"
+            },
+            {
+              "source_index": 2202,
+              "sample_id": "confiqa_context_dpo_repo-002202",
+              "reason": "identical_normalized_competition_endpoints"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "role_counts": {
+    "selector": 300,
+    "training": 240,
+    "validation": 60,
+    "alpha_dev": 120,
+    "test": 2048
+  },
+  "role_counts_by_subset": {
+    "qa": {
+      "selector": 100,
+      "training": 80,
+      "validation": 20,
+      "alpha_dev": 40,
+      "test": 683
+    },
+    "mr": {
+      "selector": 100,
+      "training": 80,
+      "validation": 20,
+      "alpha_dev": 40,
+      "test": 683
+    },
+    "mc": {
+      "selector": 100,
+      "training": 80,
+      "validation": 20,
+      "alpha_dev": 40,
+      "test": 682
+    }
+  },
+  "overlap_policy": {
+    "allow": [
+      [
+        "selector",
+        "training"
+      ],
+      [
+        "selector",
+        "validation"
+      ]
+    ]
+  },
+  "manifest_type": "data_freeze",
+  "status": "frozen",
+  "role_artifacts": {
+    "selector": {
+      "relative_path": "roles/selector.jsonl",
+      "size_bytes": 1891898,
+      "rows": 300
+    },
+    "training": {
+      "relative_path": "roles/training.jsonl",
+      "size_bytes": 1490422,
+      "rows": 240
+    },
+    "validation": {
+      "relative_path": "roles/validation.jsonl",
+      "size_bytes": 401476,
+      "rows": 60
+    },
+    "alpha_dev": {
+      "relative_path": "roles/alpha_dev.jsonl",
+      "size_bytes": 741000,
+      "rows": 120
+    },
+    "test": {
+      "relative_path": "roles/test.jsonl",
+      "size_bytes": 14028450,
+      "rows": 2048
+    }
+  },
+  "role_purposes": {
+    "alpha_dev": "calibration",
+    "selector": "selection",
+    "test": "final_test",
+    "training": "training",
+    "validation": "training_validation"
+  }
+}

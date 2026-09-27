@@ -1,0 +1,209 @@
+{
+  "imports": [
+    {
+      "kind": "environment",
+      "cell": "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_nontransfer_sv_all",
+      "record": "reproduction/environments/performance__confiqa__llama3_8b__dpo_cast_nontransfer_sv_all.json",
+      "basis": "existing recovery record names this current cell; core versions retained as recorded"
+    },
+    {
+      "kind": "environment",
+      "cell": "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_nontransfer_sv_prefill",
+      "record": "reproduction/environments/performance__confiqa__llama3_8b__dpo_cast_nontransfer_sv_prefill.json",
+      "basis": "existing recovery record names this current cell; core versions retained as recorded"
+    },
+    {
+      "kind": "environment",
+      "cell": "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_transfer_sv_all",
+      "record": "reproduction/environments/performance__confiqa__llama3_8b__dpo_cast_transfer_sv_all.json",
+      "basis": "existing recovery record names this current cell; core versions retained as recorded"
+    },
+    {
+      "kind": "environment",
+      "cell": "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_transfer_sv_prefill",
+      "record": "reproduction/environments/performance__confiqa__llama3_8b__dpo_cast_transfer_sv_prefill.json",
+      "basis": "existing recovery record names this current cell; core versions retained as recorded"
+    },
+    {
+      "kind": "environment",
+      "cell_id": "performance__confiqa__qwen2_7b__dpo_cast_nontransfer_sv_all",
+      "status": "not_imported_no_current_cell"
+    },
+    {
+      "kind": "environment",
+      "cell": "performance/imdb/main/performance__imdb__gpt2_large__dpo_cast_nontransfer_sv_all",
+      "record": "reproduction/environments/performance__imdb__gpt2_large__dpo_cast_nontransfer_sv_all.json",
+      "basis": "existing recovery record names this current cell; core versions retained as recorded"
+    },
+    {
+      "kind": "environment",
+      "cell": "performance/extensions/tldr_dpo_cast/performance__tldr__gptj_6b__dpo_cast_nontransfer_reft_all",
+      "record": "reproduction/environments/performance__tldr__gptj_6b__dpo_cast_nontransfer_reft_all.json",
+      "basis": "existing recovery record names this current cell; core versions retained as recorded"
+    },
+    {
+      "kind": "environment",
+      "cell": "performance/extensions/tldr_dpo_cast/performance__tldr__gptj_6b__dpo_cast_transfer_reft_all",
+      "record": "reproduction/environments/performance__tldr__gptj_6b__dpo_cast_transfer_reft_all.json",
+      "basis": "existing recovery record names this current cell; core versions retained as recorded"
+    },
+    {
+      "kind": "environment",
+      "cell": "performance/extensions/tldr_dpo_cast/performance__tldr__gptj_6b__dpo_cast_transfer_reft_prefill",
+      "record": "reproduction/environments/performance__tldr__gptj_6b__dpo_cast_transfer_reft_prefill.json",
+      "basis": "existing recovery record names this current cell; core versions retained as recorded"
+    },
+    {
+      "kind": "environment",
+      "cell": "performance/extensions/tldr_dpo_cast/performance__tldr__lion_llama3_8b__dpo_cast_nontransfer_reft_all",
+      "record": "reproduction/environments/performance__tldr__lion_llama3_8b__dpo_cast_nontransfer_reft_all.json",
+      "basis": "existing recovery record names this current cell; core versions retained as recorded"
+    },
+    {
+      "kind": "environment",
+      "cell": "performance/extensions/tldr_dpo_cast/performance__tldr__lion_llama3_8b__dpo_cast_transfer_reft_all",
+      "record": "reproduction/environments/performance__tldr__lion_llama3_8b__dpo_cast_transfer_reft_all.json",
+      "basis": "existing recovery record names this current cell; core versions retained as recorded"
+    },
+    {
+      "kind": "environment",
+      "cell": "performance/extensions/tldr_dpo_cast/performance__tldr__lion_llama3_8b__dpo_cast_transfer_reft_prefill",
+      "record": "reproduction/environments/performance__tldr__lion_llama3_8b__dpo_cast_transfer_reft_prefill.json",
+      "basis": "existing recovery record names this current cell; core versions retained as recorded"
+    },
+    {
+      "kind": "environment",
+      "cell": "performance/imdb/external_bipo/performance__imdb__gpt2_large__bipo_native",
+      "record": "reproduction/environments/imdb_bipo_controller.json",
+      "basis": "completed formal job identified by the frozen final controller-cost record"
+    },
+    {
+      "kind": "environment",
+      "cell": "performance/imdb/external_bipo/performance__imdb__gpt2_large__bipo_native",
+      "record": "reproduction/environments/imdb_bipo_test.json",
+      "basis": "completed formal job identified by the frozen final controller-cost record"
+    },
+    {
+      "kind": "environment",
+      "cell": "performance/imdb/external_loreft/performance__imdb__gpt2_large__loreft_native",
+      "record": "reproduction/environments/imdb_loreft_controller.json",
+      "basis": "completed formal job identified by the frozen final controller-cost record"
+    },
+    {
+      "kind": "environment",
+      "cell": "performance/imdb/external_loreft/performance__imdb__gpt2_large__loreft_native",
+      "record": "reproduction/environments/imdb_loreft_test.json",
+      "basis": "completed formal job identified by the frozen final controller-cost record"
+    },
+    {
+      "kind": "data_construction",
+      "record": "reproduction/data_construction/confiqa/configs/confiqa__llama3_8b__dpo.json",
+      "cells": [
+        "performance/confiqa/llama3_8b/bipo_native",
+        "performance/confiqa/llama3_8b/dpo",
+        "performance/confiqa/llama3_8b/loreft_native",
+        "performance/confiqa/llama3_8b/sft",
+        "performance/confiqa/llama3_8b/sft_cast_sv_all",
+        "performance/confiqa/llama3_8b/sft_cast_sv_prefill",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__casthead_neg",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__casthead_pos",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_nontransfer_reft_all",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_nontransfer_reft_prefill",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_nontransfer_sv_all",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_nontransfer_sv_prefill",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_transfer_reft_all",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_transfer_reft_prefill",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_transfer_sv_all",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_transfer_sv_prefill",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__sft_cast_reft_all",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__sft_cast_reft_prefill"
+      ],
+      "basis": "complete data specification equality after removing storage paths"
+    },
+    {
+      "kind": "data_construction",
+      "record": "reproduction/data_construction/confiqa/configs/confiqa__llama3_8b__sft.json",
+      "cells": [
+        "performance/confiqa/llama3_8b/bipo_native",
+        "performance/confiqa/llama3_8b/dpo",
+        "performance/confiqa/llama3_8b/loreft_native",
+        "performance/confiqa/llama3_8b/sft",
+        "performance/confiqa/llama3_8b/sft_cast_sv_all",
+        "performance/confiqa/llama3_8b/sft_cast_sv_prefill",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__casthead_neg",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__casthead_pos",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_nontransfer_reft_all",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_nontransfer_reft_prefill",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_nontransfer_sv_all",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_nontransfer_sv_prefill",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_transfer_reft_all",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_transfer_reft_prefill",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_transfer_sv_all",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__dpo_cast_transfer_sv_prefill",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__sft_cast_reft_all",
+        "performance/extensions/confiqa_llama/performance__confiqa__llama3_8b__sft_cast_reft_prefill"
+      ],
+      "basis": "complete data specification equality after removing storage paths"
+    },
+    {
+      "kind": "data_construction",
+      "record": "reproduction/data_construction/confiqa/configs/confiqa__qwen2_7b__dpo.json",
+      "cells": [
+        "performance/confiqa/qwen2_7b/bipo_native",
+        "performance/confiqa/qwen2_7b/loreft_native",
+        "performance/confiqa/qwen2_7b/sft_cast_sv_all",
+        "performance/confiqa/qwen2_7b/sft_cast_sv_prefill",
+        "performance/extensions/confiqa_qwen_transfer/performance__confiqa__qwen2_7b__dpo_cast_transfer_sv_all",
+        "performance/extensions/confiqa_qwen_transfer/performance__confiqa__qwen2_7b__dpo_cast_transfer_sv_prefill"
+      ],
+      "basis": "complete data specification equality after removing storage paths"
+    },
+    {
+      "kind": "data_construction",
+      "record": "reproduction/data_construction/confiqa/configs/confiqa__qwen2_7b__sft.json",
+      "cells": [
+        "performance/confiqa/qwen2_7b/bipo_native",
+        "performance/confiqa/qwen2_7b/loreft_native",
+        "performance/confiqa/qwen2_7b/sft_cast_sv_all",
+        "performance/confiqa/qwen2_7b/sft_cast_sv_prefill",
+        "performance/extensions/confiqa_qwen_transfer/performance__confiqa__qwen2_7b__dpo_cast_transfer_sv_all",
+        "performance/extensions/confiqa_qwen_transfer/performance__confiqa__qwen2_7b__dpo_cast_transfer_sv_prefill"
+      ],
+      "basis": "complete data specification equality after removing storage paths"
+    },
+    {
+      "kind": "data_construction",
+      "record": "reproduction/data_construction/tldr_test512/configs/tldr__gptj_6b__dpo_test512.json",
+      "cells": [
+        "performance/extensions/tldr_dpo_cast/performance__tldr__gptj_6b__dpo_cast_nontransfer_reft_all",
+        "performance/extensions/tldr_dpo_cast/performance__tldr__gptj_6b__dpo_cast_nontransfer_reft_prefill",
+        "performance/extensions/tldr_dpo_cast/performance__tldr__gptj_6b__dpo_cast_transfer_reft_all",
+        "performance/extensions/tldr_dpo_cast/performance__tldr__gptj_6b__dpo_cast_transfer_reft_prefill",
+        "performance/tldr/gptj_6b/bipo_native",
+        "performance/tldr/gptj_6b/dpo",
+        "performance/tldr/gptj_6b/loreft_native",
+        "performance/tldr/gptj_6b/sft",
+        "performance/tldr/gptj_6b/sft_cast_reft_all",
+        "performance/tldr/gptj_6b/sft_cast_reft_prefill"
+      ],
+      "basis": "complete data specification equality after removing storage paths"
+    },
+    {
+      "kind": "data_construction",
+      "record": "reproduction/data_construction/tldr_test512/configs/tldr__lion_llama3_8b__dpo_test512.json",
+      "cells": [
+        "performance/extensions/tldr_dpo_cast/performance__tldr__lion_llama3_8b__dpo_cast_nontransfer_reft_all",
+        "performance/extensions/tldr_dpo_cast/performance__tldr__lion_llama3_8b__dpo_cast_nontransfer_reft_prefill",
+        "performance/extensions/tldr_dpo_cast/performance__tldr__lion_llama3_8b__dpo_cast_transfer_reft_all",
+        "performance/extensions/tldr_dpo_cast/performance__tldr__lion_llama3_8b__dpo_cast_transfer_reft_prefill",
+        "performance/tldr/lion_llama3_8b/bipo_native",
+        "performance/tldr/lion_llama3_8b/dpo",
+        "performance/tldr/lion_llama3_8b/loreft_native",
+        "performance/tldr/lion_llama3_8b/sft",
+        "performance/tldr/lion_llama3_8b/sft_cast_reft_all",
+        "performance/tldr/lion_llama3_8b/sft_cast_reft_prefill"
+      ],
+      "basis": "complete data specification equality after removing storage paths"
+    }
+  ]
+}

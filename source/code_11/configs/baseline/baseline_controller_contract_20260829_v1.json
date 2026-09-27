@@ -1,0 +1,92 @@
+{
+  "contract_id": "baseline_controller_contract_20260829_v1",
+  "status": "implementation_interface_locked_no_gpu_authorization",
+  "baseline": {
+    "method": "direct_policy | cast | rcm_zero | rcm_patch | iti | random",
+    "parameters": {
+      "model": {
+        "train": {"checkpoint": "required_for_cast", "revision": "required_for_cast"},
+        "inference": {"checkpoint": "required", "revision": "required"}
+      },
+      "transfer": {
+        "mode": "none | controller_transfer | checkpoint_transfer",
+        "compatibility": {
+          "component_mapping": "identity_by_layer_and_head",
+          "architecture_match": true
+        }
+      },
+      "control_objective": {
+        "required_for": ["cast", "rcm_zero", "rcm_patch"],
+        "shared_advantage": {
+          "metric": "required scorer identifier",
+          "target": "required target label",
+          "non_target": "required non-target label",
+          "aggregation": "mean",
+          "same_input_and_decode": true
+        },
+        "derived_families": {
+          "cast": {
+            "family": "relative_advantage",
+            "reference_policy": "frozen_base",
+            "controlled_policy": "base_plus_external_residual",
+            "surrogate": "dpo_relative_log_odds",
+            "base_frozen": true,
+            "residual_operation": "add_external_delta_at_registered_write"
+          },
+          "rcm_zero": {
+            "family": "state_contrast",
+            "variant": "zero",
+            "contrast": "zero_missing -> native_present; one component; downstream recomputed"
+          },
+          "rcm_patch": {
+            "family": "state_contrast",
+            "variant": "patch",
+            "contrast": "reference -> target_prototype; one component; downstream recomputed"
+          }
+        }
+      },
+      "data": {
+        "training_manifest": {"path": "required_for_cast"},
+        "selector_manifest": {"path": "required_for_selectors_or_optional_for_cast"},
+        "inference_manifest": {"path": "required_for_cast"}
+      },
+      "controller": {
+        "family": "sv | reft",
+        "training_timings": [{"name": "protocol_registered_training_timing", "hook_parameters": {}}],
+        "inference_timings": [{"name": "protocol_registered_inference_timing", "hook_parameters": {}}],
+        "position_manifest": {"path": "required_for_cast"}
+      },
+      "position_search": {
+        "required_for": ["rcm_zero", "rcm_patch", "iti", "random"],
+        "values": "fully supplied by experiment protocol"
+      },
+      "training": "explicit object required for cast",
+      "inference": "explicit object required for cast",
+      "hyperparameters": "explicit object required for every method"
+    }
+  },
+  "position_control": {
+    "source": {
+      "kind": "explicit | selector_manifest | audit_manifest | native_manifest",
+      "path": "required for manifest source",
+      "positions": "required for explicit source"
+    },
+    "component_field": "required",
+    "group_field": "required for signed_banks or task_banks",
+    "component_type": "required",
+    "expected_count": "required",
+    "distinct_global": "required_boolean",
+    "composition": {
+      "mode": "unsigned | signed_banks | task_banks | native_tuple | joint",
+      "quotas": "required only for signed_banks or task_banks"
+    }
+  },
+  "data_controller": {
+    "location": "data/<dataset>/controller.py",
+    "datasets": ["confiqa", "imdb", "tldr", "tulu"],
+    "split_roles": ["train", "validation", "alpha_dev", "test"],
+    "mixing_modes": ["single", "concatenate", "round_robin", "registered_shuffle"],
+    "shuffle_algorithm": "python_random_v1 when registered_shuffle is selected",
+    "no_hidden_defaults": true
+  }
+}

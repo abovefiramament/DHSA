@@ -1,0 +1,585 @@
+{
+  "alpha_contract": {
+    "confiqa": {
+      "aggregation": "joint_over_qa_mr_mc",
+      "direction": "maximize",
+      "grid": [
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        1.0
+      ],
+      "near_best_absolute_tolerance": 0.0,
+      "primary_metric": "logic_score",
+      "selection_role": "joint_alpha_dev_120",
+      "test_policy": "evaluate_once_at_frozen_alpha",
+      "tie_break": "smallest_alpha"
+    },
+    "imdb": {
+      "grid": [
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        1.0
+      ],
+      "selection_role": null,
+      "test_policy": "report_full_reward_kl_curve_without_selecting_one_alpha"
+    },
+    "independent_role_alpha_forbidden": true,
+    "scope": "all CAST-SV and CAST-ReFT rows including transfer and non-transfer",
+    "signed_banks_share_one_alpha": true,
+    "tldr": {
+      "direction": "maximize",
+      "grid": [
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7
+      ],
+      "near_best_absolute_tolerance": 0.003,
+      "primary_metric": "balanced_win_rate_against_human_summary",
+      "selection_role": "alpha_dev_40_disjoint_from_head_audit",
+      "test_policy": "evaluate_once_at_frozen_alpha",
+      "tie_break": "smallest_alpha"
+    }
+  },
+  "baseline_rows": [
+    {
+      "datasets": [
+        "confiqa",
+        "imdb",
+        "tldr"
+      ],
+      "id": "sft",
+      "inference_base": "sft",
+      "kind": "direct_policy"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb",
+        "tldr"
+      ],
+      "id": "dpo",
+      "inference_base": "dpo",
+      "kind": "direct_policy"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb"
+      ],
+      "family": "sv",
+      "id": "sft_cast_sv_all",
+      "inference_base": "sft",
+      "kind": "cast",
+      "position_side": "signed",
+      "timing": "all",
+      "train_base": "sft",
+      "transfer": "none"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb"
+      ],
+      "family": "sv",
+      "id": "sft_cast_sv_prefill",
+      "inference_base": "sft",
+      "kind": "cast",
+      "position_side": "signed",
+      "timing": "prefill",
+      "train_base": "sft",
+      "transfer": "none"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb",
+        "tldr"
+      ],
+      "family": "reft",
+      "id": "sft_cast_reft_all",
+      "inference_base": "sft",
+      "kind": "cast",
+      "position_side": "signed",
+      "timing": "all",
+      "train_base": "sft",
+      "transfer": "none"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb",
+        "tldr"
+      ],
+      "family": "reft",
+      "id": "sft_cast_reft_prefill",
+      "inference_base": "sft",
+      "kind": "cast",
+      "position_side": "signed",
+      "timing": "prefill",
+      "train_base": "sft",
+      "transfer": "none"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb"
+      ],
+      "family": "sv",
+      "id": "dpo_cast_transfer_sv_all",
+      "inference_base": "dpo",
+      "kind": "cast",
+      "position_side": "signed",
+      "timing": "all",
+      "train_base": "sft",
+      "transfer": "controller_transfer"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb"
+      ],
+      "family": "sv",
+      "id": "dpo_cast_transfer_sv_prefill",
+      "inference_base": "dpo",
+      "kind": "cast",
+      "position_side": "signed",
+      "timing": "prefill",
+      "train_base": "sft",
+      "transfer": "controller_transfer"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb",
+        "tldr"
+      ],
+      "family": "reft",
+      "id": "dpo_cast_transfer_reft_all",
+      "inference_base": "dpo",
+      "kind": "cast",
+      "position_side": "signed",
+      "timing": "all",
+      "train_base": "sft",
+      "transfer": "controller_transfer"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb",
+        "tldr"
+      ],
+      "family": "reft",
+      "id": "dpo_cast_transfer_reft_prefill",
+      "inference_base": "dpo",
+      "kind": "cast",
+      "position_side": "signed",
+      "timing": "prefill",
+      "train_base": "sft",
+      "transfer": "controller_transfer"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb"
+      ],
+      "family": "sv",
+      "id": "dpo_cast_nontransfer_sv_all",
+      "inference_base": "dpo",
+      "kind": "cast",
+      "position_side": "signed",
+      "timing": "all",
+      "train_base": "dpo",
+      "transfer": "none"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb"
+      ],
+      "family": "sv",
+      "id": "dpo_cast_nontransfer_sv_prefill",
+      "inference_base": "dpo",
+      "kind": "cast",
+      "position_side": "signed",
+      "timing": "prefill",
+      "train_base": "dpo",
+      "transfer": "none"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb",
+        "tldr"
+      ],
+      "family": "reft",
+      "id": "dpo_cast_nontransfer_reft_all",
+      "inference_base": "dpo",
+      "kind": "cast",
+      "position_side": "signed",
+      "timing": "all",
+      "train_base": "dpo",
+      "transfer": "none"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb",
+        "tldr"
+      ],
+      "family": "reft",
+      "id": "dpo_cast_nontransfer_reft_prefill",
+      "inference_base": "dpo",
+      "kind": "cast",
+      "position_side": "signed",
+      "timing": "prefill",
+      "train_base": "dpo",
+      "transfer": "none"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb"
+      ],
+      "family": "sv",
+      "id": "casthead_pos",
+      "inference_base": "sft",
+      "kind": "cast",
+      "position_side": "target_support",
+      "timing": "all",
+      "train_base": "sft",
+      "transfer": "none"
+    },
+    {
+      "datasets": [
+        "confiqa",
+        "imdb"
+      ],
+      "family": "sv",
+      "id": "casthead_neg",
+      "inference_base": "sft",
+      "kind": "cast",
+      "position_side": "competitor_support",
+      "timing": "all",
+      "train_base": "sft",
+      "transfer": "none"
+    }
+  ],
+  "data_override": {
+    "legacy_performance_outputs_migrated": false,
+    "rule": "TLDR reuses Site roles; ConFiQA and IMDb use separately registered Performance mixture and model-native pair protocols without a head-audit role",
+    "supersedes_old_imdb_performance_512_128_budget": true
+  },
+  "dataset_protocols": {
+    "confiqa": {
+      "mode": "performance_specific",
+      "path": "configs/performance/confiqa_joint_data_protocol_20260831_v1.json",
+      "protocol_id": "performance_confiqa_joint_20260831_v1"
+    },
+    "imdb": {
+      "mode": "performance_specific",
+      "path": "configs/performance/imdb_data_protocol_20260901_v1.json",
+      "protocol_id": "performance_imdb_20260901_v1"
+    },
+    "tldr": {
+      "mode": "reuse_site_dataset_protocol",
+      "path": "configs/site/site_cell_matrix_20260829_v1.json",
+      "protocol_id": "site_reproduction_20260829_v1"
+    }
+  },
+  "external_baseline_search_contract": {
+    "artificial_search_budget_reduction_to_compensate_for_CAST": false,
+    "componentwise_human_audit": false,
+    "implementation_status": "deferred",
+    "methods": [
+      "bipo",
+      "loreft"
+    ],
+    "report_search_evaluations_and_training_cost": true,
+    "retain_native_intervention_geometry": true,
+    "select_best_validation_configuration": true,
+    "test_based_selection_forbidden": true,
+    "use_registered_selection_and_calibration_roles": true
+  },
+  "flow_id": "performance_cast_site_aligned_flow_v1",
+  "model_pairs": {
+    "confiqa": [
+      {
+        "dpo_model_registry_id": "context_faithful_llama3_8b_dpo",
+        "model_family": "llama3_8b",
+        "sft_model_registry_id": "llama3_8b_instruct",
+        "status": "ready"
+      },
+      {
+        "dpo_model_registry_id": "context_faithful_qwen2_7b_dpo",
+        "model_family": "qwen2_7b",
+        "sft_model_registry_id": "qwen2_7b_instruct",
+        "status": "ready"
+      }
+    ],
+    "imdb": [
+      {
+        "dpo_model_registry_id": "ma921_gpt2_large_dpo_imdb",
+        "model_family": "gpt2_large",
+        "sft_model_registry_id": "ma921_gpt2_large_sft_imdb",
+        "status": "ready"
+      }
+    ],
+    "tldr": [
+      {
+        "dpo_model_registry_id": "gptj_6b_tldr_dpo",
+        "model_family": "gptj_6b",
+        "sft_model_registry_id": "gptj_6b_tldr_sft",
+        "status": "ready"
+      },
+      {
+        "dpo_model_registry_id": "lion_llama3_8b_dpo",
+        "model_family": "lion_llama3_8b",
+        "sft_model_registry_id": "lion_llama3_8b_sft",
+        "status": "ready"
+      }
+    ]
+  },
+  "model_registry": "configs/models/model_registry_20260831_v1.json",
+  "operator_contract": {
+    "reft": "Site CAST-ReFT low-rank operator",
+    "reft_mode": "low_rank",
+    "reft_rank": 4,
+    "supersedes_old_performance_rank_schedule": true,
+    "sv": "one learned head-dimension vector per selected pre-o head"
+  },
+  "position_contract": {
+    "fixed_k8_without_post_training_audit": {
+      "competitor_support": 4,
+      "datasets": [
+        "confiqa",
+        "imdb"
+      ],
+      "families": [
+        "sv",
+        "reft"
+      ],
+      "human_audit": false,
+      "post_training_head_reselection": false,
+      "same_positions_across_sv_and_reft_within_one_checkpoint": true,
+      "selection": "take_the_first_four_registered_RCM_zero_heads_from_each_signed_pool",
+      "target_support": 4,
+      "total": 8,
+      "train_joint_k8_controller_directly": true
+    },
+    "freeze_before_controller_training": true,
+    "localization_model": "same checkpoint used to train the controller",
+    "method": "rcm_zero",
+    "one_sided_rows": "scan the same signed pool, retain exactly one registered sign, train one bank",
+    "standard": "Site signed target-support plus competitor-support quotas"
+  },
+  "position_imports": {
+    "performance__confiqa__llama3_8b__casthead_neg": {
+      "manifest": "registry://position_imports/confiqa_llama_sft_rcm_zero",
+      "mode": "rcm_scan",
+      "reuse_semantics": "exact_role"
+    },
+    "performance__confiqa__llama3_8b__casthead_pos": {
+      "manifest": "registry://position_imports/confiqa_llama_sft_rcm_zero",
+      "mode": "rcm_scan",
+      "reuse_semantics": "exact_role"
+    },
+    "performance__confiqa__llama3_8b__dpo_cast_nontransfer_reft_all": {
+      "manifest": "registry://position_imports/confiqa_llama_dpo_rcm_zero",
+      "mode": "rcm_scan",
+      "reuse_semantics": "exact_role"
+    },
+    "performance__confiqa__llama3_8b__dpo_cast_nontransfer_reft_prefill": {
+      "manifest": "registry://position_imports/confiqa_llama_dpo_rcm_zero",
+      "mode": "rcm_scan",
+      "reuse_semantics": "exact_role"
+    },
+    "performance__confiqa__llama3_8b__dpo_cast_nontransfer_sv_prefill": {
+      "manifest": "registry://position_imports/confiqa_llama_dpo_rcm_zero",
+      "mode": "rcm_scan",
+      "reuse_semantics": "exact_role"
+    },
+    "performance__confiqa__llama3_8b__dpo_cast_transfer_reft_all": {
+      "manifest": "registry://position_imports/confiqa_llama_sft_rcm_zero",
+      "mode": "rcm_scan",
+      "reuse_semantics": "exact_role"
+    },
+    "performance__confiqa__llama3_8b__dpo_cast_transfer_reft_prefill": {
+      "manifest": "registry://position_imports/confiqa_llama_sft_rcm_zero",
+      "mode": "rcm_scan",
+      "reuse_semantics": "exact_role"
+    },
+    "performance__confiqa__llama3_8b__dpo_cast_transfer_sv_all": {
+      "manifest": "registry://position_imports/confiqa_llama_sft_rcm_zero",
+      "mode": "rcm_scan",
+      "reuse_semantics": "exact_role"
+    },
+    "performance__confiqa__llama3_8b__dpo_cast_transfer_sv_prefill": {
+      "manifest": "registry://position_imports/confiqa_llama_sft_rcm_zero",
+      "mode": "rcm_scan",
+      "reuse_semantics": "exact_role"
+    },
+    "performance__confiqa__llama3_8b__sft_cast_reft_all": {
+      "manifest": "registry://position_imports/confiqa_llama_sft_rcm_zero",
+      "mode": "rcm_scan",
+      "reuse_semantics": "exact_role"
+    },
+    "performance__confiqa__llama3_8b__sft_cast_reft_prefill": {
+      "manifest": "registry://position_imports/confiqa_llama_sft_rcm_zero",
+      "mode": "rcm_scan",
+      "reuse_semantics": "exact_role"
+    },
+    "performance__confiqa__llama3_8b__sft_cast_sv_prefill": {
+      "manifest": "registry://position_imports/confiqa_llama_sft_rcm_zero",
+      "mode": "rcm_scan",
+      "reuse_semantics": "exact_role"
+    }
+  },
+  "protocol_id": "performance_non_tulu_site_aligned_20260831_v1",
+  "reft_audit_contract": {
+    "audit_unit": "one trained single-head payload applied alone",
+    "blinded": true,
+    "by_dataset": {
+      "tldr": {
+        "alpha_grid": [
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7
+        ],
+        "audit_rows": 40,
+        "human_evidence": [
+          "prompt",
+          "human_reference",
+          "generated_text"
+        ],
+        "numeric_evidence": [
+          "balanced_head_vs_human_reference_pairwise_win_rate",
+          "text_health"
+        ]
+      }
+    },
+    "candidate_pool": {
+      "competitor_support": 8,
+      "count": 16,
+      "freeze_before_audit": true,
+      "human_audit_may_expand_pool": false,
+      "target_support": 8
+    },
+    "decision_values": [
+      "keep_clean",
+      "keep_overshoot_recovered",
+      "keep_irreplaceable_value",
+      "drop_side_effect",
+      "drop_redundant"
+    ],
+    "final_count": 8,
+    "final_role_quota": null,
+    "finalization": {
+      "mode": "direct_tensor_union_of_retained_payloads",
+      "normalize": false,
+      "optimizer_steps": 0,
+      "rescale": false,
+      "retrain": false,
+      "role_rebalance": false
+    },
+    "report_final_role_composition": true,
+    "scope": "TLDR CAST-ReFT rows only; ConFiQA and IMDb use the fixed pre-training K8 contract",
+    "transfer": {
+      "audit_model": "controller_training_model",
+      "freeze_before_transfer": true,
+      "reaudit_or_reselect_on_inference_model": false
+    }
+  },
+  "schema_version": 1,
+  "scope": {
+    "datasets": [
+      "confiqa",
+      "imdb",
+      "tldr"
+    ],
+    "external_baselines_deferred": [
+      "bipo",
+      "loreft"
+    ],
+    "legacy_results_excluded": true,
+    "tulu_excluded": true
+  },
+  "site_data_authority": {
+    "path": "configs/site/site_cell_matrix_20260829_v1.json",
+    "protocol_id": "site_reproduction_20260829_v1",
+    "reuse": [
+      "network provenance",
+      "prompt registry",
+      "role construction",
+      "role isolation",
+      "RCM-zero scan and signed position policy",
+      "alpha grids",
+      "generation settings",
+      "evaluators"
+    ]
+  },
+  "status": "canonical_formal_matrix",
+  "timing_contract": {
+    "cross_timing_rows_excluded": [
+      "all_to_prefill",
+      "prefill_to_all"
+    ],
+    "formal_rows": [
+      {
+        "id": "all",
+        "inference": {
+          "name": "all",
+          "timing_id": "all_token_states"
+        },
+        "training": {
+          "name": "all",
+          "timing_id": "all_token_states"
+        }
+      },
+      {
+        "id": "prefill",
+        "inference": {
+          "name": "prefill",
+          "timing_id": "prefill_states"
+        },
+        "training": {
+          "name": "prefill",
+          "timing_id": "prefill_states"
+        }
+      }
+    ],
+    "implicit_default_forbidden": true,
+    "multiple_inference_timings_supported": true,
+    "multiple_training_timings_supported": true,
+    "prefill_definition": "prompt-final residual-write state during prefill; no decode-state write"
+  },
+  "transfer_contract": {
+    "component_mapping": "identity_by_layer_and_head",
+    "non_transfer": "localize and train CAST on DPO, apply it to the same DPO checkpoint",
+    "reaudit_after_transfer": false,
+    "relocate_after_training": false,
+    "require_equal_registered_architecture": true,
+    "retrain_on_inference_model": false,
+    "timing_rule": "matched training and inference timing",
+    "transfer": "train CAST on SFT, apply the resulting controller to DPO"
+  }
+}

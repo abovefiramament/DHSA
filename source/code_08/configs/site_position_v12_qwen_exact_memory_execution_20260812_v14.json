@@ -1,0 +1,163 @@
+{
+  "amendment_id": "site_position_v12_qwen_exact_memory_execution_20260812_v14",
+  "status": "locked_before_recovery_execution",
+  "supersedes": "site_position_v12_qwen_exact_memory_execution_20260811_v13",
+  "supersession_reason": "The container restart removed every formal V13 experiment artifact stored under /dev/shm. V14 adopts no lost experimental byte, retains the validated lossless memory implementation, and bind-mounts a persistent backend onto the unchanged Site V12 run-root path.",
+  "base_protocol_id": "site_position_full_fixed_protocol_20260719_v12",
+  "base_config": "configs/site_position_full_fixed_protocol_20260719_v12.json",
+  "base_config_sha256": "87c3b77316304b87f0aa0ade73be15a6da691c94625296214e9032aae406b45e",
+  "scientific_settings_changed": false,
+  "scope": {
+    "model_keys": [
+      "qwen25_14b"
+    ],
+    "job_ids": [
+      "imdb__sentiment__qwen25_14b__rcm_zero_signed__primary",
+      "imdb__sentiment__qwen25_14b__rcm_patch_signed__primary",
+      "imdb__sentiment__qwen25_14b__iti__primary",
+      "imdb__sentiment__qwen25_14b__random__seed_20260702",
+      "imdb__sentiment__qwen25_14b__random__seed_20260703",
+      "imdb__sentiment__qwen25_14b__random__seed_20260704"
+    ],
+    "stages": [
+      "actuator_training",
+      "heldout_generation",
+      "kl_evaluation"
+    ]
+  },
+  "cold_restart": {
+    "cause": "container_restart_removed_tmpfs_artifacts",
+    "previous_visible_root": "/dev/shm/screscomp_runs/site_position_full_20260719_v12",
+    "previous_v13_log": "runs/qwen_imdb_site_v12_v13_20260811.log",
+    "previous_v13_log_sha256": "d282babd55a51d7c1115362cefadf4ed356daa087ccb721b4b3c7423d97421c1",
+    "previous_logged_state": {
+      "rcm_zero": "logged_complete_but_formal_bytes_absent",
+      "rcm_patch": "logged_through_layer_candidate_31_of_48_but_formal_bytes_absent"
+    },
+    "reusable_experimental_artifacts": [],
+    "restart_from_empty_artifact_root": true,
+    "reconstruct_components_from_logs": false
+  },
+  "artifact_persistence": {
+    "mode": "persistent_backend_bind_mounted_to_locked_visible_root",
+    "locked_artifact_root": "/dev/shm/screscomp_runs/site_position_full_20260719_v12",
+    "persistent_backend_root": "LOCAL_HOME/RPEC/projects/screscomp/runs/site_position_full_20260719_v12_qwen_imdb_v14_persistent",
+    "locked_config_run_root_changed": false,
+    "bind_mount_required_before_execution": true,
+    "candidate_atomic_checkpoints": true,
+    "role_bank_manifests": true,
+    "generation_row_resume": true,
+    "kl_row_resume": true,
+    "complete_job_hash_inventory": true
+  },
+  "execution": {
+    "signed_role_process_isolation": true,
+    "role_manifest_required_before_merge": true,
+    "saved_tensor_storage": {
+      "mode": "cpu_offload_exact_selective",
+      "implementation": "torch.autograd.graph.saved_tensors_hooks",
+      "selection_rule": "retain tensors whose CUDA storage pointer belongs to a frozen base-model parameter; copy every other CUDA tensor saved for backward to CPU",
+      "pin_memory": false,
+      "lossless": true
+    },
+    "saved_tensor_layout_restore": {
+      "enabled": true,
+      "mode": "restore_all_changed_original_strides_exact",
+      "model_type": "qwen2",
+      "restore_trigger": "original_stride_differs_from_dense_cpu_roundtrip_stride",
+      "zero_stride_dimensions": "collapse_to_size_one_before_copy_then_reexpand",
+      "backing_storage_elements": "one_plus_sum_collapsed_size_minus_one_times_original_stride",
+      "storage_offset_policy": "normalize_to_zero_in_new_aligned_storage",
+      "negative_strides_allowed": false,
+      "logical_shape_changed": false,
+      "logical_values_changed": false,
+      "dtype_changed": false,
+      "stride_changed_from_original": false,
+      "attention_implementation_changed": false
+    },
+    "frozen_input_embedding_storage": {
+      "enabled": true,
+      "mode": "cpu_lookup_output_copy_exact",
+      "model_type": "qwen2",
+      "require_untied_word_embeddings": true,
+      "one_time_weight_residency_move": true,
+      "weight_streaming": false,
+      "storage_device": "cpu",
+      "lookup_input_ids_device": "cpu",
+      "lookup_output_device": "original_cuda",
+      "weight_dtype_changed": false,
+      "weight_values_changed": false,
+      "embedding_output_dtype_changed": false,
+      "embedding_output_values_changed": false
+    },
+    "kl_logit_storage": {
+      "enabled": true,
+      "mode": "sequential_reference_and_steered_exact_cpu_staging",
+      "stored_dtype_changed": false,
+      "stored_values_changed": false,
+      "registered_batch_size_changed": false,
+      "gpu_log_softmax_changed": false
+    },
+    "gpu_memory_monitor": {
+      "enabled": true,
+      "mode": "observe_only",
+      "interval_seconds": 2,
+      "artificial_memory_limit": null,
+      "terminate_process": false,
+      "changes_allocator": false
+    },
+    "forbidden_changes": {
+      "quantization": false,
+      "component_reselection": false,
+      "sample_change": false,
+      "batch_change": false,
+      "gradient_accumulation": false,
+      "objective_change": false,
+      "optimizer_change": false,
+      "step_change": false,
+      "sequence_truncation_change": false
+    }
+  },
+  "validated_execution_evidence": {
+    "input_embedding_validation": {
+      "path": "runs/qwen_imdb_exact_cpu_input_embedding_validation_20260811_v11.json",
+      "sha256": "f4e24ff1ee58cb6cb65bc9e734f31b91ccd6b8b271ef5d96d85ca2d378c709fa"
+    },
+    "generation_validation": {
+      "path": "runs/qwen_imdb_generation_cpu_embedding_validation_20260811_v12.json",
+      "sha256": "b8ae83e227108b33fff90c1b68fab1f8f4bddd69795129b7943962d46e9f0b4c"
+    },
+    "kl_validation": {
+      "path": "runs/qwen_imdb_kl_exact_staging_validation_20260811_v13.json",
+      "sha256": "19eed57711d1b88ad02f3765cf0dae0d956755840bf28d72fd290da2014fa8f2"
+    },
+    "generation_audit_rows": {
+      "path": "runs/qwen_imdb_generation_cpu_embedding_audit_20260811_v12.jsonl",
+      "sha256": "836cc86c3e1d873866326ed35b5c71c14fda60875b96f4536ee94ee3d99a29df"
+    },
+    "kl_audit_rows": {
+      "path": "runs/qwen_imdb_kl_exact_staging_audit_20260811_v13/kl_rows.jsonl",
+      "sha256": "8c68f27289e10afdd153278a64955884ef4e8fce9fda8da26654d71eff8a4786"
+    }
+  },
+  "authority_hashes": {
+    "configs/imdb_model_native_reward_ranked_pair_restoration_20260805_v1.json": "215c3a3d0fb0db1ec3c4d4c9a33e681aa40de8a888ea5289acfbfa63d7ec2121",
+    "configs/site_position_v12_qwen_exact_memory_execution_20260806_v3.json": "8cfae4ba7f3d4e86fe36c1bc860d68ca2c6b579e57e046b64df3fecf54b10a17",
+    "configs/site_position_v13_two_model_primary_scope_20260805_v1.json": "e090123706d57d368d32d34fc11b067cca81266c58bd51a1846de7451e395a64"
+  },
+  "source_hashes": {
+    "src/screscomp/site/protocol.py": "7248c3e26ab4d85d59cfb9d42e79ac337ac891584f198470fe9f6e0c67d3621f",
+    "src/screscomp/cli/site_prepare_inputs.py": "a89b3a52076f2bf3914202ceeda45b67a5300a33c6045160aae3606b8936df86",
+    "src/screscomp/cli/site_prepare_imdb_pairs.py": "e7bb00a20a1be72d7e8b48b4a6a6372209620b9fdf9f3fa3c64b52680fb70c47",
+    "src/screscomp/cli/prepare_imdb_sentiment_pairs.py": "5dc11934e28ac6c234c14d664d52c3c4e3ecc3d061ac92cf91bcc0d42611c8a0",
+    "src/screscomp/cli/site_select_heads.py": "a82393d571b3cb7632b36d27eb6dc3772b10d4add0111ba7ee53ddd739505766",
+    "src/screscomp/cli/site_select_imdb_rcm_staged.py": "8a049acd9bbe1d1ac8a6b15a65d3b4c629b75fea93c33e2fc92dab26cc0e1a94",
+    "src/screscomp/cli/site_train_actuator.py": "557938fd3049abf58cfe9ef017ab5cd2de991a042575c904561abd16d9b30abd",
+    "src/screscomp/cli/run_imdb_sentiment_actuator_generation.py": "9f9c5fd6d6ce98b8caaacea9fd58d75d718c67ec0b348c22e6918f568b3f8552",
+    "src/screscomp/cli/compute_imdb_generation_kl.py": "8834a8fb3435b637aafb981ab1e8ac3fd776d62717867b059b16833661fbc578",
+    "src/screscomp/cli/site_evaluate.py": "a9b1483cbc190deece13b35b4682f2bd34166ac7aada6c2c7eb2f06412e4f43c",
+    "scripts/paper/17_run_site_job.py": "e035e81a9a249fba60327c9493ea5dea35e8e5dd3a552c50e006f0e20f0af408",
+    "scripts/paper/29_prepare_site_position_full_protocol_v12.py": "ed2266f6d8eb6295fb3d426d11fcecd092fcb18cf674faee4527493f2210d014"
+  },
+  "recovery_adoptions": []
+}

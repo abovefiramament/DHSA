@@ -1,0 +1,1377 @@
+{
+  "schema_version": 3,
+  "protocol_id": "site_reproduction_20260829_v1",
+  "protocol_version": 1,
+  "flow_id": "site_cast_fixed_flow_v1",
+  "status": "canonical_formal_matrix",
+  "model_registry": "configs/models/model_registry_20260831_v1.json",
+  "baseline_family_contract": {
+    "families": [
+      "rcm",
+      "iti",
+      "random"
+    ],
+    "variants": {
+      "rcm": [
+        "rcm_zero",
+        "rcm_patch"
+      ],
+      "iti": [
+        "iti"
+      ],
+      "random": [
+        "seed_20260702",
+        "seed_20260703",
+        "seed_20260704"
+      ]
+    }
+  },
+  "slot_contract": {
+    "allowed_position_methods": [
+      "rcm_zero",
+      "rcm_patch",
+      "iti",
+      "random"
+    ],
+    "selector_to_position_method": {
+      "rcm_zero_signed": "rcm_zero",
+      "rcm_patch_signed": "rcm_patch",
+      "iti": "iti",
+      "random": "random"
+    },
+    "fixed": [
+      "cast_training_bank_audit_alpha_test_order",
+      "data_role_and_test_gate_contract",
+      "trajectory_and_evidence_contract"
+    ]
+  },
+  "presentation_scope": {
+    "datasets": {
+      "confiqa": [
+        "llama3_8b",
+        "qwen25_14b"
+      ],
+      "imdb": [
+        "ma921_gpt2_large_sft",
+        "qwen25_14b"
+      ],
+      "tldr": [
+        "gptj_6b",
+        "qwen25_14b"
+      ]
+    }
+  },
+  "protocol": {
+    "name": "Site position and CAST evaluation",
+    "target_direction": "single_target_direction",
+    "implementation_boundary": {
+      "new_framework_only": true,
+      "prior_protocol_code_forbidden": true,
+      "prior_runner_or_backend_forbidden": true,
+      "prior_frozen_data_or_result_import_forbidden": true,
+      "public_source_reconstruction_required": true,
+      "unregistered_backend_status": "pending_external_registration"
+    },
+    "intervention": {
+      "method": "cast",
+      "site_families": {
+        "sv": {
+          "operator": "signed_vector",
+          "rank": null
+        },
+        "reft": {
+          "operator": "low_rank_reft",
+          "rank": 4
+        }
+      },
+      "timing": {
+        "train": "registered_config",
+        "inference": "registered_config"
+      },
+      "shared_alpha": true,
+      "retrain_after_audit": false
+    },
+    "positions": {
+      "component_type": "pre_o_attention_head",
+      "component_id_pattern": "^L[0-9]+[.]attn[.]h[0-9]+$",
+      "tie_break": "ascending_layer_then_head",
+      "by_dataset": {
+        "confiqa": {
+          "candidate_count": 8,
+          "final_count": 8
+        },
+        "imdb": {
+          "candidate_count": 8,
+          "final_count": 8
+        },
+        "tldr": {
+          "candidate_count": 16,
+          "final_count": 8,
+          "finalization": "manual_audit_then_direct_payload_union_without_retraining"
+        }
+      },
+      "rcm": {
+        "state_timing": {
+          "timing_id": "continuation_decision_states",
+          "name": "generation_decision_states"
+        },
+        "bootstrap": {
+          "method": "paired_percentile_bootstrap",
+          "samples": 500,
+          "seed": 42,
+          "percentiles": [
+            2.5,
+            97.5
+          ]
+        },
+        "coarse_unit": "pre_o_attention_layer",
+        "coarse_parent_layers_per_role": 4,
+        "head_refinement": "all_heads_in_union_of_signed_parent_layers",
+        "role_rule": "sign_of_candidate_own_mean_paired_effect",
+        "ranking": {
+          "target_support": "ci95_low_descending",
+          "competitor_support": "negative_ci95_high_descending",
+          "ci_admission_gate": false,
+          "ci_crossing_policy": "retain_and_report"
+        },
+        "downstream_quota": {
+          "confiqa": {
+            "target_support": 4,
+            "competitor_support": 4
+          },
+          "imdb": {
+            "target_support": 4,
+            "competitor_support": 4
+          }
+        },
+        "tldr_candidate_quota": {
+          "target_support": 8,
+          "competitor_support": 8
+        },
+        "tldr_final_role_quota": null,
+        "zero": {
+          "operation": "zero_one_candidate_on_both_endpoint_trajectories",
+          "delta": "C_native_minus_C_zero"
+        },
+        "patch": {
+          "operation": "overwrite_one_candidate_on_both_endpoint_trajectories_with_target_prototype",
+          "delta": "C_patch_minus_C_native",
+          "alpha": 1.0,
+          "centering": "none",
+          "normalization": "none",
+          "prototype_aggregation": [
+            "mean_decision_states_within_sequence",
+            "mean_sequences_across_samples"
+          ],
+          "runtime_donor_stream": false
+        }
+      },
+      "iti": {
+        "family": "task_adapted_official_probe_selector",
+        "source_repository": "https://github.com/likenneth/honest_llama",
+        "source_revision": "2c6b2179be7b5aa8f0a171688cf9e01b812ca327",
+        "classifier": "sklearn.linear_model.LogisticRegression",
+        "activation_position": "final_nonpadding_token_of_complete_labeled_sequence",
+        "fold_policy": "grouped_twofold_train_A_eval_B_then_reverse",
+        "ranking": "mean_grouped_twofold_heldout_accuracy",
+        "hyperparameters": {
+          "C": 1.0,
+          "penalty": "l2",
+          "solver": "lbfgs",
+          "max_iter": 1000,
+          "tol": 0.0001,
+          "fit_intercept": true,
+          "class_weight": null,
+          "random_state": 42,
+          "feature_standardization": "none"
+        }
+      },
+      "random": {
+        "sampling": "uniform_without_replacement",
+        "layer_stratification": false,
+        "seeds": [
+          20260702,
+          20260703,
+          20260704
+        ],
+        "best_seed_selection": false
+      }
+    },
+    "data": {
+      "role_order": [
+        "selector",
+        "training",
+        "validation",
+        "head_audit",
+        "alpha_dev",
+        "reserve",
+        "test"
+      ],
+      "split_definition": "source_revision_order_filter_refill_count",
+      "provenance": {
+        "schema_version": 1,
+        "network_source_required": true,
+        "lineage_contract": [
+          "download_pinned_source",
+          "decode_and_normalize",
+          "filter_and_deduplicate",
+          "deterministic_order",
+          "assign_disjoint_roles",
+          "freeze_output_files"
+        ],
+        "freeze_outputs": {
+          "data_request": "data_request.local.json",
+          "dataset_manifest": "dataset_manifest.json",
+          "role_manifest_pattern": "roles/{role}.manifest.json",
+          "required_fields": [
+            "upstream_source_ids",
+            "operation_ids",
+            "source_files",
+            "output_files",
+            "role_assignment"
+          ]
+        },
+        "datasets": {
+          "confiqa": {
+            "adapter_id": "site_data_confiqa",
+            "sources": [
+              {
+                "id": "confiqa_context_dpo_repo",
+                "kind": "github_repository",
+                "uri": "https://github.com/byronBBL/Context-DPO/tree/557dadeeb9f47407890a5626128ca99907770b22/ConFiQA",
+                "revision": "557dadeeb9f47407890a5626128ca99907770b22",
+                "files": [
+                  {
+                    "path": "ConFiQA-QA.json",
+                    "uri": "https://raw.githubusercontent.com/byronBBL/Context-DPO/557dadeeb9f47407890a5626128ca99907770b22/ConFiQA/ConFiQA-QA.json"
+                  },
+                  {
+                    "path": "ConFiQA-MR.json",
+                    "uri": "https://raw.githubusercontent.com/byronBBL/Context-DPO/557dadeeb9f47407890a5626128ca99907770b22/ConFiQA/ConFiQA-MR.json"
+                  },
+                  {
+                    "path": "ConFiQA-MC.json",
+                    "uri": "https://raw.githubusercontent.com/byronBBL/Context-DPO/557dadeeb9f47407890a5626128ca99907770b22/ConFiQA/ConFiQA-MC.json"
+                  }
+                ]
+              }
+            ],
+            "pipeline": [
+              {
+                "id": "confiqa_json_decode_v1",
+                "version": 1,
+                "parameters": {
+                  "encoding": "utf-8",
+                  "row_identity": "source_row_index"
+                }
+              },
+              {
+                "id": "confiqa_role_projection_v1",
+                "version": 1,
+                "parameters": {
+                  "ordering": "official_source_order",
+                  "source_shuffle": false,
+                  "assignment": "ordered_nonoverlap_by_role_order"
+                }
+              },
+              {
+                "id": "confiqa_training_epoch_shuffle_v1",
+                "version": 1,
+                "parameters": {
+                  "rng": "CPython random.Random",
+                  "seed": 42,
+                  "scope": "training_batches"
+                }
+              }
+            ],
+            "ordering": {
+              "source": {
+                "enabled": false,
+                "algorithm": "preserve_official_source_order"
+              },
+              "training": {
+                "enabled": true,
+                "algorithm": "CPython_random_Random_shuffle",
+                "seed": 42
+              }
+            },
+            "role_mapping": {
+              "selector": {
+                "source_split": "registered_subset",
+                "assignment": "valid_group_refill_in_official_order",
+                "counts_ref": "protocol.data.construction_profiles.confiqa.roles.selector"
+              },
+              "training": {
+                "source_split": "selector_admitted_groups",
+                "assignment": "prepared_index_mod_5_nonzero",
+                "counts_ref": "protocol.data.construction_profiles.confiqa.roles.training"
+              },
+              "validation": {
+                "source_split": "selector_admitted_groups",
+                "assignment": "prepared_index_mod_5_zero",
+                "counts_ref": "protocol.data.construction_profiles.confiqa.roles.validation"
+              },
+              "alpha_dev": {
+                "source_split": "registered_subset",
+                "assignment": "fixed_nonrefilled_post_selector_window",
+                "counts_ref": "protocol.data.construction_profiles.confiqa.roles.alpha_dev"
+              },
+              "test": {
+                "source_split": "registered_subset",
+                "assignment": "heldout_2048_valid_refill_from_row_1500",
+                "counts_ref": "protocol.data.construction_profiles.confiqa.roles.test"
+              }
+            }
+          },
+          "imdb": {
+            "adapter_id": "site_data_imdb",
+            "sources": [
+              {
+                "id": "stanfordnlp_imdb_hf",
+                "kind": "huggingface_dataset",
+                "uri": "https://huggingface.co/datasets/stanfordnlp/imdb/tree/e6281661ce1c48d982bc483cf8a173c1bbeb5d31",
+                "revision": "e6281661ce1c48d982bc483cf8a173c1bbeb5d31",
+                "files": [
+                  {
+                    "path": "plain_text/train-00000-of-00001.parquet",
+                    "uri": "https://huggingface.co/datasets/stanfordnlp/imdb/resolve/e6281661ce1c48d982bc483cf8a173c1bbeb5d31/plain_text/train-00000-of-00001.parquet"
+                  },
+                  {
+                    "path": "plain_text/test-00000-of-00001.parquet",
+                    "uri": "https://huggingface.co/datasets/stanfordnlp/imdb/resolve/e6281661ce1c48d982bc483cf8a173c1bbeb5d31/plain_text/test-00000-of-00001.parquet"
+                  }
+                ]
+              }
+            ],
+            "pipeline": [
+              {
+                "id": "imdb_parquet_decode_v1",
+                "version": 1,
+                "parameters": {
+                  "row_identity": "source_row_index",
+                  "text_field": "text",
+                  "label_field": "label"
+                }
+              },
+              {
+                "id": "imdb_prefix_projection_v1",
+                "version": 1,
+                "parameters": {
+                  "prompt_rule": "raw_prefix_only",
+                  "source_window_limit": 25000,
+                  "derived_order_field": "source_order_position",
+                  "upstream_identity_field": "source_row_index"
+                }
+              },
+              {
+                "id": "imdb_deterministic_shuffle_v1",
+                "version": 1,
+                "parameters": {
+                  "rng": "CPython random.Random",
+                  "seed": 42,
+                  "scopes": [
+                    "one_shared_train_permutation_for_selector_and_pair_roles",
+                    "test"
+                  ]
+                }
+              }
+            ],
+            "ordering": {
+              "source": {
+                "enabled": true,
+                "algorithm": "CPython_random_Random_shuffle",
+                "seed": 42,
+                "source_window_limit": 25000
+              },
+              "training": {
+                "enabled": true,
+                "algorithm": "CPython_random_Random_shuffle",
+                "seed": 42
+              }
+            },
+            "role_mapping": {
+              "selector": {
+                "source_split": "train",
+                "assignment": "shared_train_permutation_rows_0_300_then_model_native_good_base_state_generation",
+                "counts_ref": "protocol.data.construction_profiles.imdb.roles.selector"
+              },
+              "training": {
+                "source_split": "train",
+                "assignment": "shared_train_permutation_rows_300_1836_then_first_1024_strict_positive_margin_pairs_no_refill",
+                "counts_ref": "protocol.data.construction_profiles.imdb.roles.training"
+              },
+              "validation": {
+                "source_split": "train",
+                "assignment": "shared_train_permutation_rows_1836_2220_then_first_256_strict_positive_margin_pairs_no_refill",
+                "counts_ref": "protocol.data.construction_profiles.imdb.roles.validation"
+              },
+              "test": {
+                "source_split": "test",
+                "assignment": "registered_shuffle_first_2048",
+                "counts_ref": "protocol.data.construction_profiles.imdb.roles.test"
+              }
+            }
+          },
+          "tldr": {
+            "adapter_id": "site_data_tldr",
+            "sources": [
+              {
+                "id": "openai_summarize_from_feedback_upstream",
+                "kind": "huggingface_dataset_script",
+                "uri": "https://huggingface.co/datasets/openai/summarize_from_feedback/tree/b8f7d168b6f4e95b2a92e84768bd6c955bed2f29",
+                "revision": "b8f7d168b6f4e95b2a92e84768bd6c955bed2f29",
+                "files": [
+                  {
+                    "path": "summarize_from_feedback.py",
+                    "uri": "https://huggingface.co/datasets/openai/summarize_from_feedback/resolve/b8f7d168b6f4e95b2a92e84768bd6c955bed2f29/summarize_from_feedback.py"
+                  }
+                ]
+              }
+            ],
+            "pipeline": [
+              {
+                "id": "tldr_openai_comparisons_decode_v1",
+                "version": 1,
+                "parameters": {
+                  "config": "comparisons",
+                  "row_identity": "source_row_index",
+                  "source_fields": [
+                    "info",
+                    "summaries",
+                    "choice"
+                  ]
+                }
+              },
+              {
+                "id": "tldr_preference_pair_projection_v1",
+                "version": 1,
+                "parameters": {
+                  "prompt_format": "openai_tldr_structured_v1",
+                  "chosen": "summaries[choice]",
+                  "rejected": "the_compared_nonchosen_summary",
+                  "source_order": "preserve"
+                }
+              },
+              {
+                "id": "tldr_clean_split_v1",
+                "version": 1,
+                "parameters": {
+                  "seed": 20260619,
+                  "source_test_rows": 6553,
+                  "contaminated_source_prefix_rows": 320,
+                  "calibration_rows": 320,
+                  "original_final_guard_rows": 320,
+                  "test_reserve_rows": 5593,
+                  "test_reserve_min_rows": 2048,
+                  "prompt_id_disjointness": "strict"
+                }
+              },
+              {
+                "id": "tldr_training_epoch_shuffle_v1",
+                "version": 1,
+                "parameters": {
+                  "rng": "CPython random.Random",
+                  "seed": 42,
+                  "scope": "training_batches"
+                }
+              }
+            ],
+            "ordering": {
+              "source": {
+                "enabled": false,
+                "algorithm": "preserve_pinned_snapshot_order"
+              },
+              "training": {
+                "enabled": true,
+                "algorithm": "CPython_random_Random_shuffle",
+                "seed": 42
+              }
+            },
+            "role_mapping": {
+              "selector": {
+                "source_split": "preference_train",
+                "assignment": "first_300_unique_prompt_id_groups",
+                "counts_ref": "protocol.data.construction_profiles.tldr.roles.selector"
+              },
+              "training": {
+                "source_split": "preference_train",
+                "assignment": "first_8192_pairs",
+                "counts_ref": "protocol.data.construction_profiles.tldr.roles.training"
+              },
+              "validation": {
+                "source_split": "preference_validation",
+                "assignment": "first_512_pairs",
+                "counts_ref": "protocol.data.construction_profiles.tldr.roles.validation"
+              },
+              "head_audit": {
+                "source_split": "clean_calibration",
+                "assignment": "rows_0_40",
+                "counts_ref": "protocol.data.construction_profiles.tldr.roles.head_audit"
+              },
+              "alpha_dev": {
+                "source_split": "clean_calibration",
+                "assignment": "rows_40_80",
+                "counts_ref": "protocol.data.construction_profiles.tldr.roles.alpha_dev"
+              },
+              "reserve": {
+                "source_split": "clean_calibration",
+                "assignment": "rows_80_320",
+                "counts_ref": "protocol.data.construction_profiles.tldr.roles.reserve"
+              },
+              "test": {
+                "source_split": "clean_test_reserve",
+                "assignment": "first_2048_without_reordering",
+                "counts_ref": "protocol.data.construction_profiles.tldr.roles.test"
+              }
+            }
+          }
+        }
+      },
+      "construction_profiles": {
+        "confiqa": {
+          "subsets": [
+            "qa",
+            "mr",
+            "mc"
+          ],
+          "roles": {
+            "selector": {
+              "unit": "admitted_group",
+              "target_count": 300
+            },
+            "training": {
+              "unit": "pair",
+              "max_count": 240
+            },
+            "validation": {
+              "unit": "pair",
+              "max_count": 60
+            },
+            "alpha_dev": {
+              "unit": "admitted_row",
+              "max_count": 120
+            },
+            "test": {
+              "unit": "admitted_row",
+              "target_count": 2048
+            }
+          },
+          "selector": {
+            "source_order": "official_file_order",
+            "initial_window": [
+              0,
+              300
+            ],
+            "refill_rejected": true,
+            "target_admitted_groups": 300,
+            "rejection_reasons": [
+              "missing_required_question_context_or_endpoint",
+              "identical_normalized_competition_endpoints",
+              "empty_endpoint_after_alias_cleanup"
+            ],
+            "split": "prepared_row_index_mod_5_equals_0_is_validation_else_training"
+          },
+          "alpha_dev": {
+            "window_by_subset": {
+              "qa": [
+                301,
+                421
+              ],
+              "mr": [
+                312,
+                432
+              ],
+              "mc": [
+                314,
+                434
+              ]
+            },
+            "refill_rejected": false
+          },
+          "test": {
+            "protocol_variant": "heldout_2048_extension",
+            "scope": "all_formal_confiqa_model_families",
+            "source_start": 1500,
+            "initial_source_rows": 2048,
+            "refill_rejected": true,
+            "target_valid_rows": 2048,
+            "original_500_test_in_scope": false
+          },
+          "source_shuffle": false,
+          "training_epoch_shuffle": {
+            "enabled": true,
+            "algorithm": "CPython_random_Random_shuffle",
+            "seed": 42
+          },
+          "allowed_role_overlap": [
+            [
+              "selector",
+              "training"
+            ],
+            [
+              "selector",
+              "validation"
+            ]
+          ]
+        },
+        "imdb": {
+          "subsets": [
+            "sentiment"
+          ],
+          "roles": {
+            "selector": {
+              "unit": "paired_model_native_state_group",
+              "target_count": 300
+            },
+            "training": {
+              "unit": "preference_pair",
+              "target_count": 1024
+            },
+            "validation": {
+              "unit": "preference_pair",
+              "target_count": 256
+            },
+            "test": {
+              "unit": "prompt",
+              "target_count": 2048
+            }
+          },
+          "source_order": {
+            "max_rows": 25000,
+            "shuffle": true,
+            "algorithm": "CPython_random_Random_shuffle",
+            "seed": 42,
+            "permutation_scope": "one_shared_train_permutation_reused_by_selector_and_pair_roles",
+            "window_basis": "zero_based_half_open_position_in_shared_permutation",
+            "rng_stream": "one_CPython_Random_stream_for_prefix_lengths_then_shuffle"
+          },
+          "prefix": {
+            "mode": "tokenizer",
+            "min_tokens": 2,
+            "max_tokens": 8
+          },
+          "selector_state_generation": {
+            "conditions": [
+              "good",
+              "base"
+            ],
+            "source_prompt_window": [
+              0,
+              300
+            ],
+            "prompt_rows": 300,
+            "generation_batch_size": 16,
+            "batch_seed_stride": 1009,
+            "good_template": "{prefix}\\n\\nContinue the review with a positive sentiment:",
+            "base_template": "{prefix}",
+            "max_new_tokens": 64,
+            "do_sample": true,
+            "temperature": 1.0,
+            "top_p": 1.0,
+            "top_k": 50,
+            "seed": 42,
+            "common_random_numbers_across_conditions": true,
+            "generate_once_per_model_and_reuse_exact_token_ids": true
+          },
+          "pair_preparation": {
+            "model_native": true,
+            "train_source_prompt_window": [
+              300,
+              1836
+            ],
+            "validation_source_prompt_window": [
+              1836,
+              2220
+            ],
+            "train_source_prompts": 1536,
+            "validation_source_prompts": 384,
+            "completions_per_prompt": 4,
+            "generation_batch_size": 16,
+            "batch_seed_stride": 1009,
+            "completion_seed_stride": 9176,
+            "max_new_tokens": 48,
+            "do_sample": true,
+            "temperature": 1.0,
+            "top_p": 1.0,
+            "top_k": 50,
+            "seed": 42,
+            "selection": "top_bottom_by_registered_sentiment_reward",
+            "strict_positive_margin": true,
+            "fixed_window_no_refill": true
+          },
+          "test": {
+            "source_split": "test",
+            "source_start": 0,
+            "max_source_rows": 25000,
+            "shuffle": true,
+            "algorithm": "CPython_random_Random_shuffle",
+            "seed": 42,
+            "post_shuffle_window": [
+              0,
+              2048
+            ],
+            "target_prompts": 2048
+          },
+          "allowed_role_overlap": []
+        },
+        "tldr": {
+          "subsets": [
+            "summary_preference"
+          ],
+          "prompt_format": "openai_tldr_structured_v1",
+          "roles": {
+            "selector": {
+              "unit": "unique_prompt_id_group",
+              "target_count": 300
+            },
+            "training": {
+              "unit": "preference_pair",
+              "target_count": 8192
+            },
+            "validation": {
+              "unit": "preference_pair",
+              "target_count": 512
+            },
+            "head_audit": {
+              "unit": "clean_calibration_prompt",
+              "target_count": 40
+            },
+            "alpha_dev": {
+              "unit": "clean_calibration_prompt",
+              "target_count": 40
+            },
+            "reserve": {
+              "unit": "clean_calibration_prompt",
+              "target_count": 240
+            },
+            "test": {
+              "unit": "clean_test_prompt",
+              "target_count": 2048
+            }
+          },
+          "selector": {
+            "source_split": "train",
+            "source_order": "preference_pair_order",
+            "unique_key": "prompt_id",
+            "pair_within_group": "first_admitted",
+            "duplicate_policy": "skip_and_refill",
+            "target_unique_groups": 300
+          },
+          "training": {
+            "source_split": "train",
+            "first_rows": 8192,
+            "shuffle_each_epoch": true,
+            "seed": 42
+          },
+          "validation": {
+            "source_split": "validation",
+            "first_rows": 512
+          },
+          "clean_split": {
+            "source_split": "test",
+            "source_rows": 6553,
+            "contaminated_source_prefix_rows": 320,
+            "shuffle_algorithm": "CPython_random_Random_shuffle",
+            "shuffle_seed": 20260619,
+            "calibration_rows": 320,
+            "original_final_guard_rows": 320,
+            "test_reserve_rows": 5593
+          },
+          "calibration": {
+            "shuffle_seed": 20260619,
+            "head_audit_range": [
+              0,
+              40
+            ],
+            "alpha_dev_range": [
+              40,
+              80
+            ],
+            "reserve_range": [
+              80,
+              320
+            ]
+          },
+          "test": {
+            "source": "clean_test_reserve",
+            "source_order": "post_clean_shuffle_reserve_order",
+            "clean_pool_offset": 640,
+            "first_rows": 2048,
+            "reorder": false
+          },
+          "allowed_role_overlap": [
+            [
+              "selector",
+              "training"
+            ]
+          ]
+        }
+      },
+      "test_isolation": true,
+      "trajectory": {
+        "enabled": true,
+        "coverage": "all_samples"
+      },
+      "prompt_registry": {
+        "registry_path": "configs/prompts/prompt_registry_20260831_v1.json",
+        "selections": {
+          "confiqa": {
+            "official_rag": "confiqa.official_rag.context_dpo_v1"
+          },
+          "imdb": {
+            "good_state": "imdb.good_state_v1",
+            "base_state": "imdb.base_state_v1",
+            "preference_prefix": "imdb.preference_prefix_v1"
+          },
+          "tldr": {
+            "source_prompt": "tldr.source_prompt_passthrough_v1"
+          }
+        }
+      },
+      "scaled_validation": {
+        "profile": "formal_scaled_gpu",
+        "role_counts_by_dataset": {
+          "confiqa": {
+            "selector": 10,
+            "training": 8,
+            "validation": 2,
+            "alpha_dev": 4,
+            "test": 3
+          },
+          "imdb": {
+            "selector": 8,
+            "training": 8,
+            "validation": 4,
+            "test": 3
+          },
+          "tldr": {
+            "selector": 10,
+            "training": 8,
+            "validation": 4,
+            "head_audit": 4,
+            "alpha_dev": 4,
+            "reserve": 4,
+            "test": 3
+          }
+        },
+        "same_stages_and_semantics": true,
+        "scientific_result_eligible": false
+      }
+    },
+    "randomness": {
+      "schema_version": 1,
+      "implicit_seed_forbidden": true,
+      "time_or_process_seed_forbidden": true,
+      "seed_dispatch": [
+        "python_random",
+        "numpy",
+        "torch_cpu",
+        "torch_cuda",
+        "dataloader_workers"
+      ],
+      "entries": [
+        {
+          "id": "data_confiqa_training_order",
+          "scope": "data.confiqa.training_order",
+          "rng": "CPython random.Random",
+          "algorithm": "shuffle",
+          "seed": 42
+        },
+        {
+          "id": "data_imdb_source_order",
+          "scope": "data.imdb.source_order",
+          "rng": "CPython random.Random",
+          "algorithm": "shuffle",
+          "seed": 42
+        },
+        {
+          "id": "data_imdb_training_order",
+          "scope": "data.imdb.training_order",
+          "rng": "CPython random.Random",
+          "algorithm": "shuffle",
+          "seed": 42
+        },
+        {
+          "id": "data_tldr_training_order",
+          "scope": "data.tldr.training_order",
+          "rng": "CPython random.Random",
+          "algorithm": "shuffle",
+          "seed": 42
+        },
+        {
+          "id": "position_search_primary",
+          "scope": "position_search.primary",
+          "rng": "CPython random.Random",
+          "algorithm": "backend_declared_deterministic_search",
+          "seed": 42
+        },
+        {
+          "id": "position_search_random_replicates",
+          "scope": "position_search.random",
+          "rng": "CPython random.Random",
+          "algorithm": "uniform_without_replacement",
+          "seeds": [
+            20260702,
+            20260703,
+            20260704
+          ]
+        },
+        {
+          "id": "cast_bank_training",
+          "scope": "bank_training",
+          "rng": "seed_dispatch",
+          "algorithm": "seed_all_and_dataloader_shuffle",
+          "seed": 42
+        },
+        {
+          "id": "model_generation",
+          "scope": "generation.all_datasets",
+          "rng": "seed_dispatch",
+          "algorithm": "greedy_or_seeded_generation",
+          "seed": 42
+        }
+      ],
+      "deterministic_scopes": [
+        "position_search.alpha_calibration",
+        "evaluation",
+        "alpha_selection",
+        "manual_audit",
+        "test_gate"
+      ]
+    },
+    "cast": {
+      "shared_contract": {
+        "base_model_frozen": true,
+        "native_selected_writes": "kept_active",
+        "locator_operation_during_training_or_generation": false,
+        "controller_initialization": "from_scratch",
+        "shared_alpha_within_configuration": true,
+        "independent_role_alpha_search": false
+      },
+      "sv": {
+        "operator": "add_one_learned_head_dim_vector_per_selected_pre_o_head",
+        "vector_initialization": "float32_zeros",
+        "vector_parameter_dtype": "float32",
+        "signed_rcm_partition": "two_independently_trained_role_banks",
+        "unsigned_partition": "one_jointly_trained_bank",
+        "training_common": {
+          "optimizer": "torch.optim.AdamW",
+          "lr": 0.05,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.01,
+          "amsgrad": false,
+          "scheduler": "none",
+          "gradient_clipping": "none",
+          "epochs": 2,
+          "seed": 42,
+          "epoch_shuffle_seed": 42,
+          "alpha_train": 1.0,
+          "lambda_norm": 0.0001,
+          "empty_cache_every": 25
+        },
+        "tasks": {
+          "confiqa": {
+            "apply_mode": "decision_tokens",
+            "endpoint_objective": "pair_margin",
+            "score_mode": "answer_rest_margin",
+            "option_selection_mode": "model_max",
+            "preference_loss_mode": "margin_gain",
+            "dpo_beta": 1.0,
+            "causal_train_mask": false,
+            "train_batch_size": 4,
+            "train_rows": 240,
+            "validation_rows": 60,
+            "alpha_grid": [
+              0.1,
+              0.2,
+              0.3,
+              0.4,
+              0.5,
+              0.6,
+              0.7,
+              0.8,
+              0.9,
+              1.0
+            ],
+            "alpha_selection": {
+              "metric": "logic_score",
+              "direction": "maximize",
+              "near_best_absolute_tolerance": 0.0,
+              "tie_break": "smallest_alpha"
+            },
+            "generation": {
+              "do_sample": false,
+              "temperature": 0.0,
+              "max_new_tokens": 64,
+              "stop_strings": [
+                "Q:"
+              ],
+              "seed": 42
+            },
+            "timing_id": "continuation_decision_states"
+          },
+          "imdb": {
+            "apply_mode": "all",
+            "endpoint_objective": "pair_margin",
+            "score_mode": "avglogp",
+            "option_selection_mode": "model_max",
+            "preference_loss_mode": "reference_anchored_dpo",
+            "dpo_beta": 1.0,
+            "causal_train_mask": true,
+            "train_batch_size": 32,
+            "train_rows": 1024,
+            "validation_rows": 256,
+            "alpha_grid": [
+              0.1,
+              0.2,
+              0.3,
+              0.4,
+              0.5,
+              0.6,
+              0.7,
+              0.8,
+              0.9,
+              1.0
+            ],
+            "test_alpha_policy": "report_full_curve",
+            "generation": {
+              "do_sample": true,
+              "temperature": 1.0,
+              "top_p": 1.0,
+              "top_k": 50,
+              "max_new_tokens": 256,
+              "samples_per_prompt": 1,
+              "batch_size": 16,
+              "seed": 42,
+              "same_seed_across_alpha": true
+            },
+            "timing_id": "all_token_states"
+          }
+        }
+      },
+      "reft": {
+        "datasets": [
+          "tldr"
+        ],
+        "operator": "low_rank_reft_on_selected_pre_o_head",
+        "rank": 4,
+        "parameters_per_gptj_head": 2048,
+        "candidate_active_parameters": 32768,
+        "final_active_parameters": 16384,
+        "initialization": {
+          "distribution": "normal",
+          "std": 0.01,
+          "seed": 42,
+          "warm_start": false
+        },
+        "apply_mode": "all",
+        "training": {
+          "optimizer": "torch.optim.AdamW",
+          "lr": 0.001,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.01,
+          "amsgrad": false,
+          "scheduler": "none",
+          "gradient_clipping": "none",
+          "epochs": 1,
+          "train_batch_size": 2,
+          "eval_batch_size": 2,
+          "seed": 42,
+          "shuffle_train": true,
+          "alpha_train": 1.0,
+          "lambda_norm": 0.0001,
+          "preference_loss_mode": "dpo",
+          "dpo_beta": 0.5,
+          "score_mode": "avglogp",
+          "train_rows": 8192,
+          "validation_rows": 512,
+          "dtype": "bfloat16"
+        },
+        "candidate_partition": {
+          "rcm": "two_independently_trained_eight_head_role_banks",
+          "iti": "one_jointly_trained_unsigned_sixteen_head_bank",
+          "random": "one_jointly_trained_unsigned_sixteen_head_bank_per_seed"
+        },
+        "audit": {
+          "candidate_count": 16,
+          "audit_rows": 40,
+          "alpha_grid": [
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6,
+            0.7
+          ],
+          "unit": "one_head_payload_extracted_from_joint_candidate_bank",
+          "retrain_single_head": false,
+          "blinding_seed": 20260723,
+          "target": "human_reference",
+          "primary_metric": "balanced_head_vs_human_reference_pairwise_win_rate",
+          "pure_side_effect_rule": "drop_only_when_no_registered_alpha_improves_over_shared_sft_and_registered_text_health_shows_target_independent_degradation",
+          "overshoot_rule": "retain_when_a_smaller_registered_alpha_recovers_win_rate_or_text_health",
+          "final_count": 8,
+          "final_role_quota": null,
+          "random_policy": "audit_all_three_seeds_and_never_select_best_seed",
+          "finalization": {
+            "mode": "direct_tensor_union_of_retained_payloads",
+            "retrain": false,
+            "optimizer_steps": 0,
+            "rescale": false,
+            "normalize": false,
+            "role_rebalance": false
+          }
+        },
+        "alpha_grid": [
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7
+        ],
+        "alpha_selection": {
+          "metric": "balanced_win_rate_against_human_summary",
+          "direction": "maximize",
+          "near_best_absolute_tolerance": 0.003,
+          "tie_break": "smallest_alpha"
+        },
+        "generation": {
+          "apply_mode": "all",
+          "do_sample": false,
+          "temperature": 0.0,
+          "top_p": 0.9,
+          "top_k": 0,
+          "max_new_tokens": 100,
+          "batch_size": 1,
+          "samples_per_prompt": 1,
+          "seed": 42
+        },
+        "timing_id": "all_token_states"
+      }
+    },
+    "evaluation_profiles": {
+      "confiqa": {
+        "behavior_advantage": {
+          "metric": "closed_context_over_prior_competition_margin",
+          "target": "context_supported_counterfactual_answer",
+          "non_target": "original_parametric_prior_answer",
+          "aggregation": "mean",
+          "same_input_and_decode": true
+        },
+        "open_generation_metrics": [
+          "logic_score",
+          "pc",
+          "po",
+          "mr",
+          "em",
+          "context_only",
+          "prior_only",
+          "both",
+          "neither",
+          "short_exact_context",
+          "mean_chars",
+          "health",
+          "actual_n"
+        ],
+        "logic_score": "context_only_rate+short_exact_context_rate-prior_hit_rate-neither_rate-mean_chars/400"
+      },
+      "imdb": {
+        "behavior_advantage": {
+          "metric": "generated_sentiment_competition",
+          "target": "positive_sentiment",
+          "non_target": "negative_sentiment",
+          "aggregation": "mean",
+          "same_input_and_decode": true
+        },
+        "scorer": {
+          "model_registry_id": "siebert_sentiment",
+          "formula": "P(POSITIVE)-P(NEGATIVE)",
+          "reward_batch_size": 16,
+          "kl_batch_size": 16
+        },
+        "metrics": [
+          "mean_positive_sentiment_score",
+          "positive_rate",
+          "sampled_sequence_logprob_ratio",
+          "token_kl_audit",
+          "mean_completion_tokens",
+          "health",
+          "actual_n"
+        ]
+      },
+      "tldr": {
+        "behavior_advantage": {
+          "metric": "avglogp_y_plus_minus_avglogp_y_minus",
+          "target": "human_preferred_summary",
+          "non_target": "nonchosen_summary",
+          "aggregation": "mean",
+          "same_input_and_decode": true
+        },
+        "judge": {
+          "model_registry_id": "deepseek_v4_pro_tldr_judge",
+          "protocol": "tldr_dpo_appendix_c2_concise_pairwise_v1",
+          "thinking_mode": "disabled",
+          "reasoning_effort": "high",
+          "full_order_swap": true,
+          "human_only_final_amendment": true,
+          "first_order": {
+            "candidate": "A",
+            "human_reference": "B"
+          },
+          "request": {
+            "api_key_env": "DEEPSEEK_API_KEY",
+            "timeout_seconds": 180,
+            "max_retries": 5,
+            "max_output_tokens": 800
+          }
+        },
+        "health_metrics": [
+          "avg_words",
+          "rouge_l_f1_vs_human",
+          "repeat_bigram_rate",
+          "repeat_trigram_rate",
+          "tldr_echo_rate",
+          "empty_output_rate",
+          "likely_unfinished_rate",
+          "unique_summary_ratio",
+          "distinct_1",
+          "distinct_2",
+          "distinct_3",
+          "top_skeleton_share",
+          "mean_nn_bigram_jaccard"
+        ]
+      }
+    },
+    "timing_registry": {
+      "continuation_decision_states": {
+        "mask": "initial_prefill_prompt_last_state_plus_each_subsequent_decode_last_state",
+        "training_teacher_forcing_mask": "prediction_positions_prompt_len_minus_1_through_prompt_len_plus_continuation_len_minus_2",
+        "aliases": [
+          "decision_tokens",
+          "generation_decision_states"
+        ]
+      },
+      "all_token_states": {
+        "mask": "every_prefill_and_decode_state",
+        "aliases": [
+          "all"
+        ]
+      }
+    }
+  },
+  "selector_contract": {
+    "selectors": [
+      "rcm_zero_signed",
+      "rcm_patch_signed",
+      "iti",
+      "random"
+    ],
+    "primary_seed": 42,
+    "random_seeds": [
+      20260702,
+      20260703,
+      20260704
+    ]
+  },
+  "experiment_cells": [
+    {
+      "cell_id": "confiqa__qa__llama3_8b",
+      "dataset": "confiqa",
+      "subset": "qa",
+      "model_family": "llama3_8b",
+      "intervention_family": "sv",
+      "scorer": "confiqa",
+      "model_registry_id": "llama3_8b_instruct"
+    },
+    {
+      "cell_id": "confiqa__mr__llama3_8b",
+      "dataset": "confiqa",
+      "subset": "mr",
+      "model_family": "llama3_8b",
+      "intervention_family": "sv",
+      "scorer": "confiqa",
+      "model_registry_id": "llama3_8b_instruct"
+    },
+    {
+      "cell_id": "confiqa__mc__llama3_8b",
+      "dataset": "confiqa",
+      "subset": "mc",
+      "model_family": "llama3_8b",
+      "intervention_family": "sv",
+      "scorer": "confiqa",
+      "model_registry_id": "llama3_8b_instruct"
+    },
+    {
+      "cell_id": "confiqa__qa__qwen25_14b",
+      "dataset": "confiqa",
+      "subset": "qa",
+      "model_family": "qwen25_14b",
+      "intervention_family": "sv",
+      "scorer": "confiqa",
+      "model_registry_id": "qwen25_14b_instruct"
+    },
+    {
+      "cell_id": "confiqa__mr__qwen25_14b",
+      "dataset": "confiqa",
+      "subset": "mr",
+      "model_family": "qwen25_14b",
+      "intervention_family": "sv",
+      "scorer": "confiqa",
+      "model_registry_id": "qwen25_14b_instruct"
+    },
+    {
+      "cell_id": "confiqa__mc__qwen25_14b",
+      "dataset": "confiqa",
+      "subset": "mc",
+      "model_family": "qwen25_14b",
+      "intervention_family": "sv",
+      "scorer": "confiqa",
+      "model_registry_id": "qwen25_14b_instruct"
+    },
+    {
+      "cell_id": "imdb__sentiment__ma921_gpt2_large_sft",
+      "dataset": "imdb",
+      "subset": "sentiment",
+      "model_family": "ma921_gpt2_large_sft",
+      "intervention_family": "sv",
+      "scorer": "imdb",
+      "model_registry_id": "ma921_gpt2_large_sft_imdb"
+    },
+    {
+      "cell_id": "imdb__sentiment__qwen25_14b",
+      "dataset": "imdb",
+      "subset": "sentiment",
+      "model_family": "qwen25_14b",
+      "intervention_family": "sv",
+      "scorer": "imdb",
+      "model_registry_id": "qwen25_14b_instruct"
+    },
+    {
+      "cell_id": "tldr__summary_preference__gptj_6b",
+      "dataset": "tldr",
+      "subset": "summary_preference",
+      "model_family": "gptj_6b",
+      "intervention_family": "reft",
+      "scorer": "tldr",
+      "model_registry_id": "gptj_6b_tldr_sft"
+    },
+    {
+      "cell_id": "tldr__summary_preference__qwen25_14b",
+      "dataset": "tldr",
+      "subset": "summary_preference",
+      "model_family": "qwen25_14b",
+      "intervention_family": "reft",
+      "scorer": "tldr",
+      "model_registry_id": "qwen25_14b_instruct"
+    }
+  ]
+}

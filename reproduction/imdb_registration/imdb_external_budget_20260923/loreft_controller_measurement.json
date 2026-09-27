@@ -1,0 +1,12 @@
+{
+  "job_id": "REDACTED",
+  "method": "loreft",
+  "controller_elapsed_seconds": 2409.5442969435826,
+  "candidates_completed": 6,
+  "target_seconds_approx": 2400,
+  "test_included": false,
+  "data_role_exact_reuse_verified": true,
+  "gpu_trace": "LOCAL_HOME/rpec_runs/imdb_external_budget_20260923/logs/28879173_loreft_controller_gpu.csv",
+  "stage_trace": "LOCAL_HOME/rpec_runs/imdb_external_budget_20260923/logs/28879173_loreft_controller_stages.jsonl",
+  "time_source_note": "Python entrypoint elapsed; final H100 occupancy uses completed Slurm ElapsedRaw."
+}

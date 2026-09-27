@@ -1,0 +1,146 @@
+{
+  "protocol_id": "site_heldout_2048_human_only_evidence_freeze_20260727_v1",
+  "version": 1,
+  "status": "locked_evidence_only_no_experiment_mutation",
+  "freeze_date": "2026-07-27",
+  "remote_source_of_truth": "LOCAL_HOME/RPEC/projects/screscomp",
+  "documentation": "docs/SITE_HELDOUT_2048_HUMAN_ONLY_EVIDENCE_FREEZE_20260727_V1.md",
+  "runner": "scripts/paper/42_freeze_site_heldout_2048_human_only_evidence.py",
+  "output_root": "results/site_heldout_2048_human_only_evidence_freeze_20260727_v1",
+  "parent_protocol": {
+    "path": "configs/site_heldout_2048_fixed_protocol_20260726_v1.json",
+    "sha256": "5702b06d3a02ef5e041998873d135d2e254ec16338c75cb8d8ed084fbe267717"
+  },
+  "judge_amendment": {
+    "path": "configs/site_heldout_2048_tldr_human_only_judge_amendment_20260727_v1.json",
+    "sha256": "b93d304a2295c4bbecf60ef0c0d399a05d191eeab3e61710a950b3cb5e015652"
+  },
+  "sources": {
+    "run": {
+      "source": "runs/site_heldout_2048_20260726_v1",
+      "destination": "evidence/run"
+    },
+    "confiqa_splits": {
+      "source": "data_ckplug/site_heldout_2048_20260726_v1",
+      "destination": "evidence/splits/confiqa"
+    },
+    "tldr_split": {
+      "source": "data_tldr/tldr_gptj_prepared/tldr_site_heldout_2048_20260726_v1",
+      "destination": "evidence/splits/tldr"
+    },
+    "curated_2048": {
+      "source": "results/site_heldout_2048_20260726_v1",
+      "destination": "evidence/curated_2048"
+    },
+    "tldr_v6_curated": {
+      "source": "results/tldr_site_reft_direct_k8_disjoint_alpha_dev_20260725_v6",
+      "destination": "references/tldr_v6_curated"
+    }
+  },
+  "site_v12_reference": {
+    "root": "results/site_position_full_20260719_v12_current_20260723",
+    "manifest": "results/site_position_full_20260719_v12_current_20260723/freeze_manifest.json",
+    "manifest_sha256": "6e8342f50b2522e221222c408507e00b2b2c3bf8f00da1f01c870df7d068413e",
+    "status": "immutable_current_result_snapshot",
+    "protocol_id": "site_position_full_fixed_protocol_20260719_v12",
+    "protocol_version": 12,
+    "completed_jobs": 24,
+    "expected_jobs_in_scope": 72,
+    "copy_files": [
+      "README.md",
+      "freeze_manifest.json",
+      "reproduction/environment_at_freeze.json",
+      "summaries/job_status.csv",
+      "summaries/confiqa_current_results.csv",
+      "summaries/imdb_current_results.csv",
+      "summaries/imdb_actual_token_audit.csv"
+    ]
+  },
+  "tldr_v6_reference_seals": {
+    "final_manifest.json": "b0ab1e47fa872e1c05ca9eecba66fce8cb639cc835f61289875cf387dbfd9e76",
+    "frozen_heads_seal.json": "81c8040bd46b6928889adbf907eb2d91209f130e185c325e08e408d1816edc8a",
+    "frozen_alpha_seal.json": "b81e12f04ddcfbb0a8771b100c050a84291e3eed167c4c1fe1c0165cdd3b7502"
+  },
+  "canonical_files": [
+    "configs/site_position_full_fixed_protocol_20260719_v12.json",
+    "docs/SITE_POSITION_FULL_FIXED_PROTOCOL_20260719_V12.md",
+    "configs/tldr_site_reft_direct_k8_disjoint_alpha_dev_fixed_protocol_20260725_v6.json",
+    "docs/TLDR_SITE_REFT_DIRECT_K8_DISJOINT_ALPHA_DEV_FIXED_PROTOCOL_20260725_V6.md",
+    "configs/site_heldout_2048_fixed_protocol_20260726_v1.json",
+    "configs/site_heldout_2048_tldr_human_only_judge_amendment_20260727_v1.json",
+    "docs/SITE_HELDOUT_2048_FIXED_PROTOCOL_20260726_V1.md",
+    "scripts/paper/39_prepare_site_heldout_2048_protocol.py",
+    "scripts/paper/40_run_site_heldout_2048_serial.py",
+    "configs/site_heldout_2048_human_only_evidence_freeze_20260727_v1.json",
+    "docs/SITE_HELDOUT_2048_HUMAN_ONLY_EVIDENCE_FREEZE_20260727_V1.md",
+    "scripts/paper/42_freeze_site_heldout_2048_human_only_evidence.py"
+  ],
+  "validation": {
+    "expected_n": 2048,
+    "confiqa": {
+      "subsets": {
+        "qa": {
+          "scan_stop_exclusive": 3549,
+          "rejected_rows": 1,
+          "replacement_rows": 1,
+          "output_sha256": "12f980bd05ad6559f2c2b33ac4f624e964dd8854215e4cf49a2bea9581c93a48"
+        },
+        "mr": {
+          "scan_stop_exclusive": 3635,
+          "rejected_rows": 87,
+          "replacement_rows": 79,
+          "output_sha256": "46f63290ea28441f36728ae30c0ab4d2d18ceff3c6ba9d1e77724501082697db"
+        },
+        "mc": {
+          "scan_stop_exclusive": 3644,
+          "rejected_rows": 96,
+          "replacement_rows": 93,
+          "output_sha256": "ef77bd17fca1677d173319628d76d82832c5a917b6cb9e9331e6ae8dd6e05d88"
+        }
+      },
+      "source_start": 1500,
+      "model_key": "llama3_8b",
+      "generation_files_per_subset": 7,
+      "reported_rows_per_subset": 6,
+      "selectors": [
+        "rcm_zero_signed",
+        "rcm_patch_signed",
+        "iti",
+        "random"
+      ]
+    },
+    "tldr": {
+      "input_sha256": "f1e0de82eb3d4a61f76744dc6d5162270dd2d5b1023da22dfc1db1707923105b",
+      "generation_files": 7,
+      "candidate_names": [
+        "sft",
+        "F__rcm_zero_signed__pool_00",
+        "F__rcm_patch_signed__pool_00",
+        "F__iti__pool_00",
+        "F__random__seed_20260702",
+        "F__random__seed_20260703",
+        "F__random__seed_20260704"
+      ],
+      "first_pass_rows": 14336,
+      "order_swap_rows": 14336,
+      "pairwise_rows": 7,
+      "superseded_partial_first_pass_rows": 2308
+    }
+  },
+  "evidence_policy": {
+    "formal_tldr_judge": "evidence/run/tldr/judge_human_only",
+    "forbidden_tldr_judge": "evidence/run/tldr/judge",
+    "forbidden_reason": "stopped candidate-all-pairs run; 2308 partial first-pass rows and no summary",
+    "no_retraining": true,
+    "no_reselection": true,
+    "no_alpha_change": true,
+    "no_regeneration": true,
+    "no_rejudging": true
+  },
+  "claim_boundaries": [
+    "This freeze contains the completed Llama-3-8B ConFiQA QA/MR/MC 2048-row evaluation only; Mistral and Qwen rows are not complete and are not evidence.",
+    "TLDR evidence uses only fixed-candidate versus human-reference judgments with full order-swap review.",
+    "The superseded TLDR candidate-all-pairs directory is retained only as failure provenance and is forbidden for reported results.",
+    "This freeze preserves evaluation evidence; it does not add, retrain, reselect, retune, regenerate, or rejudge any method."
+  ]
+}

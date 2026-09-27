@@ -1,0 +1,138 @@
+{
+  "amendment_id": "imdb_model_native_reward_ranked_pair_restoration_20260805_v1",
+  "lock_date": "2026-08-05",
+  "status": "locked_before_continuation",
+  "remote_source_of_truth": "LOCAL_HOME/RPEC/projects/screscomp",
+  "documentation": "docs/IMDB_MODEL_NATIVE_REWARD_RANKED_PAIR_RESTORATION_20260805_V1.md",
+  "decision": "restore_previously_locked_model_native_reward_ranked_imdb_pairs",
+  "active_protocols": {
+    "site": {
+      "protocol_id": "site_position_full_fixed_protocol_20260719_v12",
+      "config": "configs/site_position_full_fixed_protocol_20260719_v12.json",
+      "config_sha256": "87c3b77316304b87f0aa0ade73be15a6da691c94625296214e9032aae406b45e",
+      "pair_source_kind": "model_native_reward_ranked",
+      "train_source_prompts": 1536,
+      "validation_source_prompts": 384,
+      "generation_max_new_tokens": 48,
+      "target_train_pairs": 1024,
+      "target_validation_pairs": 256
+    },
+    "performance": {
+      "protocol_id": "imdb_performance_fixed_protocol_20260726_v2",
+      "config": "configs/imdb_performance_fixed_protocol_20260726_v2.json",
+      "config_sha256": "4fae889a1a6502ae6e34429f8641a56dcb650e1fb025e80fb59ecf4c440e1043",
+      "pair_source_kind": "model_native_reward_ranked",
+      "train_source_prompts": 768,
+      "validation_source_prompts": 192,
+      "generation_max_new_tokens": 128,
+      "target_train_pairs": 512,
+      "target_validation_pairs": 128
+    }
+  },
+  "pair_semantics": {
+    "source_dataset": "stanfordnlp/imdb",
+    "source_split": "train",
+    "shuffle": true,
+    "seed": 42,
+    "prefix_token_min": 2,
+    "prefix_token_max": 8,
+    "prompt_template": "{prefix}",
+    "completions_per_prompt": 4,
+    "do_sample": true,
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "top_k": 50,
+    "generation_seed": 42,
+    "reward_scorer": "siebert/sentiment-roberta-large-english",
+    "reward_target": "positive_sentiment_probability_on_complete_continuation",
+    "pair_selection_mode": "top_bottom",
+    "preferred_definition": "highest_reward_completion_within_the_four_model_native_candidates",
+    "dispreferred_definition": "lowest_reward_completion_within_the_four_model_native_candidates",
+    "minimum_reward_margin": 0.0,
+    "strict_positive_margin": true,
+    "fixed_window_no_fill": true,
+    "absolute_class_boundary_required": false
+  },
+  "task_specific_pair_fields": {
+    "site": {
+      "prefix_mode": "tokenizer",
+      "prefix_length_unit": "model_tokenizer_tokens"
+    },
+    "performance": {
+      "prefix_mode": "whitespace",
+      "prefix_length_unit": "whitespace_tokens"
+    }
+  },
+  "supersedes": {
+    "site_v13": {
+      "protocol_id": "site_position_full_fixed_protocol_20260804_v13",
+      "config": "configs/site_position_full_fixed_protocol_20260804_v13.json",
+      "config_sha256": "04969d068f80d7500611612ec79259a3046344a616171fc5c1a88bb8a6aa4bc4",
+      "scope": "imdb_public_pairs_actuator_training_and_all_downstream_outputs"
+    },
+    "performance_v3": {
+      "protocol_id": "imdb_performance_fixed_protocol_20260804_v3",
+      "config": "configs/imdb_performance_fixed_protocol_20260804_v3.json",
+      "config_sha256": "0e38622717f721f42ee2ced2421cfb09527cdaafc101d9bf5cf81f71a2b87852",
+      "scope": "cast_public_pairs_actuator_training_and_all_downstream_outputs"
+    },
+    "reason": "the_third_party_public_reproduction_pairs_are_not_verified_as_the_released_checkpoint_training_bytes_and_do_not_supply_a_reliable_positive_sentiment_edge_for_the_sparse_controller"
+  },
+  "primary_site_scope": {
+    "model_keys": [
+      "ma921_gpt2_large_sft",
+      "qwen25_14b"
+    ],
+    "excluded_model_keys": [
+      "mistral7b_v03"
+    ],
+    "selectors": [
+      "rcm_zero_signed",
+      "rcm_patch_signed",
+      "iti",
+      "random"
+    ],
+    "random_replicate_seeds": [
+      20260702,
+      20260703,
+      20260704
+    ],
+    "selected_head_count": 8,
+    "scientific_settings_changed_beyond_pair_source_restoration": false
+  },
+  "artifact_policy": {
+    "retain_v12_selectors": true,
+    "retain_v12_model_native_pair_and_downstream_artifacts_when_manifests_pass": true,
+    "reuse_v13_public_pairs": false,
+    "reuse_v13_actuators": false,
+    "reuse_v13_generation_or_scores": false,
+    "reuse_performance_v3_cast_outputs": false,
+    "released_dpo_checkpoint_evaluation_unaffected": true,
+    "claim_same_training_pairs_as_released_dpo_checkpoint": false
+  },
+  "qwen_job_ids": [
+    "imdb__sentiment__qwen25_14b__rcm_zero_signed__primary",
+    "imdb__sentiment__qwen25_14b__rcm_patch_signed__primary",
+    "imdb__sentiment__qwen25_14b__iti__primary",
+    "imdb__sentiment__qwen25_14b__random__seed_20260702",
+    "imdb__sentiment__qwen25_14b__random__seed_20260703",
+    "imdb__sentiment__qwen25_14b__random__seed_20260704"
+  ],
+  "execution": {
+    "environment": "screscomp",
+    "single_gpu_serial": true,
+    "gpu_candidates": [
+      2,
+      3
+    ],
+    "gpu_selection": "lower_memory_used_at_launch",
+    "gpu_cotenancy_allowed_and_recorded": true,
+    "qwen_execution_amendment": "configs/site_position_v12_qwen_exact_memory_execution_20260806_v3.json",
+    "performance_validator": "scripts/paper/53_validate_imdb_performance_reward_ranked_restoration.py",
+    "performance_runner": "scripts/paper/54_run_imdb_performance_v2_reward_ranked.sh",
+    "performance_shared_runner": "scripts/run_imdb_directional_main_table_locked.sh",
+    "performance_shared_runner_sha256": "cc441262429cb79efbc409d99040074cb8696f50cee2e84b23d7ff07668a9efa",
+    "performance_pair_config_environment": "empty_selects_the_model_native_v2_branch",
+    "unexpected_condition_policy": "stop_and_report_before_changing_any_scientific_setting"
+  }
+}

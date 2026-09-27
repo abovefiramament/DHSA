@@ -1,0 +1,66 @@
+{
+  "amendment_id": "site_position_v12_qwen_exact_memory_execution_20260819_v15",
+  "status": "locked_before_recovery_execution",
+  "supersedes": "site_position_v12_qwen_exact_memory_execution_20260812_v14",
+  "supersession_reason": "Random seed 20260703 was externally terminated by SIGKILL during KL after the process reached 31828 MiB. Resume uses KL batch size 4 to stay below the 30 GiB execution limit.",
+  "base_protocol_id": "site_position_full_fixed_protocol_20260719_v12",
+  "base_config": "configs/site_position_full_fixed_protocol_20260719_v12.json",
+  "base_config_sha256": "87c3b77316304b87f0aa0ade73be15a6da691c94625296214e9032aae406b45e",
+  "scientific_settings_changed": false,
+  "scope": {
+    "model_keys": [
+      "qwen25_14b"
+    ],
+    "job_ids": [
+      "imdb__sentiment__qwen25_14b__random__seed_20260703",
+      "imdb__sentiment__qwen25_14b__random__seed_20260704"
+    ],
+    "stages": [
+      "heldout_generation",
+      "kl_evaluation"
+    ]
+  },
+  "execution": {
+    "kl_batch_size_override": 4,
+    "frozen_input_embedding_storage": {
+      "enabled": true,
+      "mode": "cpu_lookup_output_copy_exact",
+      "model_type": "qwen2",
+      "require_untied_word_embeddings": true,
+      "one_time_weight_residency_move": true,
+      "weight_streaming": false,
+      "storage_device": "cpu",
+      "lookup_input_ids_device": "cpu",
+      "lookup_output_device": "original_cuda",
+      "weight_dtype_changed": false,
+      "weight_values_changed": false,
+      "embedding_output_dtype_changed": false,
+      "embedding_output_values_changed": false
+    },
+    "kl_logit_storage": {
+      "enabled": true,
+      "mode": "sequential_reference_and_steered_exact_cpu_staging",
+      "stored_dtype_changed": false,
+      "stored_values_changed": false,
+      "registered_batch_size_changed": true,
+      "gpu_log_softmax_changed": false
+    }
+  },
+  "resume": {
+    "job_id": "REDACTED",
+    "generation_rows": 20480,
+    "sentiment_rows": 20480,
+    "kl_rows_before_v15": 8640,
+    "retrain": false,
+    "regenerate": false,
+    "kl_resume_by_existing_row_key": true
+  },
+  "failure_evidence": {
+    "log": "runs/qwen_imdb_site_v12_v14_resume_20260818.log",
+    "log_sha256": "ef3b0b5c9380c4399a4d2f37321a566e15b1abb9fd55b5c3f2dec3edf3305c82",
+    "signal": "SIGKILL",
+    "peak_process_memory_mib": 31828,
+    "cgroup_oom_kill": 0,
+    "cuda_oom_traceback": false
+  }
+}

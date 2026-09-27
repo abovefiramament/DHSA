@@ -1,0 +1,132 @@
+{
+  "protocol_id": "site_heldout_2048_fixed_protocol_20260726_v1",
+  "version": 1,
+  "status": "locked_before_gpu_execution",
+  "last_updated": "2026-07-26",
+  "remote_source_of_truth": "LOCAL_HOME/RPEC/projects/screscomp",
+  "documentation": "docs/SITE_HELDOUT_2048_FIXED_PROTOCOL_20260726_V1.md",
+  "preparer": "scripts/paper/39_prepare_site_heldout_2048_protocol.py",
+  "runner": "scripts/paper/40_run_site_heldout_2048_serial.py",
+  "claim": "evaluation-only expansion of frozen Site controllers to 2048 held-out examples per task stratum",
+  "target_rows_per_stratum": 2048,
+  "invariants": {
+    "evaluation_only": true,
+    "source_protocols_remain_unchanged": true,
+    "source_results_remain_reported": true,
+    "component_reselection": false,
+    "head_reselection": false,
+    "actuator_retraining": false,
+    "alpha_reselection": false,
+    "prompt_change": false,
+    "decoding_change": false,
+    "metric_change": false,
+    "judge_change": false,
+    "method_specific_sample_drop_or_replacement": false,
+    "failed_rows_retry_same_sample_only": true,
+    "all_methods_share_identical_sample_ids_within_stratum": true
+  },
+  "execution": {
+    "run_root": "LOCAL_HOME/RPEC/projects/screscomp/runs/site_heldout_2048_20260726_v1",
+    "curated_results": "results/site_heldout_2048_20260726_v1",
+    "serial_only": true,
+    "single_gpu_per_job": true,
+    "preferred_physical_gpu_indices": [
+      2,
+      3
+    ],
+    "gpu_selection_policy": "lower_observed_memory_used_at_stage_launch",
+    "gpu_co_tenancy_allowed": true,
+    "empty_gpu_required": false,
+    "failure_policy": "stop_without_fallback_retraining_reselection_alpha_change_or_sample_replacement"
+  },
+  "confiqa": {
+    "source_config": "LOCAL_HOME/RPEC/projects/screscomp/configs/site_position_full_fixed_protocol_20260719_v12.json",
+    "source_config_sha256": "87c3b77316304b87f0aa0ade73be15a6da691c94625296214e9032aae406b45e",
+    "source_protocol": "LOCAL_HOME/RPEC/projects/screscomp/docs/SITE_POSITION_FULL_FIXED_PROTOCOL_20260719_V12.md",
+    "source_protocol_sha256": "b316c3fcce5ff5bf85fadb4f27d24075697dbc074de5ff161af45b87e2425eb1",
+    "source_run_root": "/dev/shm/screscomp_runs/site_position_full_20260719_v12",
+    "subsets": [
+      "qa",
+      "mr",
+      "mc"
+    ],
+    "model_keys": [
+      "llama3_8b",
+      "mistral7b_v03",
+      "qwen25_14b"
+    ],
+    "source_files": {
+      "qa": {
+        "path": "LOCAL_HOME/RPEC/projects/screscomp/data_ckplug/context_dpo_confiqa_official/ConFiQA-QA.json",
+        "sha256": "9b201a7e2f2bbf8ad8ae3364eb87c194cf5d6007789c8b5302c091fa8fae74e4"
+      },
+      "mr": {
+        "path": "LOCAL_HOME/RPEC/projects/screscomp/data_ckplug/context_dpo_confiqa_official/ConFiQA-MR.json",
+        "sha256": "dbb76f361831b754b87219344d80a386eaf83078ffe5888272dbe9d8e6c0eede"
+      },
+      "mc": {
+        "path": "LOCAL_HOME/RPEC/projects/screscomp/data_ckplug/context_dpo_confiqa_official/ConFiQA-MC.json",
+        "sha256": "a058e0ca631b90bc799ddedc3bb92aea56d249c604f8a12d309cbcd4ec627994"
+      }
+    },
+    "sample_construction": {
+      "source_order": "official_file_order",
+      "source_start": 1500,
+      "initial_window_rows": 2048,
+      "target_valid_rows": 2048,
+      "fill_rejected_rows": true,
+      "fill_order": "continue_official_file_order",
+      "schema": "base",
+      "alias_policy": "raw",
+      "prompt_contract": "context_dpo_official_v1",
+      "previous_v12_test_source_window": [
+        1000,
+        1500
+      ],
+      "required_disjoint_roles": [
+        "v12_selector",
+        "v12_alpha_dev",
+        "v12_heldout_test"
+      ],
+      "data_root": "LOCAL_HOME/RPEC/projects/screscomp/data_ckplug/site_heldout_2048_20260726_v1"
+    },
+    "source_artifact_requirements": [
+      "actuator/training_manifest.json",
+      "actuator/head_actuator.pt",
+      "evaluation/alpha_selection.json",
+      "evaluation/dev_manifest.json",
+      "evaluation/test_manifest.json"
+    ],
+    "evaluation_settings_source": "source_config.site.tasks.confiqa.downstream"
+  },
+  "tldr": {
+    "source_config": "LOCAL_HOME/RPEC/projects/screscomp/configs/tldr_site_reft_direct_k8_disjoint_alpha_dev_fixed_protocol_20260725_v6.json",
+    "source_config_sha256": "f04437b8e7b6322b05e7f6ccf93ef264898a93c3a0d05eda2b4b78a6f33fac21",
+    "source_protocol": "LOCAL_HOME/RPEC/projects/screscomp/docs/TLDR_SITE_REFT_DIRECT_K8_DISJOINT_ALPHA_DEV_FIXED_PROTOCOL_20260725_V6.md",
+    "source_protocol_sha256": "a587787ca18c86d25c421a67bb8ba596bf693b9fa00d370ff728e1b1e66acfda",
+    "source_run_root": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_site_reft_direct_k8_disjoint_alpha_dev_20260725_v6",
+    "reserve": {
+      "path": "LOCAL_HOME/RPEC/projects/screscomp/runs/tldr_sft_rm4_rollout_existing_rmselect_300_20260617/clean_splits_20260619/test_clean_reserve_seed20260619.jsonl",
+      "sha256": "38d3fa85dd3328d9d55f9e91cfa64211f487abd7e66f9c9df6bcec6fffea60b1",
+      "rows": 5593,
+      "slice_start": 0,
+      "slice_rows": 2048
+    },
+    "output_file": "LOCAL_HOME/RPEC/projects/screscomp/data_tldr/tldr_gptj_prepared/tldr_site_heldout_2048_20260726_v1/final_test_2048.jsonl",
+    "required_disjoint_roles": [
+      "selector_train_300",
+      "reft_train_8192_pairs",
+      "reft_validation_512_pairs",
+      "head_audit_dev_40",
+      "alpha_dev_40",
+      "calibration_reserve_240",
+      "v6_final_test_320"
+    ],
+    "frozen_state_requirements": [
+      "calibration/frozen_alpha.json",
+      "calibration/frozen_alpha_seal.json",
+      "final/final_manifest.json"
+    ],
+    "evaluation_settings_source": "source_config.generation_and_evaluation"
+  }
+}

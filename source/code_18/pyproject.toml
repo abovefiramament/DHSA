@@ -1,0 +1,99 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "screscomp"
+version = "0.1.0"
+description = "Source-conditioned residual competition toolkit"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "transformers>=4.41,<5",
+  "peft>=0.13",
+  "numpy>=1.26,<2",
+  "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.2", "ruff>=0.5"]
+
+[project.scripts]
+screscomp-build = "screscomp.cli.build_dataset:main"
+screscomp-probe = "screscomp.cli.run_prior_probe:main"
+screscomp-split = "screscomp.cli.make_splits:main"
+screscomp-render = "screscomp.cli.render_prompts:main"
+screscomp-audit = "screscomp.cli.audit_prompts:main"
+screscomp-score-behavior = "screscomp.cli.score_behavior:main"
+screscomp-score-residual-patching = "screscomp.cli.score_residual_patching:main"
+screscomp-score-pairwise-patching = "screscomp.cli.score_pairwise_patching:main"
+screscomp-score-direction-intervention = "screscomp.cli.score_direction_intervention:main"
+screscomp-score-interaction-matrix = "screscomp.cli.score_interaction_matrix:main"
+screscomp-score-component-competition = "screscomp.cli.score_component_competition:main"
+screscomp-score-steering-utility = "screscomp.cli.score_steering_utility:main"
+screscomp-prepare-ckplug-ab = "screscomp.cli.prepare_ckplug_ab:main"
+screscomp-prepare-ckplug-open = "screscomp.cli.prepare_ckplug_open:main"
+screscomp-score-external-steering-utility = "screscomp.cli.score_external_steering_utility:main"
+screscomp-score-ckplug-generation = "screscomp.cli.score_ckplug_generation:main"
+screscomp-score-ckplug-prediction = "screscomp.cli.score_ckplug_prediction:main"
+screscomp-score-ckplug-official = "screscomp.cli.score_ckplug_official:main"
+screscomp-summarize-ckplug-generations = "screscomp.cli.summarize_ckplug_generations:main"
+screscomp-select-ckplug-alpha = "screscomp.cli.select_ckplug_alpha:main"
+screscomp-rescore-ckplug-generation = "screscomp.cli.rescore_ckplug_generation:main"
+screscomp-analyze-ckplug-arbitration = "screscomp.cli.analyze_ckplug_arbitration:main"
+screscomp-score-format-component-scan = "screscomp.cli.score_format_component_scan:main"
+screscomp-suggest-rcm-refinement = "screscomp.cli.suggest_rcm_refinement:main"
+screscomp-select-rcm-source-config = "screscomp.cli.select_rcm_source_config:main"
+screscomp-score-ckplug-factor-component-scan = "screscomp.cli.score_ckplug_factor_component_scan:main"
+screscomp-rcm-build-graph = "screscomp.cli.rcm_build_graph:main"
+screscomp-rcm-select-graph = "screscomp.cli.rcm_select_graph:main"
+screscomp-rcm-eval-candidate-edges = "screscomp.cli.rcm_eval_candidate_edges:main"
+screscomp-rcm-eval-edge-pairs = "screscomp.cli.rcm_eval_edge_pairs:main"
+screscomp-rcm-control-plan = "screscomp.cli.rcm_control_plan:main"
+screscomp-rcm-predict-events = "screscomp.cli.rcm_predict_events:main"
+screscomp-rcm-score-events = "screscomp.cli.rcm_score_events:main"
+screscomp-rcm-calibrate-readout = "screscomp.cli.rcm_calibrate_readout:main"
+screscomp-rcm-export-registry = "screscomp.cli.rcm_export_registry:main"
+screscomp-rcm-make-prediction-baselines = "screscomp.cli.rcm_make_prediction_baselines:main"
+screscomp-rcm-collect-prediction-table = "screscomp.cli.rcm_collect_prediction_table:main"
+screscomp-rcm-expand-graph = "screscomp.cli.rcm_expand_graph:main"
+screscomp-rcm-axis-audit = "screscomp.cli.rcm_axis_audit:main"
+screscomp-rcm-export-ck-axis-summary = "screscomp.cli.rcm_export_ck_axis_summary:main"
+screscomp-cecm-discover-model-prior = "screscomp.cli.cecm_discover_model_prior:main"
+screscomp-cecm-build-preference-pairs = "screscomp.cli.cecm_build_preference_pairs:main"
+screscomp-cecm-fetch-confiqa = "screscomp.cli.cecm_fetch_confiqa:main"
+screscomp-prepare-step-dpo-pairs = "screscomp.cli.prepare_step_dpo_pairs:main"
+screscomp-prepare-math-dpo-pairs = "screscomp.cli.prepare_step_dpo_pairs:main"
+screscomp-prepare-imdb-sentiment-env = "screscomp.cli.prepare_imdb_sentiment_env:main"
+screscomp-generate-imdb-sentiment-completions = "screscomp.cli.generate_imdb_sentiment_completions:main"
+screscomp-score-imdb-sentiment-generations = "screscomp.cli.score_imdb_sentiment_generations:main"
+screscomp-prepare-imdb-sentiment-pairs = "screscomp.cli.prepare_imdb_sentiment_pairs:main"
+screscomp-run-imdb-sentiment-actuator-generation = "screscomp.cli.run_imdb_sentiment_actuator_generation:main"
+screscomp-cecm-round = "screscomp.cli.cecm_round:main"
+screscomp-cecm-scan-component-contributions = "screscomp.cli.cecm_scan_component_contributions:main"
+screscomp-cecm-summarize-rollout-directionality = "screscomp.cli.cecm_summarize_rollout_directionality:main"
+screscomp-cecm-select-rollout-directional-components = "screscomp.cli.cecm_select_rollout_directional_components:main"
+screscomp-cecm-audit-component-confidence = "screscomp.cli.cecm_audit_component_confidence:main"
+screscomp-cecm-select-margin-components = "screscomp.cli.cecm_select_margin_components:main"
+screscomp-cecm-select-components = "screscomp.cli.cecm_select_components:main"
+screscomp-cecm-select-arbitration-core = "screscomp.cli.cecm_select_arbitration_core:main"
+screscomp-cecm-train-fixed-actuator = "screscomp.cli.cecm_train_fixed_actuator:main"
+screscomp-cecm-run-attention-head-refine = "screscomp.cli.cecm_run_attention_head_refine:main"
+screscomp-cecm-scan-attention-heads = "screscomp.cli.cecm_scan_attention_heads:main"
+screscomp-cecm-run-fixed-actuator-generation = "screscomp.cli.cecm_run_fixed_actuator_generation:main"
+screscomp-cecm-train-attention-head-actuator = "screscomp.cli.cecm_train_attention_head_actuator:main"
+screscomp-cecm-run-joint-actuator-generation = "screscomp.cli.cecm_run_joint_actuator_generation:main"
+screscomp-cecm-run-source-scaling-control = "screscomp.cli.cecm_run_source_scaling_control:main"
+screscomp-cecm-run-source-prompt-delta-control = "screscomp.cli.cecm_run_source_prompt_delta_control:main"
+screscomp-cecm-run-sample-delta-smoke = "screscomp.cli.cecm_run_sample_delta_smoke:main"
+screscomp-cecm-run-transition-delta-control = "screscomp.cli.cecm_run_transition_delta_control:main"
+screscomp-cecm-score-prompt-operating-points = "screscomp.cli.cecm_score_prompt_operating_points:main"
+screscomp-cecm-audit-prompt-delta-geometry = "screscomp.cli.cecm_audit_prompt_delta_geometry:main"
+screscomp-cecm-select-round-controls = "screscomp.cli.cecm_select_round_controls:main"
+screscomp-cecm-run-joint-specs = "screscomp.cli.cecm_run_joint_specs:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

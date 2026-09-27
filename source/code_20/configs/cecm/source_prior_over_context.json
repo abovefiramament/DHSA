@@ -1,0 +1,49 @@
+{
+  "objective_id": "source_prior_over_context",
+  "description": "Positive endpoint is the prior/original answer under a no-context prompt; negative endpoint is the context/counterfactual answer.",
+  "prompt_key": "strong_no_rag",
+  "y_plus_keys": [
+    "orig_answer",
+    "prior_answer",
+    "parametric_answer",
+    "source_answer",
+    "baseline_answer",
+    "orig_answers",
+    "prior_answers",
+    "parametric_answers",
+    "source_answers",
+    "baseline_answers"
+  ],
+  "y_minus_keys": [
+    "cf_answer",
+    "context_answer",
+    "counterfactual_answer",
+    "target_answer",
+    "evidence_answer",
+    "cf_answers",
+    "context_answers",
+    "counterfactual_answers",
+    "target_answers",
+    "evidence_answers"
+  ],
+  "continuation_prefix": " ",
+  "val_mod": 5,
+  "component_clauses": [
+    {
+      "name": "prior_support_edge",
+      "axis": "source_identity",
+      "event": "prior_hit",
+      "edge_sign": "need_positive",
+      "edge_direction": "positive",
+      "max_core_index": 5
+    },
+    {
+      "name": "context_contrast_edge",
+      "axis": "source_identity",
+      "event": "context_hit",
+      "edge_sign": "suff_positive",
+      "edge_direction": "positive",
+      "max_core_index": 5
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "cell_id": "performance__tldr__gptj_6b__dpo_cast_nontransfer_reft_all",
+  "kind": "recovered_original_run_snapshot",
+  "source_filename": "config/runtime_environment.local.json",
+  "preserved_fields": {
+    "actual": {
+      "cuda_runtime": "12.4",
+      "cudnn": 90100,
+      "python": "3.11.3",
+      "torch": "2.5.1+cu124",
+      "transformers": "4.46.3"
+    },
+    "cell_id": "performance__tldr__gptj_6b__dpo_cast_nontransfer_reft_all",
+    "expected": {
+      "cuda_runtime": "12.4",
+      "cudnn": 90100,
+      "python": "3.11.3",
+      "torch": "2.5.1+cu124",
+      "transformers": "4.46.3"
+    },
+    "profile_id": "tldr_gptj_h100_fresh_20260913",
+    "status": "verified"
+  },
+  "portable_transform": "machine-specific interpreter path omitted; exact original retained in run-local recovery workspace",
+  "source_run_code_revision": "source/code_15",
+  "attribution": "snapshot from source cell launch; not proof of unchanged environment at later resumes or upstream cached stages",
+  "stages": {
+    "alpha_evaluate": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "alpha_freeze": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "alpha_generate": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "audit_execute": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "audit_freeze": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "audit_gate": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "audit_prepare": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "bank_finalize": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "bank_train": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "data": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "position_freeze": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "position_resolve": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "position_search": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "test_evaluate": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "test_gate": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    },
+    "test_generate": {
+      "status": "completed",
+      "imported_evidence": false,
+      "environment_attribution": "source_cell_snapshot_available; per-attempt attribution still requires corroboration"
+    }
+  },
+  "remaining_unknowns": [
+    "complete_original_dependency_set",
+    "GPU_driver_at_each_stage",
+    "actual_attention_kernels",
+    "TF32_and_reduction_flags",
+    "parameter_and_buffer_dtypes",
+    "per_attempt_environment_changes",
+    "upstream_shared_cache_environment"
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "round": {
+    "index": 1
+  },
+  "model": {
+    "path": "LOCAL_HOME/.cache/huggingface/hub/models--deepseek-ai--deepseek-math-7b-instruct",
+    "device": "auto",
+    "torch_dtype": "auto",
+    "use_chat_template": false
+  },
+  "output": {
+    "root": "data_gsm8k/rounds/deepseek"
+  },
+  "task": {
+    "adapter": "gsm8k_full_trajectory",
+    "name": "gsm8k_deepseek",
+    "event": "gsm8k_gold_answer_logic_advantage",
+    "source_jsonl": "data_gsm8k/cast_gsm8k_greedy1_answer_margin_240_60_rolesplit_smoke_v0/trajectory_pool/source/gsm8k_open_rows.jsonl",
+    "rollouts_jsonl": "data_gsm8k/cast_gsm8k_greedy1_answer_margin_240_60_rolesplit_smoke_v0/trajectory_pool/pairs/rollouts.jsonl",
+    "prompt_key": "deepseek_math_cot",
+    "prompt_semantics": "DeepSeek Math CoT prompt: Please reason step by step, and put your final answer within \\boxed{}.",
+    "val_mod": 5
+  },
+  "pairs": {
+    "max_rows": null,
+    "continuation_policy": "full_trajectory"
+  },
+  "discovery": {
+    "component_source": "reselect",
+    "reselect_components": true,
+    "reuse_components": "",
+    "component_types": [
+      "attn",
+      "mlp"
+    ],
+    "component_type_apply_modes": {
+      "attn": "all",
+      "mlp": "prompt_last"
+    },
+    "allow_ci_cross_zero": false,
+    "require_directional_ci": true,
+    "rows": 60,
+    "mlp_topk": 4,
+    "attn_layer_topk": 4,
+    "exclude_attn_layers": "0,1",
+    "head_scan_rows": 24,
+    "head_scan_factors": [
+      0.0,
+      1.5
+    ],
+    "head_topk": 4,
+    "head_require_directional_ci": true
+  },
+  "training": {
+    "score_mode": "answer_rest_margin",
+    "option_selection_mode": "first",
+    "max_aliases_per_side": 1,
+    "train_split": "train",
+    "val_split": "val",
+    "max_train_rows": 240,
+    "max_val_rows": 60,
+    "epochs": 2,
+    "lr": 0.05,
+    "lambda_norm": 0.0001,
+    "alpha_train": 1.0,
+    "state_margin_weight": 0.0,
+    "gain_weight": 1.0,
+    "target_margin": 0.0,
+    "target_gain": 0.0,
+    "empty_cache_every": 25,
+    "mlp": {
+      "enabled": true,
+      "train_apply_mode": "prompt_last",
+      "generation_apply_mode": "prefill"
+    },
+    "attention": {
+      "enabled": true,
+      "train_apply_mode": "all",
+      "generation_apply_mode": "all"
+    }
+  },
+  "alpha": {
+    "scan": false,
+    "mlp": [
+      0.05
+    ],
+    "head": [
+      0.5
+    ],
+    "train_sweep": [
+      0.0,
+      1.0
+    ]
+  },
+  "evaluation": {
+    "enabled": true,
+    "name": "gsm8k_test",
+    "eval_open_rows": "data_gsm8k/raw/test.jsonl",
+    "generation_prompt_key": "deepseek_math_cot",
+    "scoring_kind": "gsm8k",
+    "split": "all",
+    "start": 0,
+    "max_rows": 0,
+    "generation_apply_mode": "prefill",
+    "max_new_tokens": 512,
+    "stop_strings": "\\nUser:",
+    "flush_every": 1,
+    "summary_every": 100,
+    "empty_cache_every": 25
+  }
+}
