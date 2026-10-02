@@ -22,7 +22,7 @@ Fansheng Zhang<sup>1,*</sup>, Shengran Guo<sup>2,†</sup>, Zexiao Wang<sup>3,�
 
 <sup>*</sup> Corresponding authors: **Liang Yuan** ([liang.yuan@acu.edu.au](mailto:liang.yuan@acu.edu.au)) and **Fansheng Zhang** ([above1firmament@gmail.com](mailto:above1firmament@gmail.com)).
 
-The arXiv link will be added when an identifier is available. See [Citation](#citation) for the current manuscript citation.
+[arXiv:2609.33298](https://arxiv.org/abs/2609.33298). See [Citation](#citation) for the manuscript citation.
 
 [Frozen release](https://github.com/abovefiramament/DHSA/releases/tag/frozen-20260927) · [Reproduction guide](docs/REPRODUCTION.md) · [Paper-to-materials map](docs/PAPER_TO_ARTIFACTS.md) · [Extension examples](docs/EXTENDING.md)
 
@@ -115,15 +115,18 @@ Use the [paper-to-materials map](docs/PAPER_TO_ARTIFACTS.md) to locate a figure 
 
 ## Citation
 
-If your research uses or builds upon DHSA, RCM, CAST, or the accompanying code or experimental materials, please cite our paper using the reference below. The current citation is also available in [CITATION.bib](CITATION.bib) and [CITATION.cff](CITATION.cff); it will be updated with the arXiv identifier.
+If your research uses or builds upon DHSA, RCM, CAST, or the accompanying code or experimental materials, please cite our paper using the reference below. The current citation is also available in [CITATION.bib](CITATION.bib) and [CITATION.cff](CITATION.cff).
 
 ```bibtex
-@unpublished{zhang2026dhsa,
+@misc{zhang2026dhsa,
   title  = {Direct Hidden-State Alignment: Mapping and Controlling Preference Expression in {LLMs}},
   author = {Zhang, Fansheng and Guo, Shengran and Wang, Zexiao and Yuan, Liang and Chen, Jiyuan and Luo, Ruikun},
   year   = {2026},
-  note   = {Research manuscript. Shengran Guo and Zexiao Wang contributed equally and share second authorship},
-  url    = {https://github.com/abovefiramament/DHSA}
+  eprint = {2609.33298},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.LG},
+  note   = {Shengran Guo and Zexiao Wang contributed equally and share second authorship},
+  url    = {https://arxiv.org/abs/2609.33298}
 }
 ```
 

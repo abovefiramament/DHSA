@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: >-
   Please cite the DHSA manuscript when using this software or its research
   materials. Shengran Guo and Zexiao Wang contributed equally and share second
-  authorship. The arXiv identifier will be added when available.
+  authorship.
 type: software
 title: 'DHSA: Direct Hidden-State Alignment'
 authors:
@@ -44,5 +44,5 @@ preferred-citation:
     - family-names: Luo
       given-names: Ruikun
   year: 2026
-  notes: 'Research manuscript. Shengran Guo and Zexiao Wang contributed equally and share second authorship.'
-  url: 'https://github.com/abovefiramament/DHSA'
+  notes: 'arXiv preprint arXiv:2609.33298. Shengran Guo and Zexiao Wang contributed equally and share second authorship.'
+  url: 'https://arxiv.org/abs/2609.33298'
