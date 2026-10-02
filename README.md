@@ -132,7 +132,7 @@ If your research uses or builds upon DHSA, RCM, CAST, or the accompanying code o
 
 ## Acknowledgments
 
-We acknowledge the A100 Computing Center at Chengdu University for providing computational resources. We also acknowledge the Research Computing Centre at The University of Queensland for access to the Bunya supercomputer ([DOI: 10.48610/wf6c-qy55](https://doi.org/10.48610/wf6c-qy55)).
+We acknowledge the A100 Computing Center at Chengdu University for providing computational resources.
 
 We thank the developers and maintainers of the models, datasets, evaluators, and baseline implementations used in this work. See [third-party sources and licensing scope](THIRD_PARTY_NOTICES.md) and each condition's public source records.
 
